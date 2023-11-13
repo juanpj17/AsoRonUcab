@@ -1,17 +1,23 @@
 <template>
   <div class="home">
-    <GenerarQR msg="Welcome to Your Vue.js App"/>
+    <EventoRegistro></EventoRegistro>
+   
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import GenerarQR from '@/components/GenerarQR.vue'
+import DetalleProducto from '@/components/DetalleProducto.vue';
+import FormularioNatural from '@/components/FormularioNatural.vue';
+import FormularioJuridico from '@/components/FormularioJuridico.vue';
+import EventoRegistro from "@/components/EventoRegistro.vue"
+
 
 export default {
   name: 'HomeView',
   components: {
-    GenerarQR
+    GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,EventoRegistro
   }
 }
 </script>
