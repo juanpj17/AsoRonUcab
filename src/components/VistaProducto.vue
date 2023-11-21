@@ -111,11 +111,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{ infoModal.id }}</td>
-                        <td>{{ infoModal.nombre }}</td>
-                        <td>{{ infoModal.stock }}</td>
-                        <td>{{ infoModal.precio }}</td>
+                    <tr v-for="item in infoModal" :key="item.age">
+                        <td>{{ item.age }}</td>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.stock }}</td>
+                        <td>{{ item.precio }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -129,16 +129,10 @@
       data() {
         return {
             ejemplo:[
-                { age: 1, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' }
-            ],
-            infoPedido:[
-                { id: 1, nombre: 'Producto A', stock: 10, precio: 20.99 },
-                { id: 89, nombre: 'Producto B', stock: 5, precio: 15.99 },
-                { id: 21, nombre: 'Producto C', stock: 8, precio: 25.49 },
-                { id: 38, nombre: 'Producto D', stock: 15, precio: 18.99 }
+                { age: 1, first_name: 'Dickerson', last_name: 'Macdonald', stock: 10, precio: 20.99 },
+                { age: 21, first_name: 'Larsen', last_name: 'Shaw', stock: 5, precio: 15.99},
+                { age: 89, first_name: 'Geneva', last_name: 'Wilson', stock: 8, precio: 25.49 },
+                { age: 38, first_name: 'Jami', last_name: 'Carney', stock: 15, precio: 18.99  }
             ],
             items:[],
             fields: [
@@ -178,14 +172,9 @@
       },
         methods: {
             info(item) {
-                // Busco el producto en infoPedido con la misma edad
-                const productoInfo = this.infoPedido.find(p => p.id === item.age);
-
-                // Si se encuentra el producto, mostrar el modal
-                if (productoInfo) {
-                    this.infoModal = productoInfo;
-                    this.mostrarModal = true;
-                }
+                // Puedes actualizar infoModal con los detalles del pedido específico
+                this.infoModal = [item];
+                this.mostrarModal = true;
             },
 
         onFiltered(filteredItems) {
