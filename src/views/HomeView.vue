@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <EventoRegistro></EventoRegistro>
+    <VistaProducto></VistaProducto>
    
   </div>
 </template>
@@ -12,12 +12,12 @@ import DetalleProducto from '@/components/DetalleProducto.vue';
 import FormularioNatural from '@/components/FormularioNatural.vue';
 import FormularioJuridico from '@/components/FormularioJuridico.vue';
 import EventoRegistro from "@/components/EventoRegistro.vue"
-
+import VistaProducto from '@/components/VistaProducto.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,EventoRegistro
+    GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,EventoRegistro, VistaProducto
   }
 }
 </script>
