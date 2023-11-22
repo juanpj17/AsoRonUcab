@@ -20,7 +20,7 @@
             <b-card-text v-if="producto.stock=='0'"><h6>Agotado</h6></b-card-text> 
             <b-card-text v-else><h6> {{ producto.stock }} disponibles</h6></b-card-text> 
             
-            <b-button href="#" variant="primary" v-on:click="AgregarCarrito(producto)" >Ver mas</b-button>
+            <b-button href="#" variant="primary" v-on:click="verMas()" >Ver mas</b-button>
             </b-card>
         </b-col> 
     </b-row>
@@ -56,27 +56,11 @@
                         this.Productos = response.data;                 
                     })    
             },
-
-            AgregarCarrito(producto){
-                console.log(this.ClienteRegistrado)
-                if(this.ClienteRegistrado){
-                    if(producto.stock!='0'){
-                    if(!this.enCarrito(producto)){
-                        this.Pedido.push(producto);
-                        Vue.observable(this.$root).pedidos = this.Pedido;
-                    }
-                    swal.fire({title: 'El producto se agregó a su carrito'});
-                    this.enviarPedido();}
-                    else
-                    swal.fire({title: 'El producto se encuentra agotado actualmente'});
-                } else {
-                    this.alertaNoCliente();
-                }           
+            verMas(){
+                this.$router.push('/DetalleProducto');
             },
 
-            enCarrito(producto){
-                return this.Pedido.includes(producto);
-            },  
+             
 
             alertaNoCliente(){
                 if (!this.ClienteRegistrado){

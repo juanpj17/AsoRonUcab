@@ -1,6 +1,6 @@
 <template>
   <div>
- <b-card no-body class="overflow-hidden" style="max-width: 1500px; margin-left: 30px; margin-right: 30px; margin-top: 50px; padding-top: 50px; padding-bottom: 30px; " >
+ <b-card no-body class="overflow-hidden" style="max-width: 2300px; margin-left: 30px; margin-right: 30px; margin-top: 50px; padding-top: 50px; padding-bottom: 30px; " >
    <b-row no-gutters>
      <b-col md="6">
        <div class="carousel">

@@ -23,9 +23,11 @@
     >
       <!-- Example scoped slot for select state illustrative purposes -->
       <template #cell(selected)="{ rowSelected }">
-        <template v-if="rowSelected">
+        <template v-if="rowSelected" >
           <span aria-hidden="true">&check;</span>
-          <span class="sr-only">Selected</span>
+          <!-- <span class="sr-only">Selected</span> -->
+        
+          
         </template>
         <template v-else>
           <span aria-hidden="true">&nbsp;</span>
@@ -41,7 +43,7 @@
     </p>
     <p>
       Selected Rows:<br>
-      {{ selected }}
+      {{ selected }}{{ precio }}
     </p>
 </section>
   </div>
@@ -61,7 +63,7 @@
     data() {
       return {
      
-        fields: ['selected', 'isActive', 'age', 'first_name', 'last_name'],
+        fields: ['selected', 'isActive', 'age', 'first_name', 'last_name','precio'],
         items: [
           { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
           { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
@@ -69,7 +71,8 @@
           { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
         ],
         selectMode: 'multi',
-        selected: []
+        selected: [ { "isActive": false, "age": 21, "first_name": "Larsen", "last_name": "Shaw" } ],
+        precio:[]
       }
     },
     methods: {
