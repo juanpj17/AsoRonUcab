@@ -1,11 +1,5 @@
 <template>
   <div>
-    <h1>Generador de Códigos QR</h1>
-    <div>
-      <b-button @click="generateQRCode" variant="primary" class="generate-button">
-        Generar QR
-      </b-button>
-    </div>
     <div v-if="qrCodeData" class="mt-3">
       <img :src="qrCodeData" alt="Código QR" />
     </div>
@@ -21,6 +15,10 @@ export default {
       qrCodeData: null,
     }
   },
+  created() {
+    this.generateQRCode();
+  }
+  ,
   methods: {
     generateQRCode() {
       const textToEncode = 'www.google.com'; // Puedes cambiar esto a tus necesidades

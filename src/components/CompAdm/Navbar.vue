@@ -6,9 +6,10 @@
         <nav>
            <ul class="nav-links">
                 <li><a @click="PrincipalProducto()">Productos</a></li>
-                <li><a href="#">Eventos</a></li>
+                <li><a @click="PrincipalEventos()">Eventos</a></li>
                 <li><a href="#">Empleados</a></li>
                 <li><a href="#">Clientes</a></li>
+                <li><a @click="PrincipalProveedor()">Proveedores</a></li>
                 <li><a href="#">Rol/Permiso</a></li>
                 <li><a href="#">Clientes</a></li>
            </ul>            
@@ -25,6 +26,15 @@
             if (this.$route.path!='/PrincipalProducto/')
             this.$router.push('/PrincipalProducto/');
           },
+          PrincipalProveedor() {
+            if (this.$route.path!='/PrincipalProveedor/')
+            this.$router.push('/PrincipalProveedor/');
+          },
+          PrincipalEventos() {
+            if (this.$route.path!='/PrincipalEventos/')
+            this.$router.push('/PrincipalEventos/');
+          },
+       
        
          },
   

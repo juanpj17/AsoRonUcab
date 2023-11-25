@@ -6,7 +6,6 @@
                 <div class="col-md-9 principal">
                
                     <div class="box  bg-white p-4 ">
-                        <h3 class="mb-4 text-center fs-1">Registro</h3> 
                         <b-alert show variant="danger" v-if="enviado">Campos vacios</b-alert>
                         
                       <form class="mb-3">
@@ -112,7 +111,7 @@
                           </div>
                         </div>
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  v-on:click="validar" >Registrase</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  v-on:click="validar" >Guardar</button>
                         </div>
                       </form>
 
