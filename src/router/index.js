@@ -11,6 +11,10 @@ import PrincipalProveedor from '@/views/Administrador/PrincipalProveedor.vue'
 import PrincipalAfiliados from '@/views/Clientes/PrincipalAfiiados.vue'
 import MiCuenta from '@/views/Clientes/MiCuenta.vue'
 import PrincipalEventos from '@/views/Administrador/PrincipalEventos.vue'
+import PrincipalEventosC from '@/views/Clientes/PrincipalEventos.vue'
+import PrincipalPago from '@/views/Clientes/PrincipalPago.vue'
+import PrincipalProductoC from '@/views/Clientes/PrincipalProductos.vue'
+import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
 
 Vue.use(VueRouter)
 
@@ -70,8 +74,27 @@ const routes = [
     name: 'PrincipalEventos',
     component: PrincipalEventos
   },
+  {
+    path: '/PrincipalEventosC',
+    name: 'PrincipalEventosC',
+    component: PrincipalEventosC
+  },
   
-  
+  {
+    path: '/PrincipalPago',
+    name: 'PrincipalPago',
+    component: PrincipalPago
+  },
+  {
+    path: '/PrincipalProductoC',
+    name: 'PrincipalProductoC',
+    component: PrincipalProductoC
+  },
+  {
+    path: '/PrincipalCarrito',
+    name: 'PrincipalCarrito',
+    component: PrincipalCarrito
+  },
 
 ]
 

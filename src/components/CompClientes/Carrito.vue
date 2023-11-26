@@ -32,7 +32,7 @@
           </b-col>
           <b-col cols="12" md="12">
             <b-card style="max-width: 1200px;" border-variant="primary">
-              <b-button variant="primary" size="lg" >Ir a la caja</b-button>
+              <b-button variant="primary" size="lg" @click="Pagar()" >Ir a la caja</b-button>
             </b-card>
           </b-col>
         </b-row>
@@ -50,7 +50,8 @@
       data() {
           return {
 
-          orden:[{idProducto:1,nombre:'Producto1',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0},{idProducto:1,nombre:'Producto2',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0}]
+          orden:[{idProducto:1,nombre:'Producto1',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0},
+                {idProducto:1,nombre:'Producto2',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0}]
           };
 
       },
@@ -58,12 +59,13 @@
       
   
       methods: {
-          redireccionar() {
-              this.$router.push('/PagoView/' + this.Perfil);
-          },
+         
           contar(){
             return this.cont++
           },
+          Pagar(){
+            this.$router.push('/PrincipalPago')
+          }
   
           
          

@@ -30,7 +30,7 @@
    <hr>
  <b-row>
    <b-col > <b-form-input v-model="text" placeholder=""></b-form-input></b-col>
-   <b-col style="background-color: rgb(220, 69, 69) ;"> <b-button variant="danger">Añadir  al  carrito</b-button></b-col>
+   <b-col style="background-color: rgb(220, 69, 69) ;"> <b-button variant="danger" @click="Carrito()">Añadir  al  carrito</b-button></b-col>
  </b-row>
 </b-container>
 <hr>
@@ -84,6 +84,9 @@ import { numeric } from 'vuelidate/lib/validators';
      },
      prevSlide() {
        this.currentSlideIndex = (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length;
+     },
+     Carrito(){
+      this.$router.push('/PrincipalCarrito')
      }
    }
  };

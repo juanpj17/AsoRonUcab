@@ -11,7 +11,7 @@
               <b-nav-item  @click="MiCuenta()">Mi cuenta</b-nav-item>
               <b-nav-item >Mis pedido</b-nav-item>
               <b-nav-item >Metodos de pago registrado</b-nav-item>
-              <b-nav-item  @click="PrincipalAfiliados">Afiliacion</b-nav-item>
+              <b-nav-item  @click="PrincipalAfiliados()">Afiliacion</b-nav-item>
             </b-nav>
           </nav>
           <b-button variant="primary" block @click="hide">Closeidebar</b-button>
@@ -31,10 +31,9 @@
          <nav>
             <ul class="nav-links">
                  <li><a @click="PrincipalProducto()">Productos</a></li>
-                 <li><a href="#">Eventos</a></li>
+                 <li><a @click="PrincipalEventosC()">Eventos</a></li>
                  <li><a href="#">Ofertas</a></li>
-                 <li><a href="#">Clientes</a></li>
-                 <li><a href="#">Carrito</a></li>
+                 <li><a @click="Carrito()">Carrito</a></li>
             </ul>            
          </nav>
          <a class="btn" href="#"><button>Cerrar sesion</button></a>
@@ -47,12 +46,12 @@
  
           methods:{
            PrincipalProducto() {
-             if (this.$route.path!='/PrincipalProducto/')
-             this.$router.push('/PrincipalProducto/');
+             if (this.$route.path!='/PrincipalProductoC/')
+             this.$router.push('/PrincipalProductoC/');
            },
-           PrincipalProveedor() {
-             if (this.$route.path!='/PrincipalProveedor/')
-             this.$router.push('/PrincipalProveedor/');
+           PrincipalEventosC() {
+             if (this.$route.path!='/PrincipalEventosC/')
+             this.$router.push('/PrincipalEventosC/');
            },
            PrincipalAfiliados() {
              if (this.$route.path!='/PrincipalAfiliados/')
@@ -61,6 +60,10 @@
            MiCuenta() {
              if (this.$route.path!='/MiCuenta/')
              this.$router.push('/MiCuenta/');
+           },
+           Carrito() {
+             if (this.$route.path!='/PrincipalCarrito/')
+             this.$router.push('/PrincipalCarrito/');
            },
         
         
