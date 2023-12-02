@@ -9,6 +9,8 @@ import PrincipalProducto from '@/views/Administrador/PrincipalProducto.vue'
 import RegistrarProductoView from '@/views/Administrador/RegistrarProductoView.vue'
 import PrincipalProveedor from '@/views/Administrador/PrincipalProveedor.vue'
 import PrincipalAfiliados from '@/views/Clientes/PrincipalAfiiados.vue'
+import AsignarRoles from '@/views/Administrador/AsignarRoles.vue'
+import TiendaFisica from '@/views/Administrador/TiendaFisica.vue'
 import MiCuenta from '@/views/Clientes/MiCuenta.vue'
 import PrincipalEventos from '@/views/Administrador/PrincipalEventos.vue'
 import PrincipalEventosC from '@/views/Clientes/PrincipalEventos.vue'
@@ -94,6 +96,16 @@ const routes = [
     path: '/PrincipalCarrito',
     name: 'PrincipalCarrito',
     component: PrincipalCarrito
+  },
+  {
+    path: '/AsignarRoles',
+    name: 'AsignarRoles',
+    component: AsignarRoles
+  },
+  {
+    path: '/TiendaFisica',
+    name: 'TiendaFisica',
+    component: TiendaFisica
   },
 
 ]

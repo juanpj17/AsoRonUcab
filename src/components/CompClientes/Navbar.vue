@@ -12,6 +12,8 @@
               <b-nav-item >Mis pedido</b-nav-item>
               <b-nav-item >Metodos de pago registrado</b-nav-item>
               <b-nav-item  @click="PrincipalAfiliados()">Afiliacion</b-nav-item>
+              <b-nav-item  @click="TiendaFisica()">TiendaFisica</b-nav-item>
+              <b-nav-item  @click="AsignarRoles()">Roles</b-nav-item>
             </b-nav>
           </nav>
           <b-button variant="primary" block @click="hide">Closeidebar</b-button>
@@ -51,6 +53,14 @@
            PrincipalEventosC() {
              if (this.$route.path!='/PrincipalEventosC/')
              this.$router.push('/PrincipalEventosC/');
+           },
+           TiendaFisica() {
+             if (this.$route.path!='/TiendaFisica/')
+             this.$router.push('/TiendaFisica/');
+           },
+           AsignarRoles() {
+             if (this.$route.path!='/AsignarRoles/')
+             this.$router.push('/AsignarRoles/');
            },
            PrincipalAfiliados() {
              if (this.$route.path!='/PrincipalAfiliados/')
