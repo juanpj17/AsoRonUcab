@@ -30,10 +30,10 @@
          </div>
          <nav>
             <ul class="nav-links">
-                 <li><a @click="PrincipalProducto()">Productos</a></li>
-                 <li><a @click="PrincipalEventosC()">Eventos</a></li>
-                 <li><a href="#">Ofertas</a></li>
-                 <li><a @click="Carrito()">Carrito</a></li>
+                 <li><a class="text" @click="PrincipalProducto()" >Productos</a></li>
+                 <li><a class="text" @click="PrincipalEventosC()" >Eventos</a></li>
+                 <li><a class="text" href="#">Ofertas</a></li>
+                 <li><a class="text" @click="Carrito()" >Carrito</a></li>
             </ul>            
          </nav>
          <a class="btn" href="#"><button>Cerrar sesion</button></a>
@@ -43,7 +43,6 @@
  <script>
    
    export default{
- 
           methods:{
            PrincipalProducto() {
              if (this.$route.path!='/PrincipalProductoC/')
@@ -89,7 +88,7 @@
  }
  
  .header{
-     background-color: #1b3039;
+     background-color: #833440;
      display: flex;
      justify-content: flex-end;
      align-items: center;
@@ -125,10 +124,12 @@
      transform: scale(1.1);
  }
  
+ 
  .header .nav-links a{
      font-size: 700;
-     color: #eceff1;
+     color: antiquewhite;
      text-decoration: none;    
+     cursor: pointer;
  }
  
  
@@ -159,4 +160,10 @@
     left: 20px;
     transform: translateY(-50%);
 }
+
+  .text{
+    color: antiquewhite;
+  }
+
+ 
  </style>
