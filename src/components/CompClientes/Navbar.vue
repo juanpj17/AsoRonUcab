@@ -175,5 +175,7 @@
     color: antiquewhite;
   }
 
- 
+  ul{
+    margin: auto !important;
+  }
  </style>
