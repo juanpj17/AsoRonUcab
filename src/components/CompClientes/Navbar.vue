@@ -28,9 +28,9 @@
 
 
 
-             <img src="@/assets/logo.png" alt="Logo de la marca">
+             <img src="@/assets/Logo_AsoRon.png" alt="Logo de la marca">
          </div>
-         <nav>
+         <nav >
             <ul class="nav-links">
                  <li><a class="text" @click="PrincipalProducto()" >Productos</a></li>
                  <li><a class="text" @click="PrincipalEventosC()" >Eventos</a></li>
