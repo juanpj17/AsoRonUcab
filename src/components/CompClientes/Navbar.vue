@@ -28,7 +28,7 @@
 
 
 
-             <img src="@/assets/Logo_AsoRon.png" alt="Logo de la marca">
+             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
          </div>
          <nav >
             <ul class="nav-links">

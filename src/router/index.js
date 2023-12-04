@@ -1,22 +1,22 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DetalleProducto from '@/views/Administrador/DetalleProductoView.vue'
-import RegistrarProducto from '@/components/CompAdm/RegistrarProducto.vue'
-import RegistrarPremio from '@/views/Administrador/RegistrarPremio'
-import NotaCata from '@/views/Administrador/NotaCata.vue'
-import PrincipalProducto from '@/views/Administrador/PrincipalProducto.vue'
-import RegistrarProductoView from '@/views/Administrador/RegistrarProductoView.vue'
-import PrincipalProveedor from '@/views/Administrador/PrincipalProveedor.vue'
-import PrincipalAfiliados from '@/views/Clientes/PrincipalAfiiados.vue'
 import AsignarRoles from '@/views/Administrador/AsignarRoles.vue'
-import TiendaFisica from '@/views/Administrador/TiendaFisica.vue'
+import DetalleProducto from '@/views/Administrador/DetalleProductoView.vue'
+import HomeView from '../views/HomeView.vue'
 import MiCuenta from '@/views/Clientes/MiCuenta.vue'
+import NotaCata from '@/views/Administrador/NotaCata.vue'
+import PrincipalAfiliados from '@/views/Clientes/PrincipalAfiiados.vue'
+import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
 import PrincipalEventos from '@/views/Administrador/PrincipalEventos.vue'
 import PrincipalEventosC from '@/views/Clientes/PrincipalEventos.vue'
 import PrincipalPago from '@/views/Clientes/PrincipalPago.vue'
+import PrincipalProducto from '@/views/Administrador/PrincipalProducto.vue'
 import PrincipalProductoC from '@/views/Clientes/PrincipalProductos.vue'
-import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
+import PrincipalProveedor from '@/views/Administrador/PrincipalProveedor.vue'
+import RegistrarPremio from '@/views/Administrador/RegistrarPremio'
+import RegistrarProducto from '@/components/CompAdm/RegistrarProducto.vue'
+import RegistrarProductoView from '@/views/Administrador/RegistrarProductoView.vue'
+import TiendaFisica from '@/views/Administrador/TiendaFisica.vue'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
@@ -108,6 +108,12 @@ const routes = [
     component: TiendaFisica
   },
 
+  // *****dejar este de último*****
+  {
+    path: '*',
+    redirect: '/'
+  },
+ 
 ]
 
 const router = new VueRouter({

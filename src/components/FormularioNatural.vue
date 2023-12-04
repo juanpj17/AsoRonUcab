@@ -190,6 +190,18 @@
     height: 50px !important;
   }
  
+  /*Modifica el color de la X para eliminar números de teléfono*/
+  .b-form-tag > button.b-form-tag-remove {
+    color: red !important;
+  }
+
+  /*ajusta el div del formulario*/
+  .bg-white {
+    margin: 25px 0;
+    --bs-bg-opacity: 1;
+    background-color:var(--carne)!important; 
+  }
+
   /*saca del input la palabra del recuadro (Primer nombre, email, etc)*/
   .form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-control-plaintext ~ label, .form-floating > .form-select ~ label {
     color: rgba(var(--bs-body-color-rgb), 0.65);
@@ -200,23 +212,11 @@
   .form-floating > label {
     padding: 0.5rem 0.75rem !important;
     left: 7px !important;
-  }
-
-  /*ajusta el div del formulario*/
-  .bg-white {
-    margin: 25px 0;
-    --bs-bg-opacity: 1;
-    background-color:var(--carne)!important; 
-  }
+  } 
 
   /* Ajusta el color del texto a blanco mientras escribes, antes estaba en gris */
   .white-text {
     color: white !important; 
-  }
-
-  /*Modifica el color de la X para eliminar números de teléfono*/
-  .b-form-tag > button.b-form-tag-remove {
-    color: red !important;
   }
   
 

@@ -1,12 +1,6 @@
 <template>
-    <div>
-      <!-------------------------------------- Esto seria los rol --------------------------------------->
-    
-  
-      <input type="text" v-model="url">
-      <input type="text" v-model="logo">
-      
-  
+    <div>   
+
       <div class="container">
         <div class="row">
           <div class="col-md-4 d-flex" style="margin-top:50px">
@@ -20,7 +14,6 @@
               <input type="checkbox" class="form-check-input" v-model="item.selected">
               <label class="form-check-label">{{ item.text }}</label>
             </div>
-            <!-- <button class="btn btn-primary" @click="obtenerEstadoCasillas">Obtener Estado</button> -->
   
   
         </div>
@@ -28,21 +21,12 @@
   
   </div>
 
-       <!-- <Qrcode :value="qrData" :size="200"/>
-       <vue-qriously :value="qrData" :size="200"/>
-       <vue-qriously :value="qrData" :size="200"></vue-qriously> -->
   
-      <!-------------------------------------- Esto seria Tienda física --------------------------------------->
-      
   </template>
   
   <script>
   
-  
-  
-  // import Qrcode from 'vue-qr';
-  
-  
+
 
     
     export default {
@@ -83,14 +67,6 @@
   
   
     methods: {
-      modalCanjear() {
-        this.modalVisible = true;
-        console.log('funciona el click')
-      },
-      closeModal() {
-        this.modalVisible = false;
-        new QRCode('andi','andi')
-      },
       obtenerEstadoCasillas() {
       const a = []
       this.arrayCheckBox.forEach((item, index) => {

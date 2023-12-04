@@ -1,7 +1,7 @@
 <template>
    <header class="header">
         <div class="logo">
-            <img src="@/assets/logo.png" alt="Logo de la marca">
+            <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
         </div>
         <nav>
            <ul class="nav-links">
@@ -51,6 +51,13 @@
     padding: 0;
     font-family: 'Nunito', sans-serif;
     font-size: 20px;
+}
+
+header .nav-links a {
+    font-size: 700;
+    color: antiquewhite !important;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 body{
