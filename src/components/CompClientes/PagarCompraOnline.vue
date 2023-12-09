@@ -36,7 +36,7 @@
       </template>
     </b-table>
     <p>
-      <b-button size="lg" @click="guardar()" style="margin-right: 20px;">Guardar</b-button>
+      <!-- <b-button size="lg" @click="guardar()" style="margin-right: 20px;">Guardar</b-button> -->
       <b-button size="lg" @click="selectAllRows" style="margin-right: 20px;">Select all</b-button>
       <b-button size="lg" @click="clearSelected">Clear selected</b-button>
       <b-button size="lg"  style="margin-left: 5px;" @click="btAgregar=true">Agregar Tarjeta</b-button>
@@ -112,7 +112,7 @@
         items: [
           { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:1 },
           { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'G Martinez', fecha_vencimiento: '03/15',id:2 },
-          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela Martinez', fecha_vencimiento: '03/15',id:3 },
+          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela Josefina', fecha_vencimiento: '03/15',id:3 },
         ],
         selectMode: 'multi',
         selected: [],
@@ -124,7 +124,8 @@
     },
     methods: {
       onRowSelected(items) {
-        this.selected = items
+        this.selected = items;
+        this.guardar();
        
       },
       selectAllRows() {

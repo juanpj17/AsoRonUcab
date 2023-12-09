@@ -12,6 +12,8 @@
               <b-nav-item >Mis pedido</b-nav-item>
               <b-nav-item >Metodos de pago registrado</b-nav-item>
               <b-nav-item  @click="PrincipalAfiliados()">Afiliacion</b-nav-item>
+              <b-nav-item  @click="TiendaFisica()">TiendaFisica</b-nav-item>
+              <b-nav-item  @click="AsignarRoles()">Roles</b-nav-item>
             </b-nav>
           </nav>
           <b-button variant="primary" block @click="hide">Closeidebar</b-button>
@@ -26,14 +28,14 @@
 
 
 
-             <img src="@/assets/logo.png" alt="Logo de la marca">
+             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
          </div>
-         <nav>
+         <nav >
             <ul class="nav-links">
-                 <li><a @click="PrincipalProducto()">Productos</a></li>
-                 <li><a @click="PrincipalEventosC()">Eventos</a></li>
-                 <li><a href="#">Ofertas</a></li>
-                 <li><a @click="Carrito()">Carrito</a></li>
+                 <li><a class="text" @click="PrincipalProducto()" >Productos</a></li>
+                 <li><a class="text" @click="PrincipalEventosC()" >Eventos</a></li>
+                 <li><a class="text" href="#">Ofertas</a></li>
+                 <li><a class="text" @click="Carrito()" >Carrito</a></li>
             </ul>            
          </nav>
          <a class="btn" href="#"><button>Cerrar sesion</button></a>
@@ -43,7 +45,6 @@
  <script>
    
    export default{
- 
           methods:{
            PrincipalProducto() {
              if (this.$route.path!='/PrincipalProductoC/')
@@ -52,6 +53,14 @@
            PrincipalEventosC() {
              if (this.$route.path!='/PrincipalEventosC/')
              this.$router.push('/PrincipalEventosC/');
+           },
+           TiendaFisica() {
+             if (this.$route.path!='/TiendaFisica/')
+             this.$router.push('/TiendaFisica/');
+           },
+           AsignarRoles() {
+             if (this.$route.path!='/AsignarRoles/')
+             this.$router.push('/AsignarRoles/');
            },
            PrincipalAfiliados() {
              if (this.$route.path!='/PrincipalAfiliados/')
@@ -89,7 +98,7 @@
  }
  
  .header{
-     background-color: #1b3039;
+     background-color: #833440;
      display: flex;
      justify-content: flex-end;
      align-items: center;
@@ -125,10 +134,12 @@
      transform: scale(1.1);
  }
  
+ 
  .header .nav-links a{
      font-size: 700;
-     color: #eceff1;
+     color: antiquewhite;
      text-decoration: none;    
+     cursor: pointer;
  }
  
  
@@ -159,4 +170,12 @@
     left: 20px;
     transform: translateY(-50%);
 }
+
+  .text{
+    color: antiquewhite;
+  }
+
+  ul{
+    margin: auto !important;
+  }
  </style>
