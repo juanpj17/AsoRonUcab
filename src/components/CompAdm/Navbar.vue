@@ -12,6 +12,7 @@
                 <li><a @click="PrincipalProveedor()">Proveedores</a></li>
                 <li><a href="#">Rol/Permiso</a></li>
                 <li><a href="#">Clientes</a></li>
+                <li><a href="#" @click="Inventario()">Inventario</a></li>
            </ul>            
         </nav>
         <a class="btn" href="#"><button>Contact</button></a>
@@ -33,6 +34,10 @@
           PrincipalEventos() {
             if (this.$route.path!='/PrincipalEventos/')
             this.$router.push('/PrincipalEventos/');
+          },
+          Inventario() {
+            if (this.$route.path!='/Inventario/')
+            this.$router.push('/Inventario/');
           },
        
        

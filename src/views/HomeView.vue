@@ -1,17 +1,17 @@
 <template>
   <div class="home">
- <PrincipalAfiiadosVue></PrincipalAfiiadosVue>
-   
+<Home></Home>
 
+<MiCuentaVue></MiCuentaVue>
    </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import PrincipalEventos from './Administrador/PrincipalEventos.vue';
-
+import Home from './Administrador/Home.vue';
 import PrincipalProveedoresVue from '@/components/CompAdm/PrincipalProveedores.vue';
-
+import TablaHistoricoVue from '@/components/CompAdm/TablaHistorico.vue'
 import GenerarQR from '@/components/GenerarQR.vue'
 import DetalleProducto from '@/components/DetalleProducto.vue';
 import FormularioNatural from '@/components/FormularioNatural.vue';
@@ -32,12 +32,16 @@ import Carnet from '@/components/CompClientes/Carnet.vue'
 import PrincipalAfiiadosVue from '@/views/Clientes/PrincipalAfiiados.vue'
 import MiCuentaVue from './Clientes/MiCuenta.vue';
 import CatalogoEventosVue from '@/components/CompClientes/CatalogoEventos.vue';
+import Punto from '@/components/CompAdm/Punto.vue'
+import FacturaAfiliacion from '@/components/CompClientes/FacturaAfiliacion.vue';
+import InventarioPrincipal from '@/components/CompAdm/InventarioPrincipal.vue';
+import InventarioVue from './Administrador/Inventario.vue';
 export default {
 
   name: 'HomeView',
-  components: {
-    GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,RegistrarProducto,TablaClientes,CrearRolVue,TablaRoles,prueba,Carrito,MetodoPagoOnline
-  ,PrincipalProducto,NavBar,PrincipalClientes,PrincipalProveedoresVue,NavbarC,Carnet,PrincipalAfiiadosVue,MiCuentaVue,PrincipalEventos,CatalogoEventosVue
+  components: {InventarioVue,
+    GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,RegistrarProducto,TablaClientes,CrearRolVue,TablaRoles,prueba,Carrito,MetodoPagoOnline,Home,FacturaAfiliacion
+  ,PrincipalProducto,NavBar,PrincipalClientes,PrincipalProveedoresVue,NavbarC,Carnet,PrincipalAfiiadosVue,MiCuentaVue,PrincipalEventos,CatalogoEventosVue,Punto,TablaHistoricoVue,InventarioPrincipal
   }
 }
 </script>

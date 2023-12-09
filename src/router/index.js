@@ -15,7 +15,8 @@ import PrincipalEventosC from '@/views/Clientes/PrincipalEventos.vue'
 import PrincipalPago from '@/views/Clientes/PrincipalPago.vue'
 import PrincipalProductoC from '@/views/Clientes/PrincipalProductos.vue'
 import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
-
+import Home from '@/views/Administrador/Home.vue'
+import Inventario from '@/views/Administrador/Inventario.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -94,6 +95,16 @@ const routes = [
     path: '/PrincipalCarrito',
     name: 'PrincipalCarrito',
     component: PrincipalCarrito
+  },
+  {
+    path: '/Home',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/Inventario',
+    name: 'Inventario',
+    component: Inventario
   },
 
 ]
