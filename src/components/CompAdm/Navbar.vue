@@ -13,6 +13,8 @@
                 <li><a href="#">Rol/Permiso</a></li>
                 <li><a href="#">Clientes</a></li>
                 <li><a href="#" @click="Inventario()">Inventario</a></li>
+                <li><a href="#" @click="Pedidos()">Pedidos</a></li>
+
            </ul>            
         </nav>
         <a class="btn" href="#"><button>Contact</button></a>
@@ -38,6 +40,10 @@
           Inventario() {
             if (this.$route.path!='/Inventario/')
             this.$router.push('/Inventario/');
+          },
+          Pedidos() {
+            if (this.$route.path!='/Pedidos/')
+            this.$router.push('/Pedidos/');
           },
        
        

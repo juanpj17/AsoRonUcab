@@ -11,15 +11,14 @@
                         
                       <form class="mb-3">
                         <div class="row">
-    
                         <div class=" col form-group form-floating mb-3">
-                           <input type="text" class="form-control rounded-2" id="nombre"  placeholder="nombre" v-model="nombre">
-                           <label for="nombre">  Denominacion Comercial</label> 
+                           <input type="text" class="form-control rounded-2" placeholder="nombre" v-model="nombre">
+                           <label>  Denominacion Comercial</label> 
                            <b-form-text  v-if=" !$v.nombre.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         </div>
                         <div class=" col form-group form-floating mb-3">
-                           <input type="text" class="form-control rounded-2" id="apellido"  placeholder="apellido" v-model="apellido">
-                           <label for="apellido" >Razon social</label> 
+                           <input type="text" class="form-control rounded-2"  placeholder="RazonSocial" v-model="apellido">
+                           <label>Razon social</label> 
                        
                       </div>
     
@@ -28,13 +27,13 @@
                     <div class="row">
     
                         <div class=" col form-group form-floating mb-3">
-                            <input type="text" class="form-control rounded-2" id="nombre"  placeholder="nombre" v-model="nombre">
-                            <label for="nombre"> Pagina web</label> 
+                            <input type="text" class="form-control rounded-2"  placeholder="PagWeb" v-model="nombre">
+                            <label> Pagina web</label> 
                              <b-form-text  v-if=" !$v.nombre.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         </div>
                         <div class=" col form-group form-floating mb-3">
-                             <input type="text" class="form-control rounded-2" id="apellido"  placeholder="apellido" v-model="apellido">
-                             <label for="apellido" > Capital Disponible</label> 
+                             <input type="text" class="form-control rounded-2"  placeholder="CapDip" v-model="apellido">
+                             <label > Capital Disponible</label> 
        
                         </div>
                     </div>
@@ -43,8 +42,8 @@
                           <div class="col form-group">
                             <label>Ej:314531181</label>
                               <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2" id="numDoc"  placeholder="numDoc" v-model="numDoc">
-                                  <label for="numDoc">Rif</label>
+                                  <input type="text" class="form-control rounded-2"  placeholder="rif" v-model="numDoc">
+                                  <label>Rif</label>
                                   <b-form-text  v-if=" !$v.numDoc.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                               </div>
                           </div>
@@ -52,14 +51,13 @@
 
 
 <div class="col form-group ">
-    <b-form-group label-for="tags-validation"  :state="state">
+    <b-form-group  >
       <b-form-tags
-        input-id="tags-validation"
         v-model="tags"
         tag-variant="dark"
         :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
         :tag-validator="tagValidator"
-        :state="state"
+        
         separator=" "
         placeholder="Ingrese sus numeros de telefono"
         style="background-color: rgb(237, 234, 234);"
@@ -75,14 +73,12 @@
   </div>
   -------------------------------
   <div class="col form-group ">
-    <b-form-group label-for="tags-validation"  :state="state">
+    <b-form-group >
       <b-form-tags
-        input-id="tags-validation"
         v-model="email"
         tag-variant="dark"
         :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
         :tag-validator="tagValidator"
-        :state="state"
         separator=" "
         placeholder="Ingrese sus Correos afiliados"
         style="background-color: rgb(247, 243, 243);"
@@ -101,23 +97,23 @@
 -------------------------------
                         <label>Debe estar en el rango de 6-15 caracteres</label>
                         <div class="form-floating mb-3">
-                           <input type="password" class="form-control rounded-2" id="floatingPassword"  placeholder="password" v-model="password">
-                           <label for="floatingPassword">Password</label>
+                           <input type="password" class="form-control rounded-2"   placeholder="password" v-model="password">
+                           <label >Password</label>
                            <b-form-text  v-if=" !$v.password.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         
                         </div>
       
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
+                              <b-form-select v-model="estado"  class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
                               </b-form-select>  
-                              <label for="estado">Seleccione</label>
+                              <label>Seleccione</label>
                                         <b-form-text  v-if="!$v.estado.required" class="form-floating mb-3" text-variant="danger"> Debe selecionar un estado</b-form-text >                
                             </div>
                           <div class="col form-group">
                               <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2" id="direccion"  placeholder="direccion" v-model="direccion">
-                                  <label for="direccion">Direccion</label>
+                                  <input type="text" class="form-control rounded-2"   placeholder="direccion" v-model="direccion">
+                                  <label >Direccion</label>
                                   <b-form-text  v-if=" !$v.direccion.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                               </div>
                           </div>
@@ -126,15 +122,15 @@
                         --------
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
+                              <b-form-select v-model="estado"   class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
                               </b-form-select>  
-                              <label for="estado">Seleccione</label>
+                              <label >Seleccione</label>
                                         <b-form-text  v-if="!$v.estado.required" class="form-floating mb-3" text-variant="danger"> Debe selecionar un estado</b-form-text >                
                             </div>
                           <div class="col form-group">
                               <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2" id="direccion"  placeholder="direccion" v-model="direccion">
-                                  <label for="direccion">Direccion</label>
+                                  <input type="text" class="form-control rounded-2"  placeholder="direccion" v-model="direccion">
+                                  <label>Direccion</label>
                                   <b-form-text  v-if=" !$v.direccion.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                               </div>
                           </div>

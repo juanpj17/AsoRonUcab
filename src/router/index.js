@@ -11,7 +11,6 @@ import PrincipalPago from '@/views/Clientes/PrincipalPago.vue'
 import PrincipalProducto from '@/views/Administrador/PrincipalProducto.vue'
 import PrincipalProductoC from '@/views/Clientes/PrincipalProductos.vue'
 
-import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
 import Home from '@/views/Administrador/Home.vue'
 import Inventario from '@/views/Administrador/Inventario.vue'
 
@@ -22,6 +21,7 @@ import RegistrarProductoView from '@/views/Administrador/RegistrarProductoView.v
 import TiendaFisica from '@/views/Administrador/TiendaFisica.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Pedidos from '@/views/Administrador/Pedidos.vue'
 
 
 Vue.use(VueRouter)
@@ -122,6 +122,12 @@ const routes = [
     path: '/TiendaFisica',
     name: 'TiendaFisica',
     component: TiendaFisica
+
+  },
+  {
+    path: '/Pedidos',
+    name: 'Pedidos',
+    component: Pedidos
 
   },
 

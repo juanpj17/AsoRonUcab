@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-<Home></Home>
-
-<MiCuentaVue></MiCuentaVue>
+<TiendaFisica></TiendaFisica>
+<FormularioJuridico></FormularioJuridico>
    </div>
 </template>
 
@@ -36,10 +35,14 @@ import Punto from '@/components/CompAdm/Punto.vue'
 import FacturaAfiliacion from '@/components/CompClientes/FacturaAfiliacion.vue';
 import InventarioPrincipal from '@/components/CompAdm/InventarioPrincipal.vue';
 import InventarioVue from './Administrador/Inventario.vue';
+import MisPedidosVue from '@/components/CompClientes/MisPedidos.vue';
+import PedidosVue from '@/components/CompAdm/Pedidos.vue';
+import TiendaFisica from './Administrador/TiendaFisica.vue';
 export default {
 
+
   name: 'HomeView',
-  components: {InventarioVue,
+  components: {InventarioVue,MisPedidosVue,PedidosVue,TiendaFisica,
     GenerarQR,DetalleProducto,FormularioNatural,FormularioJuridico,RegistrarProducto,TablaClientes,CrearRolVue,TablaRoles,prueba,Carrito,MetodoPagoOnline,Home,FacturaAfiliacion
   ,PrincipalProducto,NavBar,PrincipalClientes,PrincipalProveedoresVue,NavbarC,Carnet,PrincipalAfiiadosVue,MiCuentaVue,PrincipalEventos,CatalogoEventosVue,Punto,TablaHistoricoVue,InventarioPrincipal
   }

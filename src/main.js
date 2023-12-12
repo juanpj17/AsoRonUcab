@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import store from './store'
+import Venecodollar from "venecodollar"
 import Vuelidate from 'vuelidate'
 import VueAxios from 'vue-axios'
 import axios from 'axios'

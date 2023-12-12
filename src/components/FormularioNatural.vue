@@ -83,11 +83,10 @@
                                 <input 
                                   type="text" 
                                   class="form-control rounded-2 altura" 
-                                  id="numDoc"
-                                  placeholder="numDoc"
-                                  v-model="numDoc"
+                                  placeholder="ci"
+                                  v-model="ci"
                                 >
-                                <label for="numDoc">Cedula</label>
+                                <label>Cedula</label>
                                 <div style="height: 25px">
                                   <b-form-text  v-if=" !$v.numDoc.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text > 
                                 </div>
@@ -95,16 +94,15 @@
                         </div>
 
                         <div class="col form-group">
-                            <label style="color: gray; font-size: 16px">Ej:29919287</label>
+                            <label style="color: gray; font-size: 16px">Ej:314531193</label>
                             <div class="form-floating mb-3">
                                 <input 
                                   type="text" 
                                   class="form-control rounded-2 altura" 
-                                  id="numDoc"  
                                   placeholder="numDoc" 
-                                  v-model="numDoc"
+                                  v-model="rif"
                                 >
-                                <label for="numDoc">Rif</label>
+                                <label>Rif</label>
                                 <div style="height: 25px">
                                   <b-form-text  v-if=" !$v.numDoc.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                                 </div>
@@ -118,7 +116,7 @@
                               type="email" 
                               class="form-control rounded-2 altura" 
                               id="email"  
-                              placeholder="name@example.com"
+                              placeholder="correo"
                               v-model="email"
                             >
                            <label for="email">Email</label>
@@ -127,14 +125,13 @@
 
                       <div class="col form-group " style="color: white">
                         <label style="color: gray; font-size: 16px"> El teléfono debe tener entre 12 a 15 caracteres y empezar con 0.</label>
-                          <b-form-group label-for="tags-validation"  :state="state">
+                          <b-form-group label-for="tags-validation"  >
                             <b-form-tags
                               input-id="tags-validation"
                               v-model="tags"
                               tag-variant="dark"
                               :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
                               :tag-validator="tagValidator"
-                              :state="state"
                               separator=" "
                               placeholder="Ingrese sus números de teléfono"
                               style="background-color: var(--vinotinto); color:var(--carne)"
@@ -238,7 +235,7 @@ export default {
           sapellido:'',
           direccion:'',
           enviado:false,
-          tipDoc:'',
+         
           estado:'',
           tags: [],
         dirty: false
@@ -264,7 +261,6 @@ export default {
         snombre:{required,alpha},
         numDoc:{required,numeric, minLengthValue: minLength(7),maxLengthValue: maxLength(10),},
         direccion:{required},
-        tipDoc:{required},
         estado:{required},
         papellido:{required,alpha},
         sapellido:{required,alpha},
@@ -286,7 +282,7 @@ export default {
               if(!this.$v.numDoc.numeric){this.mensajeValidacion('Los documentos de identidad no aceptan letras ni caracteres especiales')}
               if(!this.$v.numDoc.minLengthValue){this.mensajeValidacion('Los documentos de identidad tienen minimo 6 numeros')}
               if(!this.$v.numDoc.maxLengthValue){this.mensajeValidacion('Los documentos de identidad tienen maximo 10 numeros')}
-              if(this.tipDoc==='V'&&this.numDoc.length>8){this.mensajeValidacion('La cedula de identidad tiene como maximo 8 digitos')}
+            
               if(!this.$v.password.minLengthValue){this.mensajeValidacion('El password debe tener tener minimo 6 caracteres y maximo 15')}
               if(!this.$v.password.maxLengthValue){this.mensajeValidacion('El password debe tener tener minimo 6 caracteres y maximo 15')}
             
