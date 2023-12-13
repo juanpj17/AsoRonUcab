@@ -80,45 +80,22 @@
       }, 2000);
       },
       async getMonitor() {
-        // https://bcv-api.deno.dev/v1/exchange
-        const api = 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/';
         try {
-          const response = await this.getContentPage(api);
-          const allMonitors = response['monitors'];
-          console.log(allMonitors)
-          const monitorData = allMonitors['bcv'];
-          console.log(monitorData.price);
-          this.orden=[];
-          console.log(this.orden);
-          this.orden.push({
-                      idProducto: 0,
-                      idCliente: 1,
-                      nombre: 0,
-                      precio: 1,
-                      nombreImagen: 0,
-                      stock: 1,
-                      cantidad: 1,
-                      total: 0,
-                  });
-          console.log(this.orden);
-          return monitorData;
-        } catch (error) {
-           console.error(`KeyError: ${error.message}`);
-        }
+            const instance = axios.create({
+                baseURL: 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/',
+                timeout: 1000,
+            });
+
+            const response = await instance.get();
+            const allMonitors = response.data['monitors'];
+            const bcvData = allMonitors['bcv'];
+            return bcvData.price;
+            } catch (error) {
+                console.error(error);
+                throw error; // Lanza el error para que se propague a quien llamó a la función.
+            }
       },
-      async getContentPage(url) {
-        try {
-          const response = await fetch(url);
-  
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        } catch (error) {
-          console.error(`Error fetching data: ${error.message}`);
-          throw error;
-        }
-      },
+
     }
   };
   

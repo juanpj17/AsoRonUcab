@@ -72,9 +72,7 @@
 </b-container>
 </template>
 <script>
-
-  import * as venecodollar from 'venecodollar';
-import { getDollarPrices } from 'venecodollar';
+    import axios from 'axios';
   export default {  
 
     data() {
@@ -94,28 +92,67 @@ import { getDollarPrices } from 'venecodollar';
       }
     },
 
-    create(){
-      this.getPrice();
+    created(){
+      this.getMonitor()
+        .then(price => {
+        console.log('Precio del dólar:', price);
+        })
+        .catch(error => {
+            console.error('Error al obtener el precio del dólar:', error);
+        });
     },
 
     methods:{
-      CrearOrden(){
-        let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
-        this.items.push(producto);
+        CrearOrden(){
+            let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
+            this.items.push(producto);
+        },
+
+      /*async getMonitor() {
+        try {
+            const instance = axios.create({
+                baseURL: 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/',
+                timeout: 1000,
+            });
+
+            const response = await instance.get();
+            const allMonitors = response.data['monitors'];
+            const bcvData = allMonitors['bcv'];
+            return bcvData.price;
+            } catch (error) {
+                console.error(error);
+                throw error; 
+            }
+      },*/
+
+        async getMonitor() {
+         // https://bcv-api.deno.dev/v1/exchange
+            const api = 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/';
+            try {
+                const response = await this.getContentPage(api);
+                const allMonitors = response['monitors'];
+                console.log(allMonitors)
+                const monitorData = allMonitors['bcv'];
+                console.log(monitorData.price);
+                this.orden=[];
+                console.log(this.orden);
+                this.orden.push({
+                      idProducto: 0,
+                      idCliente: 1,
+                      nombre: 0,
+                      precio: 1,
+                      nombreImagen: 0,
+                      stock: 1,
+                      cantidad: 1,
+                      total: 0,
+                });
+                console.log(this.orden);
+                return monitorData.price;
+            } catch (error) {
+                console.error(`KeyError: ${error.message}`);
+            }
       },
 
-      async  getDollar(){
-        try{
-          const response = await getDollarPrices()
-          return response
-        }catch(error){
-        console.log(error)
-      }
-     },
-      async getPrice(){
-        let price = await getDollar();
-        console.log(price)
-      }
   }
 }   
 </script>
