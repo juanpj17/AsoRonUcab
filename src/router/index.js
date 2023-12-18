@@ -22,8 +22,19 @@ import TiendaFisica from '@/views/Administrador/TiendaFisica.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Pedidos from '@/views/Administrador/Pedidos.vue'
-
-
+import PrincipalEmpleados from '@/views/Administrador/PrincipalEmpleados.vue'
+import PrincipalRegistroNatural from '@/views/Comunes/PrincipalRegistroNatural.vue'
+import PrincipalClientes from '@/views/Administrador/PrincipalClientes.vue'
+import PrincipalRegistroJuridico from '@/views/Comunes/PrincipalRegistroJuridico.vue'
+import PrincipalRoles from '@/views/Administrador/PrincipalRoles.vue'
+import Login from '@/views/Comunes/Login.vue'
+import  HomeAsoRon from '@/views/Comunes/HomeAsoRon.vue'
+import MisPedidos from '@/views/Clientes/MisPedidos.vue'
+import Compras from '@/views/Administrador/OrdenesDeCompra.vue'
+import RegistrarEvento from '@/views/Administrador/RegistrarEvento.vue'
+import ControlAccion from '@/views/Administrador/ControlAccion.vue'
+import PagarTiendaFisica from '@/views/Clientes/PagarTiendaFisica.vue'
+import PersonasContacto from '@/views/Clientes/PersonasDeContacto'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,7 +44,7 @@ const routes = [
     component: HomeView
   },
   {
-  path: '/DetalleProducto',
+  path: '/DetalleProducto/:tipoUsuario/:idProd',
    name: 'DetalleProducto',
   component: DetalleProducto
   },
@@ -43,7 +54,7 @@ const routes = [
     component: RegistrarProducto 
   },
   {
-    path: '/RegistrarProductoView',
+    path: '/RegistrarProductoView/:idProducto',
     name: 'RegistrarProductoView',
     component: RegistrarProductoView 
   },
@@ -78,12 +89,12 @@ const routes = [
     component: MiCuenta
   },
   {
-    path: '/PrincipalEventos',
+    path: '/PrincipalEventos/',
     name: 'PrincipalEventos',
     component: PrincipalEventos
   },
   {
-    path: '/PrincipalEventosC',
+    path: '/PrincipalEventosC/:tipoUsuario',
     name: 'PrincipalEventosC',
     component: PrincipalEventosC
   },
@@ -94,7 +105,7 @@ const routes = [
     component: PrincipalPago
   },
   {
-    path: '/PrincipalProductoC',
+    path: '/PrincipalProductoC/:tipoUsuario',
     name: 'PrincipalProductoC',
     component: PrincipalProductoC
   },
@@ -114,7 +125,7 @@ const routes = [
     name: 'Inventario',
     component: Inventario
   },{
-    path: '/AsignarRoles',
+    path: '/AsignarRoles/:id',
     name: 'AsignarRoles',
     component: AsignarRoles
   },
@@ -130,6 +141,79 @@ const routes = [
     component: Pedidos
 
   },
+  {
+    path: '/MisPedidos',
+    name: 'MisPedidos',
+    component: MisPedidos
+
+  },
+  {
+    path: '/PrincipalEmpleados',
+    name: 'PrincipalEmpleados',
+    component: PrincipalEmpleados
+  },
+  {
+    path: '/PrincipalRegistroNatural/:id/:tipoUsuario',
+    name: 'PrincipalRegistroNatural',
+    component:PrincipalRegistroNatural
+  },
+  {
+    path: '/PrincipalRegistroJuridico/:id/:tipoUsuario',
+    name: 'PrincipalRegistroJuridico',
+    component:PrincipalRegistroJuridico
+  },
+  {
+    path: '/PrincipalClientes',
+    name: 'PrincipalClientes',
+    component:PrincipalClientes
+  },
+  {
+    path: '/PrincipalRoles',
+    name: 'PrincipalRoles',
+    component:PrincipalRoles
+  },
+  
+  {
+    path: '/Login',
+    name: 'Login',
+    component:Login
+  },
+  {
+    path: '/HomeAsoRon/:registrado',
+    name: 'HomeAsoRon',
+    component:HomeAsoRon
+  },
+  
+  {
+    path: '/Compras/:id',
+    name: 'Compras',
+    component:Compras
+  },
+  {
+    path: '/RegistrarEvento/:id',
+    name: 'RegistrarEvento',
+    component:RegistrarEvento
+  },
+  {
+    path: '/ControlAccion',
+    name: 'ControlAccion',
+    component:ControlAccion
+  },
+  {
+    path: '/PagarTiendaFisica',
+    name: 'PagarTiendaFisica',
+    component:PagarTiendaFisica
+  },
+  {
+    path: '/PersonasContacto',
+    name: 'PersonasContacto',
+    component:PersonasContacto
+  },
+  
+  
+
+
+ 
 
   // *****dejar este de último*****
   {

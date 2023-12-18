@@ -5,9 +5,6 @@
         <CarnetVue style="display:flex;justify-content:center;align-items:center"></CarnetVue>
         <br>
         <TablaPagosAfiliadosVue></TablaPagosAfiliadosVue>
-        <br>
-        <b-button style="margin-right:30px">Realizar pago</b-button>
-        <b-button>Eliminar Afliacion</b-button>
     </div>
 </template>
 

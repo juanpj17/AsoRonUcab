@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-      <h1>Registro de Clientes </h1>
+      <h1>Auditoria </h1>
     <!-- User Interface controls -->
     <b-row>
       <b-col lg="6" class="my-1">
@@ -51,21 +51,9 @@
       
 
     </b-row>
-    <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg" @click="modalShow = !modalShow"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
-    
-    </div>
    
 
-<b-modal v-model="modalShow" size="lg" scrollable="true">
-  <template #modal-title>
-     <h2 >Seleccione el tipo de Cliente</h2>
-   </template>
-     <b-container><b-row>
-      <b-col><b-button size="lg" pill @click="RegistroNatural('*')">Natural</b-button></b-col>
-      <b-col><b-button size="lg" pill @click="RegistroJuridico('*')">Juridico</b-button></b-col>
-     </b-row></b-container>
-      
-</b-modal>
+
     <!-- Main table element -->
     <b-table
     id="table-transition-example"
@@ -87,19 +75,7 @@
 
     >
      <!-- Columna de acciones con botón de eliminar y modificar -->
-    <template #cell(actions)="row">
-      <b-button icon="delete" variant="danger" size="sm">
-        <i class="bi bi-trash-fill"></i> Eliminar
-      </b-button>
-
-      <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-      Detalles
-    </b-button>
-    <b-button size="sm" style="margin-left: 10px;" @click="Modificar(row.item.Codigo)" class="mr-1">
-      Modifiar
-    </b-button>
-   
-    </template>
+    
 <!-- Detalles del producto -->
 <template #row-details="row">
       <b-card>
@@ -120,85 +96,6 @@
         ></b-pagination>
     <!-- Info modal -->
      <!-- Info modal -->
-<b-modal v-model="mostrarModal" size="xl" scrollable>
-    <template #modal-title>
-     
-      <h2 >Detalles del empleado</h2>
-    </template>
-    <template #default>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Direccion fisica</th>
-                    <th v-if="tipoRegistro=='J'">Direccion fiscal </th>
-                   
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in infoModal" :key="item.age">
-                    <td>{{ item.Correo }} </td>
-                    <td v-if="tipoRegistro=='J'">{{ item.Direccion }} </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-bordered" >
-            <thead>
-                <tr>
-                    <th>Telefonos</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in infoTelefonos" :key="item.age">
-                    <td>{{ item }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Correos</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in infoTelefonos" :key="item.age">
-                    <td>{{ item }}</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <table  v-if="tipoRegistro=='J'" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Razon social</th> 
-                    <th>Pagina web</th> 
-                    <th>Capital</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in infoTelefonos" :key="item.age">
-                    <td>{{ item }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <p v-if="tipoRegistro=='J'">Personas de contacto</p>
-        <table  v-if="tipoRegistro=='J'" class="table table-bordered" title="Personas de contacto">
-            <thead>
-                <tr>
-                    <th>Nombre</th> 
-                    <th>Telefono</th> 
-                    <th>Correo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in infoTelefonos" :key="item.age">
-                    <td>{{ item }}</td>
-                </tr>
-            </tbody>
-        </table>
-        
-
-    </template>
-</b-modal>
 
   </b-container>
 </template>
@@ -212,9 +109,9 @@
         fields: [
         { key: 'Codigo', label: 'Codigo',sortable: true },
             { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center',sortable: true },
-            { key: 'Cedula', label: 'Cedula', class: 'text-center',sortable: true },
-            { key: 'Rif', label: 'Rif', class: 'text-center',sortable: true },
-            { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
+            { key: 'Accion', label: 'Accion', class: 'text-center',sortable: true },
+            { key: 'Tabla', label: 'Tabla', class: 'text-center',sortable: true },
+            { key: 'Fecha_hora', label: 'Fecha y hora de la accion', class: 'text-center',sortable: true },
         ],
         totalRows: 1,
         infoModal: [],
@@ -229,7 +126,7 @@
         transProps: {
         // Transition name
         name: 'flip-list',
-        sortBy: 'Codigo',
+        sortBy:'Codigo',
       },
       modalShow: false,
 
@@ -269,7 +166,7 @@
         this.currentPage = 1
       },
     LlenarTabla(){
-      this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
+      this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Accion:'Eliminar',Tabla:'Productos' },
           ]
     },
    RegistroNatural(id){

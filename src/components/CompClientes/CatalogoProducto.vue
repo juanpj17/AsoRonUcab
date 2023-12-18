@@ -10,7 +10,7 @@
             <h5 class="card-subtitle mb-2 mr-5 text-body-secondary">{{ producto.Presentacion }}</h5>
             <h5 class="card-subtitle mb-2 mr-5 text-body-secondary">{{ producto.Precio }} Bs</h5>
             <!-- Botón desplegable de opciones -->
-            <b-button href="#" variant="primary" @click="verMas()" >Ver mas</b-button>
+            <b-button href="#" variant="primary" @click="verMas(producto.Id)" >Ver mas</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -20,7 +20,9 @@
   <script>
   
   export default{
-
+    props:{
+      tipoUsuario:'',
+    },
   
       data(){
           return{
@@ -29,8 +31,8 @@
   
       }, 
          methods:{
-          verMas(){
-              this.$router.push('/DetalleProducto');
+          verMas(id){
+              this.$router.push('/DetalleProducto/'+this.tipoUsuario+'/'+id);
           },
          },
   

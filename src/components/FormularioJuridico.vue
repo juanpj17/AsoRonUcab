@@ -14,22 +14,17 @@
                         <div class=" col form-group form-floating mb-3">
                            <input type="text" class="form-control rounded-2" placeholder="nombre" v-model="nombre">
                            <label>  Denominacion Comercial</label> 
-                           <b-form-text  v-if=" !$v.nombre.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         </div>
                         <div class=" col form-group form-floating mb-3">
                            <input type="text" class="form-control rounded-2"  placeholder="RazonSocial" v-model="apellido">
                            <label>Razon social</label> 
-                       
                       </div>
-    
                     </div>
-
                     <div class="row">
     
                         <div class=" col form-group form-floating mb-3">
                             <input type="text" class="form-control rounded-2"  placeholder="PagWeb" v-model="nombre">
                             <label> Pagina web</label> 
-                             <b-form-text  v-if=" !$v.nombre.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         </div>
                         <div class=" col form-group form-floating mb-3">
                              <input type="text" class="form-control rounded-2"  placeholder="CapDip" v-model="apellido">
@@ -44,62 +39,57 @@
                               <div class="form-floating mb-3">
                                   <input type="text" class="form-control rounded-2"  placeholder="rif" v-model="numDoc">
                                   <label>Rif</label>
-                                  <b-form-text  v-if=" !$v.numDoc.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                               </div>
                           </div>
                         </div>
+                        <b-container>
+                            <b-row>
+                                
+                                <b-col cols="11"><p style="text-align: left;">Registrar telefonos</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click=" RegistrarTelefonos()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                              </b-row>
+                        </b-container> 
+                        <div v-for="(elemento, index) in telefonos" :key="index">
+                          <b-container style="margin-bottom: 10px;">
+                            <b-row>
+                              <b-col cols="11">
+                                  <div class="col form-group form-floating mb-2">
+                                   <b-input v-model="elemento.numero"></b-input>
+                                    <label>Ingrese el numero</label>
+                                  </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                            </b-row>
+                            </b-container>
+                            </div>
 
 
-<div class="col form-group ">
-    <b-form-group  >
-      <b-form-tags
-        v-model="tags"
-        tag-variant="dark"
-        :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
-        :tag-validator="tagValidator"
-        
-        separator=" "
-        placeholder="Ingrese sus numeros de telefono"
-        style="background-color: rgb(237, 234, 234);"
-      ></b-form-tags>
+  
+                          <b-container>
+                            <b-row>
+                                
+                                <b-col cols="11"><p style="text-align: left;">Registrar correos</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click=" RegistrarCorreo()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                              </b-row>
+                        </b-container> 
+                        <div v-for="(elemento, index) in correos" :key="index">
+                          <b-container style="margin-bottom: 10px;">
+                            <b-row>
+                              <b-col cols="11">
+                                  <div class="col form-group form-floating mb-2">
+                                   <b-input v-model="elemento.direccion"></b-input>
+                                    <label>Ingrese la direccion de correo electronico</label>
+                                  </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarCorreoSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                            </b-row>
+                            </b-container>
+                            </div>
 
-      <template #description>
-        <div id="tags-validation-help">
-         El telefono debe tener entre 12 a 15 caracteres.
-         Para registrar precione enter o espacio
-        </div>
-      </template>
-    </b-form-group>
-  </div>
-  -------------------------------
-  <div class="col form-group ">
-    <b-form-group >
-      <b-form-tags
-        v-model="email"
-        tag-variant="dark"
-        :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
-        :tag-validator="tagValidator"
-        separator=" "
-        placeholder="Ingrese sus Correos afiliados"
-        style="background-color: rgb(247, 243, 243);"
-      ></b-form-tags>
-
-      <template #description>
-        <div id="tags-validation-help">
-         El correo debe tener el siguiente formato 
-         Para registrar precione enter o espacio
-        </div>
-          <b-form-text  v-if=" !$v.email.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
-      </template>
-    </b-form-group>
-  </div>
-
--------------------------------
                         <label>Debe estar en el rango de 6-15 caracteres</label>
                         <div class="form-floating mb-3">
                            <input type="password" class="form-control rounded-2"   placeholder="password" v-model="password">
                            <label >Password</label>
-                           <b-form-text  v-if=" !$v.password.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         
                         </div>
       
@@ -108,37 +98,36 @@
                               <b-form-select v-model="estado"  class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
                               </b-form-select>  
                               <label>Seleccione</label>
-                                        <b-form-text  v-if="!$v.estado.required" class="form-floating mb-3" text-variant="danger"> Debe selecionar un estado</b-form-text >                
+                                                       
                             </div>
                           <div class="col form-group">
                               <div class="form-floating mb-3">
                                   <input type="text" class="form-control rounded-2"   placeholder="direccion" v-model="direccion">
                                   <label >Direccion</label>
-                                  <b-form-text  v-if=" !$v.direccion.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
+                                  
                               </div>
                           </div>
                         </div>
 
-                        --------
+                        
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
                               <b-form-select v-model="estado"   class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
                               </b-form-select>  
                               <label >Seleccione</label>
-                                        <b-form-text  v-if="!$v.estado.required" class="form-floating mb-3" text-variant="danger"> Debe selecionar un estado</b-form-text >                
+                                      
                             </div>
                           <div class="col form-group">
                               <div class="form-floating mb-3">
                                   <input type="text" class="form-control rounded-2"  placeholder="direccion" v-model="direccion">
                                   <label>Direccion</label>
-                                  <b-form-text  v-if=" !$v.direccion.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                               </div>
                           </div>
                         </div>
                     --------
 
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  v-on:click="validar" >Registrase</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  @click="RegistroNatural()" >Registrase</button>
                         </div>
                       </form>
 
@@ -148,12 +137,14 @@
         </section>
       </div>  
       </template>
-<script>
-import { required, minLength,maxLength,alpha,numeric,email} from 'vuelidate/lib/validators';
+<script>;
 export default {
-    data: function() {
+  props:{
+    id:''
+  },
+    data() {
       return {
-          email: [],
+          correos: [],
           password: '',
           nombreCompleto:'',
           numDoc:'',
@@ -163,73 +154,50 @@ export default {
           estado:'',
           nombre:'',
           apellido:'',
-          tags: [],
-          
-        dirty: false
+          telefonos:[]
 
 
         }
       },
-      computed: {
-      
-    },
-    watch: {
-      tags(newValue, oldValue) {
-        // Set the dirty flag on first change to the tags array
-        this.dirty = true
-      }
-    },
+      created(){
+       this.RegistrarCorreo()
+       this.RegistrarTelefonos() 
+      },
     
-    validations: {
+    
+     
         
-        email: { required,email},
-        password: { required,  minLengthValue: minLength(6),maxLengthValue: maxLength(15), },
-        nombre:{required,alpha},
-        numDoc:{required,numeric, minLengthValue: minLength(7),maxLengthValue: maxLength(10),},
-        direccion:{required},
-        tipDoc:{required},
-        estado:{required},
-        apellido:{required,alpha},
-        ClienteEncontrado:'',
-    },
     methods: {
-        validar(){
-          this.buscarClienteEnServidor();
-          if(this.ClienteEncontrado.length!=0){this.mensajeValidacion('El correo ingresado ya se encuentra registrado')}
-            if (this.$v.$invalid || (this.tipDoc==='V'&&this.numDoc.length>8)|| this.ClienteEncontrado.length!=0) {
-              if(this.email==''||this.password==''||this.nombre==''||this.numDoc==''||this.direccion==''||this.tipDoc==''||this.estado==''||this.apellido=='')
-                {this.mensajeValidacion('Hay campos vacios') }
-              if(!this.$v.email.email){this.mensajeValidacion(`Formato de correo invalido. 
-                Ejemplo de formato: ejemplo@gmail.com `)}
-              if(!this.$v.nombre.alpha){this.mensajeValidacion('Los nombres no aceptan caracteres especiales,numeros ni espacios en blanco')}
-              if(!this.$v.apellido.alpha){this.mensajeValidacion('Los apellidos no aceptan caracteres especiales,numeros ni espacios en blanco')}
-              if(!this.$v.numDoc.numeric){this.mensajeValidacion('Los documentos de identidad no aceptan letras ni caracteres especiales')}
-              if(!this.$v.numDoc.minLengthValue){this.mensajeValidacion('Los documentos de identidad tienen minimo 6 numeros')}
-              if(!this.$v.numDoc.maxLengthValue){this.mensajeValidacion('Los documentos de identidad tienen maximo 10 numeros')}
-              if(this.tipDoc==='V'&&this.numDoc.length>8){this.mensajeValidacion('La cedula de identidad tiene como maximo 8 digitos')}
-              if(!this.$v.password.minLengthValue){this.mensajeValidacion('El password debe tener tener minimo 6 caracteres y maximo 15')}
-              if(!this.$v.password.maxLengthValue){this.mensajeValidacion('El password debe tener tener minimo 6 caracteres y maximo 15')}
-            
-              return;
-            }
-            else
-            {this.crear();}
-        },
+       RegistroNatural(){
+        if (this.$route.path!='/PrincipalRegistroNatural/*/*')
+           this.$router.push('/PrincipalRegistroNatural/*/*');
+       },
         
-            mensaje(){
-              Swal.fire('Usted se ha registrado con exito')
-            },
-            mensajeValidacion(mensaje){
-              Swal.fire({
-              icon: 'error',
-              title: 'Error de registro',
-              text: mensaje,})
-            },
             
-            tagValidator(tag) {
-        // Individual tag validator function
-        return tag === tag.toLowerCase() && tag.length > 10 && tag.length < 16
+            RegistrarTelefonos(){
+      this.telefonos.push({ numero: ''});
+      },
+      EliminarTelefonoSeleccionado(indice){
+      this.telefonos.forEach((elemento,index) => { 
+          if (indice==index){
+             this.telefonos.splice(index,1)
+          }
+      })
+
+      },
+      RegistrarCorreo(){
+      this.correos.push({ direccion: ''});
+      },
+
+      EliminarCorreoSeleccionado(indice){
+      this.correos.forEach((elemento,index) => { 
+          if (indice==index){
+             this.correos.splice(index,1)
+          }
+      })
+
       }
+         
                
     },
     

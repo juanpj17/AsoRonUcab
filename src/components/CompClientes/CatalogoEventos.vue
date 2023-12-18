@@ -35,7 +35,9 @@
 <script>
     import Vue from 'vue'; 
     export default{
-    
+        props:{
+        tipUsuario:''
+    },
 
         data(){
             return{
@@ -54,13 +56,27 @@ selected: null,
         value: 50
             }
         }, 
+        created(){
+          console.log(this.tipUsuario)
+        },
 
        
         
         methods:{
             Pagar(){
-                this.$router.push('/PrincipalPago');
+                if(this.tipUsuario!='*')
+                {   console.log (this.tipoUsuario)
+                    this.$router.push('/PrincipalPago');}
+                else
+                 this.Advertencia()
             },
+            Advertencia(){
+                Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Para realizar la compra debe Iniciar Sesion",
+});
+            }
 
              
 

@@ -2,80 +2,54 @@
     <header class="header">
          <div class="logo">
             
-    
-  
-
-
-
-
-
-
-
              <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
          </div>
          <nav >
             <ul class="nav-links">
                  <li><a class="text" @click="PrincipalProducto()" >Productos</a></li>
                  <li><a class="text" @click="PrincipalEventosC()" >Eventos</a></li>
-                 <li><a class="text" @click="MisPedidos()">Mis Pedidos</a></li>
-                 <li><a class="text" @click="Carrito()" >Carrito</a></li>
             </ul>            
          </nav>
-
          <a class="btn" href="#">
             <b-dropdown text="Cuenta">
-                 <b-dropdown-item @click="MiCuenta()">Mi cuenta</b-dropdown-item>
-                 <b-dropdown-item @click="PersonasContacto()">Personas de Contacto</b-dropdown-item>
-                 <b-dropdown-item @click="PrincipalAfiliados()">Afiliacion</b-dropdown-item>
-                <b-dropdown-item v-b-modal.modal-1 >Cerrar sesion</b-dropdown-item>
-                
+                 <b-dropdown-item @click="Login()">Iniciar sesion</b-dropdown-item>
+                <b-dropdown-item v-b-modal.modal-1 > Registrase</b-dropdown-item>
+                <b-modal id="modal-1" title="Seleccione el tipo de persona" scrollable="true">
+                <b-button style="margin-right: 20px;" variant="dark" @click="RegistroNatural()">Natural</b-button>  
+                <b-button variant="dark" @click="RegistroJuridico()">Juridico</b-button>
+                </b-modal>
             </b-dropdown>
-         </a>
+            
+        </a>
      </header
      >
+     
  </template>
  <script>
-
-
    
    export default{
           methods:{
            PrincipalProducto() {
-             if (this.$route.path!='/PrincipalProductoC/$')
-             this.$router.push('/PrincipalProductoC/$');
+             if (this.$route.path!='/PrincipalProductoC/*')
+             this.$router.push('/PrincipalProductoC/*');
            },
            PrincipalEventosC() {
-             if (this.$route.path!='/PrincipalEventosC/$')
-             this.$router.push('/PrincipalEventosC/$');
+             if (this.$route.path!='/PrincipalEventosC/*')
+             this.$router.push('/PrincipalEventosC/*');
            },
-           TiendaFisica() {
-             if (this.$route.path!='/TiendaFisica/')
-             this.$router.push('/TiendaFisica/');
-           },
-           AsignarRoles() {
-             if (this.$route.path!='/AsignarRoles/')
-             this.$router.push('/AsignarRoles/');
-           },
-           PrincipalAfiliados() {
-             if (this.$route.path!='/PrincipalAfiliados/')
-             this.$router.push('/PrincipalAfiliados/');
-           },
-           MiCuenta() {
-             if (this.$route.path!='/MiCuenta/')
-             this.$router.push('/MiCuenta/');
-           },
-           Carrito() {
-             if (this.$route.path!='/PrincipalCarrito/')
-             this.$router.push('/PrincipalCarrito/');
-           },
-           MisPedidos() {
-             if (this.$route.path!='/MisPedidos/')
-             this.$router.push('/MisPedidos/');
-           },
-           PersonasContacto() {
-             if (this.$route.path!='/PersonasContacto/')
-             this.$router.push('/PersonasContacto/');
-           },
+          Login(){
+            if (this.$route.path!='/Login/')
+             this.$router.push('/Login/');
+           
+          },
+          RegistroNatural(){
+            if (this.$route.path!='/PrincipalRegistroNatural/*/*')
+           this.$router.push('/PrincipalRegistroNatural/*/*');
+   },
+   RegistroJuridico(){
+    if (this.$route.path!='/PrincipalRegistroJuridico/*/*')
+           this.$router.push('/PrincipalRegistroJuridico/*/*');
+   },
         
         
           },

@@ -1,21 +1,20 @@
 <template>
     <div>
 <navbar></navbar>
- <PrincipalEventoVue></PrincipalEventoVue>
+ <RegistrarEvento></RegistrarEvento>
       
     </div>
 </template>
 
 <script>
 import Navbar from '../../components/CompAdm/Navbar.vue';
+import RegistrarEvento from '@/components/CompAdm/RegistrarEvento.vue';
 
-
-import PrincipalEventoVue from '@/components/CompAdm/PrincipalEvento.vue';
 
 export default{
     components:{
   
-   Navbar,PrincipalEventoVue
+   Navbar,RegistrarEvento
 }
 }
 </script>

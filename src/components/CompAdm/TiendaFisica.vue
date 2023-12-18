@@ -57,13 +57,13 @@
     <b-col></b-col>
     
     <b-col><b-button v-b-modal.modal-center>Canjear</b-button></b-col>
-    <b-col ><b-button> Canjear</b-button></b-col>
+    <b-col ><b-button @click="Pagar()"> Pagar</b-button></b-col>
 
   <b-modal id="modal-center" centered title="Canjear puntos">
     <b-input-group prepend="Cantidad" class="mt-3">
-         <b-form-input></b-form-input>
+         <b-form-input v-model="canjear"></b-form-input>
            <b-input-group-append>
-              <b-button variant="info">Canjear</b-button>
+              <b-button variant="info">Aceptar</b-button>
           </b-input-group-append>
         </b-input-group>
   </b-modal>
@@ -84,13 +84,14 @@ import { getDollarPrices } from 'venecodollar';
         telf:'04145767916',
         Direccion:'Caracas',
         puntos:22,
-        total:'40',
+        total:'falta poner la api aqui',
         items: [],
         fields: [
           { key: 'Nombre', label: 'Nombre', },
           { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
           { key: 'Precio', label: 'Precio', class: 'text-center' },
         ],
+        canjear:'',
       }
     },
 
@@ -102,6 +103,10 @@ import { getDollarPrices } from 'venecodollar';
       CrearOrden(){
         let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
         this.items.push(producto);
+      },
+      Pagar(){
+        if (this.$route.path!='/PagarTiendaFisica')
+             this.$router.push('/PagarTiendaFisica');
       },
 
       async  getDollar(){

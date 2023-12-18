@@ -1,21 +1,19 @@
 <template>
     <div>
 <navbar></navbar>
- <PrincipalEventoVue></PrincipalEventoVue>
-      
+        <PrincipalClientes></PrincipalClientes>
     </div>
 </template>
 
 <script>
 import Navbar from '../../components/CompAdm/Navbar.vue';
+import PrincipalClientes from '@/components/CompAdm/PrincipalClientes.vue';
 
-
-import PrincipalEventoVue from '@/components/CompAdm/PrincipalEvento.vue';
 
 export default{
     components:{
   
-   Navbar,PrincipalEventoVue
+   PrincipalClientes,Navbar
 }
 }
 </script>

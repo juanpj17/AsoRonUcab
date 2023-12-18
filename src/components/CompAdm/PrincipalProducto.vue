@@ -5,7 +5,7 @@
      
       <b-button block variant="primary" @click="RegistrarProducto()">Registrar nuevo producto</b-button>
       <b-row class="mt-5">
-        <b-col cols="12" md="3" v-for="producto in Productos" :key="producto.id">
+        <b-col cols="12" md="3" v-for="producto in Productos" :key="producto.Id">
           <b-card style="max-width: 20rem;margin-left: 10PX;" class="mb-2">
             <img :src="producto.Imagen" class="card-img-top">
             <b-card-title><h3>{{ producto.Nombre }}</h3></b-card-title>
@@ -16,7 +16,7 @@
               <template #button-content>
                 <b-icon icon="gear-fill"></b-icon>
               </template>
-              <b-dropdown-item @click="enviarID(producto.id)">Modificar</b-dropdown-item>
+              <b-dropdown-item @click="RegistrarProducto(producto.Id)">Modificar</b-dropdown-item>
               <b-dropdown-item >Eliminar</b-dropdown-item>
               <b-dropdown-item @click="RegistrarPremio()" >Agregar Premio</b-dropdown-item>
               <b-dropdown-item @click="RegistrarNotaCata()">Agregar nota de cata</b-dropdown-item>
@@ -41,14 +41,8 @@
   
       }, 
          methods:{
-          
-        
-  
-          enviarID(id) {
-            this.$router.push('/ModificarProductoView/' + id);
-          },
-          RegistrarProducto() {
-            this.$router.push('/RegistrarProductoView/');
+          RegistrarProducto(id) {
+            this.$router.push('/RegistrarProductoView/'+id);
           },
           RegistrarPremio(){
             this.$router.push('/RegistrarPremio/');

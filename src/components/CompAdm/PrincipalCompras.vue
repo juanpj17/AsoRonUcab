@@ -60,7 +60,6 @@
         :per-page="perPage"
         :filter="filter"
         :filter-included-fields="filterOn"
-        :sort-by.sync="sortBy"
         hover
         outlined
         stacked="md"
@@ -73,7 +72,7 @@
       >
       <template #cell(actions)="row">
     <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Mas info
+        Detalles
       </b-button>
       
       </template>
@@ -89,7 +88,7 @@
 
  <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
       <template #modal-title>
-        <h3>Detalles del pedido</h3>
+        <h3 >Detalles del pedido</h3>
       </template>
       <template #default>
           <table class="table table-bordered">
@@ -109,22 +108,21 @@
                   </tr>
               </tbody>
           </table>
-          <p>Metodos de pago utilizados</p>
           <table class="table table-bordered">
               <thead>
                   <tr>
-                      <th>Metodo de pago</th>
-                      <th>Monto Cancelado</th>
+                      <th>Estatus</th>
+                      <th>Fecha y Hora</th>
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
+                      <td>{{ item.Estatus}}</td> 
+                      <td>{{ item.Fecha_Hora}}</td>
                   </tr>
               </tbody>
           </table>
-         
+         <b-button>Actualizar estatus</b-button>
 
       </template>
   </b-modal>
@@ -153,7 +151,8 @@
           items: [
           ],
           fields: [
-          { key: 'Codigo', label: 'Codigo',sortable: true  },
+            { key: 'id', label: 'Codigo del pedido',sortable: true  },
+            { key: 'idCliente', label: 'Codigo del Proveedor',sortable: true  },
             { key: 'Fecha', label: 'Fecha de compra', class: 'text-center',sortable: true  },
             { key: 'Total', label: 'Total', class: 'text-center',sortable: true  },
             { key: 'Estatus', label: 'Estatus', class: 'text-center',sortable: true  },
@@ -172,7 +171,6 @@
         },
         infoModal: [],
         mostrarModal:false,
-        sortBy: 'Codigo',
 
          
         }
@@ -204,10 +202,18 @@
         },
       LlenarTabla(){
         this.items=[
-        {Codigo:3,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
+        {id:3,idCliente:1,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
        ]
       },
-      
+      decreaseStock(item) {
+          if (item.stock > 0) {
+            item.stock--;
+          }
+        },
+        increaseStock(item) {
+          item.stock++;
+          
+        },
         info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
               this.infoModal = [item];

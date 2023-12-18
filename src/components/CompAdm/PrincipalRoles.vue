@@ -50,7 +50,7 @@
         
   
       </b-row>
-  
+      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
       <!-- Main table element -->
       <b-table
       id="table-transition-example"
@@ -60,10 +60,10 @@
         :per-page="perPage"
         :filter="filter"
         :filter-included-fields="filterOn"
-        :sort-by.sync="sortBy"
+        
         hover
         outlined
-        stacked="md"
+        
         show-empty
         small
         @filtered="onFiltered"
@@ -72,10 +72,9 @@
 
       >
       <template #cell(actions)="row">
-    <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Mas info
-      </b-button>
-      
+    <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">Detalles</b-button>
+    <b-button size="sm" style="margin-left: 10px;" class="mr-1" @click="AsignarRoles(row.item.id)">Modificar</b-button>
+    <b-button size="sm" style="margin-left: 10px;" class="mr-1">Eliminar</b-button>
       </template>
         <template #row-details="row">
           <b-card>
@@ -87,45 +86,38 @@
       </b-table>
  <!-- Info modal -->
 
- <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
+ <b-modal v-model="mostrarModal"  id="modal-xl" size="xl"  scrollable>
       <template #modal-title>
-        <h3>Detalles del pedido</h3>
+        <h3>Detalles del rol</h3>
       </template>
       <template #default>
           <table class="table table-bordered">
               <thead>
                   <tr>
-                      <th>Nombre</th>
-                      <th>Cantidad</th>
-                      <th>Precio Unitario</th>
+                      <th>Descripcion</th>
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
-                      <td>{{ item.Precio}}</td> 
-
+                      <td>{{ item.Descripcion}}</td> 
                   </tr>
               </tbody>
           </table>
-          <p>Metodos de pago utilizados</p>
+          <p>Permisos asignados</p>
           <table class="table table-bordered">
               <thead>
                   <tr>
-                      <th>Metodo de pago</th>
-                      <th>Monto Cancelado</th>
+                      <th>Descripcion</th>
+                      <th>Accion</th>
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
+                      <td>{{ item.Descripcion}}</td> 
+                      <td>{{ item.Accion}}</td>
                   </tr>
               </tbody>
           </table>
-         
-
       </template>
   </b-modal>
 
@@ -153,11 +145,9 @@
           items: [
           ],
           fields: [
-          { key: 'Codigo', label: 'Codigo',sortable: true  },
-            { key: 'Fecha', label: 'Fecha de compra', class: 'text-center',sortable: true  },
-            { key: 'Total', label: 'Total', class: 'text-center',sortable: true  },
-            { key: 'Estatus', label: 'Estatus', class: 'text-center',sortable: true  },
-            { key: 'actions', label: 'Detalles', class: 'text-center' },
+            { key: 'id', label: 'Codigo del rol',sortable: true  },
+            { key: 'Nombre', label: 'Nombre de rol',sortable: true  },
+            { key: 'actions', label: 'Opciones', class: 'text-center' },
 
           ],
           totalRows: 1,
@@ -172,7 +162,6 @@
         },
         infoModal: [],
         mostrarModal:false,
-        sortBy: 'Codigo',
 
          
         }
@@ -204,16 +193,20 @@
         },
       LlenarTabla(){
         this.items=[
-        {Codigo:3,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
+        {id:3,idCliente:1,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
        ]
       },
-      
         info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
               this.infoModal = [item];
               this.mostrarModal = true;
               this.modficarN=item
           },
+          AsignarRoles(id){
+            if (this.$route.path!='/AsignarRoles/')
+            this.$router.push('/AsignarRoles/' + id);
+          },
+          
 
       }
     }

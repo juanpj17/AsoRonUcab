@@ -1,15 +1,10 @@
 <template>
-    <div>
-  <b-card no-body>
-    
-        <b-container fluid class="principal">
-    <br>
-    <h1>Pagos registrados</h1>
+  <b-container fluid>
+    <!-- User Interface controls -->
     <b-row>
-      <!-- Filtro -->
-      <b-col lg="4" class="my-1">
+      <b-col lg="6" class="my-1">
         <b-form-group
-          label="Filtro"
+          label="Filter"
           label-for="filter-input"
           label-cols-sm="3"
           label-align-sm="right"
@@ -25,45 +20,78 @@
             ></b-form-input>
 
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''" variant="info">Borrar</b-button>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
+    </b-row>
+      
+    <b-row>
+      <b-col></b-col>
+      <b-col></b-col>
+      <b-col class="my-1" >
+        <b-form-group
+          label="Max de filas"
+          label-for="per-page-select"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+          
+        >
+          <b-form-select
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+    
+      
 
     </b-row>
-    <br>
-    <br>
-    <b-button pill class="boton" size="lg"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
-    <!-- Tabla principal -->
+
+    <!-- Main table element -->
+    <b-row style="margin-bottom: 15px; text-align: left;">
+      <b-col cols="3">
+        <div>
+    <b-button-group>
+      <b-button variant="outline-primary" @click="MetodosPago()">
+        <b-icon icon="cash-coin"></b-icon> Pagar Mensualidad
+      </b-button>
+      <b-button variant="outline-primary">
+        <b-icon icon="trash"></b-icon> Eliminar Afiliacion
+      </b-button>
+    </b-button-group>
+  </div>
+      </b-col>
+    </b-row>
+    
     <b-table
-      :items="ejemplo"
+    id="table-transition-example"
+      :items="items"
       :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
       :filter="filter"
       :filter-included-fields="filterOn"
+      :sort-by.sync="sortBy"
+      hover
+      outlined
       stacked="md"
       show-empty
       small
       @filtered="onFiltered"
-      hover
-      sticky-header
-      head-variant="light"
+      primary-key="id"
+      :tbody-transition-props="transProps"
+
     >
-
-     
-
-      <!-- Columna de acciones con botón de eliminar y modificar -->
-      <template #cell(actions)="row">
-        <b-button icon="delete" @click="eliminar(row.item)" variant="danger" size="sm">
-          <i class="bi bi-trash-fill"></i> Eliminar
-        </b-button>
-      </template>
-
-      
-
-
-
-      <!-- Detalles del producto -->
+    <template #cell(actions)="row">
+  <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
+      Mas info
+    </b-button>
+    
+    </template>
       <template #row-details="row">
         <b-card>
           <ul>
@@ -72,21 +100,51 @@
         </b-card>
       </template>
     </b-table>
+<!-- Info modal -->
 
-</b-container>
+<b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
+    <template #modal-title>
+      <h3>Detalles del pedido</h3>
+    </template>
+    <template #default>
+        <p>Metodos de pago utilizados</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Metodo de pago</th>
+                    <th>Monto Cancelado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in infoModal" :key="item.id">
+                    <td>{{ item.Nombre}}</td> 
+                    <td>{{ item.Cantidad}}</td> 
+                </tr>
+            </tbody>
+        </table>
+       
 
+    </template>
+</b-modal>
 
-   
-  </b-card>
-</div>
+    
+    <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          class="my-0"
+          align="fill"
+          size="sm"
+        ></b-pagination>
+    <!-- Info modal -->
+    
+  </b-container>
 </template>
 <script>
   export default {
     data() {
       return {
-        elementos:[],
-        selected: null,
-        ejemplo:[
+        items:[
               { Fecha_Pago:'21/2/2022',Mes_cancelado:'Febrero',Monto_cancelado:2000 },
               { Fecha_Pago:'21/3/2022',Mes_cancelado:'Marzo',Monto_cancelado:2000 },
               { Fecha_Pago:'21/3/2022',Mes_cancelado:'Marzo',Monto_cancelado:2000 },
@@ -94,21 +152,26 @@
               
           ],
           fields: [
-              { key: 'Fecha_Pago', label: 'Fecha del pago', },
-              { key: 'Mes_cancelado', label: 'Mes cancelado', class: 'text-center' },
-              { key: 'Monto_cancelado', label: 'Monto cancelado', class: 'text-center' },
-             
+          { key: 'Codigo', label: 'Codigo',sortable: true },
+              { key: 'Fecha_Pago', label: 'Fecha del pago',sortable: true },
+              { key: 'Mes_cancelado', label: 'Mes cancelado', class: 'text-center',sortable: true },
+              { key: 'Monto_cancelado', label: 'Monto cancelado', class: 'text-center',sortable: true },
               { key: 'actions', label: 'Opciones', class: 'text-center' },
              
           ],
-        totalRows: 1,
-        currentPage: 1,
-        perPage: 3,
-        filter: null,
-        filterOn: [],
+          totalRows: 1,
+          currentPage: 1,
+          perPage: 5,
+          pageOptions: [5, 10, 15],
+          filter: null,
+          filterOn: [],
+          transProps: {
+          // Transition name
+          name: 'flip-list'
+        },
+        infoModal: [],
         mostrarModal:false,
-        texto:'',
-        modficarN:'',
+        sortBy: 'Codigo',
 
         
       }
@@ -128,24 +191,22 @@
       this.totalRows = this.items.length
     },
     methods: {
-        agregarElemento() {
-        this.elementos.push({texto:'',selected:''})
-      },
-      guardarInformacion() {
-        console.log(this.elementos)
-      },
-      
-
       onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
-      Modificar(){
-        const resultado = this.ejemplo.find((nota) => nota.Codigo === this.modficarN.Codigo);
-        console.log(resultado)
-        resultado.Descripcion=this.texto;
+      info(item) {
+              // Puedes actualizar infoModal con los detalles del pedido específico
+              this.infoModal = [item];
+              this.mostrarModal = true;
+              this.modficarN=item
+          },
+      MetodosPago(){
+        this.$router.push('/PrincipalPago')
       }
+
+      
     },
     
   }

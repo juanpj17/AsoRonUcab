@@ -1,5 +1,6 @@
 <template>
     <b-container fluid>
+        <h1>Registro de empleados</h1>
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">
@@ -50,7 +51,9 @@
         
   
       </b-row>
-  
+      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="RegistrarEmpleado()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
+      </div>
+     
       <!-- Main table element -->
       <b-table
       id="table-transition-example"
@@ -71,65 +74,29 @@
         :tbody-transition-props="transProps"
 
       >
+       <!-- Columna de acciones con botón de eliminar y modificar -->
       <template #cell(actions)="row">
-    <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Mas info
+        <b-button icon="delete" variant="danger" size="sm">
+          <i class="bi bi-trash-fill"></i> Eliminar
+        </b-button>
+
+        <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
+        Detalles
       </b-button>
-      
+      <b-button size="sm" style="margin-left: 10px;" @click="RegistrarEmpleado()" class="mr-1">
+        Modifiar
+      </b-button>
+     
       </template>
-        <template #row-details="row">
-          <b-card>
-            <ul>
-              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-            </ul>
-          </b-card>
-        </template>
+<template #row-details="row">
+        <b-card>
+          <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul>
+        </b-card>
+      </template>
+
       </b-table>
- <!-- Info modal -->
-
- <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
-      <template #modal-title>
-        <h3>Detalles del pedido</h3>
-      </template>
-      <template #default>
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
-                      <th>Nombre</th>
-                      <th>Cantidad</th>
-                      <th>Precio Unitario</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
-                      <td>{{ item.Precio}}</td> 
-
-                  </tr>
-              </tbody>
-          </table>
-          <p>Metodos de pago utilizados</p>
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
-                      <th>Metodo de pago</th>
-                      <th>Monto Cancelado</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
-                  </tr>
-              </tbody>
-          </table>
-         
-
-      </template>
-  </b-modal>
-
-      
       <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -138,29 +105,68 @@
             align="fill"
             size="sm"
           ></b-pagination>
-      <!-- Info modal -->
-      
+  <b-modal v-model="mostrarModal" size="lg" scrollable>
+      <template #modal-title>
+       
+        <h2>Detalles del empleado</h2>
+      </template>
+      <template #default>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Rif</th>
+                      <th>Correo</th>
+                      <th>Direccion</th>
+                     
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="item in infoModal" :key="item.age">
+                      <td>{{ item.Rif }}</td>
+                      <td>{{ item.Correo }} </td>
+                      <td>{{ item.Direccion }} </td>
+                  </tr>
+              </tbody>
+          </table>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Telefonos</th>
+                     
+                     
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="item in infoTelefonos" :key="item.age">
+                      <td>{{ item }}</td>
+                      
+                  </tr>
+              </tbody>
+          </table>
+          
+
+      </template>
+  </b-modal>
     </b-container>
   </template>
   
   <script>
     export default {
-      props:{
-        tipo_historico:'',
-      },
       data() {
         return {
           items: [
           ],
           fields: [
           { key: 'Codigo', label: 'Codigo',sortable: true  },
-            { key: 'Fecha', label: 'Fecha de compra', class: 'text-center',sortable: true  },
-            { key: 'Total', label: 'Total', class: 'text-center',sortable: true  },
-            { key: 'Estatus', label: 'Estatus', class: 'text-center',sortable: true  },
-            { key: 'actions', label: 'Detalles', class: 'text-center' },
-
+              { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center',sortable: true  },
+              { key: 'Cedula', label: 'Cedula', class: 'text-center',sortable: true  },
+              { key: 'Rol', label: 'Rol', class: 'text-center', sortable: true },
+              { key: 'actions', label: 'Opciones', class: 'text-center', sortable: true },
           ],
           totalRows: 1,
+          infoModal: [],
+          infoTelefonos:[],
+          mostrarModal:false,
           currentPage: 1,
           perPage: 5,
           pageOptions: [5, 10, 15],
@@ -168,11 +174,9 @@
           filterOn: [],
           transProps: {
           // Transition name
-          name: 'flip-list'
+          name: 'flip-list',
+          sortBy: 'Codigo',
         },
-        infoModal: [],
-        mostrarModal:false,
-        sortBy: 'Codigo',
 
          
         }
@@ -197,23 +201,31 @@
         this.totalRows = this.items.length
       },
       methods: {
+        info(item) {
+              // Puedes actualizar infoModal con los detalles del pedido específico
+              this.infoModal = [item];
+              this.infoTelefonos=[1,2,3]
+              this.mostrarModal = true;
+            
+          },
         onFiltered(filteredItems) {
           // Trigger pagination to update the number of buttons/pages due to filtering
           this.totalRows = filteredItems.length
           this.currentPage = 1
         },
       LlenarTabla(){
-        this.items=[
-        {Codigo:3,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
-       ]
+        this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
+        { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+        ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+      ]
+      },
+      RegistrarEmpleado(){
+         
+             if (this.$route.path!='/PrincipalRegistroNatural/')
+             this.$router.push('/PrincipalRegistroNatural/');
+           
       },
       
-        info(item) {
-              // Puedes actualizar infoModal con los detalles del pedido específico
-              this.infoModal = [item];
-              this.mostrarModal = true;
-              this.modficarN=item
-          },
 
       }
     }

@@ -1,5 +1,8 @@
-<template>
-    <b-container fluid>
+<template >
+    <b-container fluid style="background-color: #F6F1F1; "  >
+      <div style="background-color: #56070C;">
+        <h3 style="color: #F6F1F1;">REGISTRO DE PEDIDOS</h3>
+      </div>
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">
@@ -86,9 +89,9 @@
       </b-table>
  <!-- Info modal -->
 
- <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" >
+ <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
       <template #modal-title>
-        <h3 style="margin-top: 450px;">Detalles del pedido</h3>
+        <h3 >Detalles del pedido</h3>
       </template>
       <template #default>
           <table class="table table-bordered">
@@ -135,9 +138,11 @@
             class="my-0"
             align="fill"
             size="sm"
+            pills
+            style="margin-bottom: 20px;"
           ></b-pagination>
       <!-- Info modal -->
-      
+      <div style="padding-top: 700px; background-color:  #e1d9d9;"></div>
     </b-container>
   </template>
   

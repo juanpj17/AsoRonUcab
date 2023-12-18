@@ -1,15 +1,18 @@
 <template>
     <div>
-        <!--<Navbar></Navbar>-->
+        <Navbar v-if="tipoUsuario=='%'"></Navbar>
         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
-      <DetalleProductoVue :idProducto="idProducto" :tipoUsuario="tipoUsuario"></DetalleProductoVue> 
+        <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
+        <h2 style="margin-bottom:60px">Formulario de registro</h2>
+        <FormularioNaturalVue :id="$route.params.id"></FormularioNaturalVue>
     
     </div>
 </template>
 
 <script>
 
-import DetalleProductoVue from '../../components/DetalleProducto.vue'
+
+import FormularioNaturalVue from '@/components/FormularioNatural.vue';
 import Navbar from '@/components/CompAdm/Navbar.vue';
 import NavbarC from '@/components/Comunes/Navbar.vue';
 import NavbarCli from '@/components/CompClientes/Navbar.vue';
@@ -17,17 +20,17 @@ import NavbarCli from '@/components/CompClientes/Navbar.vue';
 export default{
     props:{
         tipoUsuario:'',
-        idProducto:''
+       
+
     },
+
     components:{
-  DetalleProductoVue,Navbar,NavbarC,NavbarCli
-    },
-    created(){
+        FormularioNaturalVue,Navbar,NavbarC,NavbarCli
+    },created(){
         this.tipoUsuario=this.$route.params.tipoUsuario
-        this.idProducto=this.$route.params.idProd
-        console.log('hola')
-        console.log(this.idProducto)
         console.log(this.tipoUsuario)
+        
+        
     }
 }
 </script>

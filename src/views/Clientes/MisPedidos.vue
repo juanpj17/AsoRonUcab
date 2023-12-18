@@ -1,24 +1,21 @@
 <template>
     <div>
         <NavbarVue></NavbarVue>
-        
-        <PagarCompraOnlineVue ></PagarCompraOnlineVue>
+        <MisPedidos></MisPedidos>
         
     </div>
 </template>
 
 <script>
 import NavbarVue from '@/components/CompClientes/Navbar.vue'
-import PagarCompraOnlineVue from '@/components/CompClientes/PagarCompraOnline.vue'
+import MisPedidos from '@/components/CompClientes/MisPedidos.vue';
 
 
 
 export default{
-    
-
     components:{
   
-   NavbarVue,PagarCompraOnlineVue,
+   NavbarVue,MisPedidos
 }
 }
 </script>

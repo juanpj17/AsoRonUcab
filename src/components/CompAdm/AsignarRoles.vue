@@ -1,50 +1,49 @@
 <template>
-    <div>   
-
+    <div> 
+      <b-container>
+          <b-row style="margin-bottom: 20px;">
+            <b-col><input type="text" id="rolNombre" class="flex-grow-1 form-control" v-model="nombreDelRol" placeholder="Nombre del Rol"></b-col>
+          </b-row>
+          <b-row>
+            <b-col><b-form-textarea id="textarea" v-model="text" placeholder="Descripcion del rol..."></b-form-textarea></b-col>
+         </b-row>
+      </b-container>  
       <div class="container">
-        <div class="row">
-          <div class="col-md-4 d-flex" style="margin-top:50px">
-            <input type="text" id="rolNombre" class="flex-grow-1 form-control" v-model="nombreDelRol" placeholder="Nombre del Rol">
-            <button class="btn btn-primary "  style="width:135px; height: 30px; margin-left:50px">Registrar</button>
-          </div>
-          <div class="col-md-12 text-center mt-3">
-            <p>Permisos Asociados</p>
-          </div>
+         <div class="row">
+            <div class="col-md-12 text-center mt-3">
+                <h3>Permisos asociados</h3>
+            </div>
             <div v-for="(item, index) in arrayCheckBox" :key="index" class="col-md-3 form-check form-switch">
               <input type="checkbox" class="form-check-input" v-model="item.selected">
-              <label class="form-check-label">{{ item.text }}</label>
+              <label class="form-check-label" style="text-align: left;">{{ item.text }}</label>
             </div>
-  
-  
         </div>
       </div>
-  
-  </div>
-
-  
+      <b-row>
+          <b-col>   <button class="btn btn-primary "   @click="obtenerEstadoCasillas()">Registrar</button></b-col>
+      </b-row>
+    </div>
   </template>
   
   <script>
   
-
-
-    
     export default {
-  
+      props:{
+        id:''
+      },
     data(){
       return {
-          url: "",
+        text:'',
+          
           logo: "",
-          modalVisible: false,
           nombreDelRol:'',
-          qrData: 'andi',
           arrayCheckBox :[
-          {value: 'Crear_producto', text: 'Crear producto', selected: false},
-          {value: 'Editar_producto', text: 'Editar producto', selected: false},
-          {value: 'Eliminar_producto', text: 'Eliminar producto', selected: false},
-          {value: 'Registrar_empleado', text: 'Registrar empleado', selected: false},
-          {value: 'Editar_empleado', text: 'Editar empleado', selected: false},
-          {value: 'Eliminar_empleado', text: 'Eliminar empleado', selected: false},
+          {value: 'Crear_producto', text:'Crear producto', selected: false},
+          {value: 'Editar_producto', text:'Editar producto', selected: false},
+          {value: 'Eliminar_producto', text:'Eliminar producto', selected: false},
+          {value: 'Registrar_empleado', text:'Registrar empleado', selected: false},
+          {value: 'Editar_empleado', text:'Editar empleado', selected: false},
+          {value: 'Eliminar_empleado', text:'Eliminar empleado', selected: false},
           {value: 'Crear_proveedor', text: 'Crear proveedor', selected: false},
           {value: 'Editar_proveedor', text: 'Editar proveedor', selected: false},
           {value: 'Eliminar_proveedor', text: 'Eliminar proveedor', selected: false},
@@ -79,46 +78,7 @@
         });
       }, 2000);
       },
-      async getMonitor() {
-        // https://bcv-api.deno.dev/v1/exchange
-        const api = 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/';
-        try {
-          const response = await this.getContentPage(api);
-          const allMonitors = response['monitors'];
-          console.log(allMonitors)
-          const monitorData = allMonitors['bcv'];
-          console.log(monitorData.price);
-          this.orden=[];
-          console.log(this.orden);
-          this.orden.push({
-                      idProducto: 0,
-                      idCliente: 1,
-                      nombre: 0,
-                      precio: 1,
-                      nombreImagen: 0,
-                      stock: 1,
-                      cantidad: 1,
-                      total: 0,
-                  });
-          console.log(this.orden);
-          return monitorData;
-        } catch (error) {
-           console.error(`KeyError: ${error.message}`);
-        }
-      },
-      async getContentPage(url) {
-        try {
-          const response = await fetch(url);
-  
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        } catch (error) {
-          console.error(`Error fetching data: ${error.message}`);
-          throw error;
-        }
-      },
+     
     }
   };
   
@@ -240,9 +200,7 @@
     cursor: pointer;
   }
   
-  .modal-input{
   
-  }
   
   .btn_position{
     width: 135px;
