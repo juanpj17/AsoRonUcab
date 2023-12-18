@@ -78,27 +78,10 @@
         });
       }, 2000);
       },
-<<<<<<< HEAD
-     
-=======
-      async getMonitor() {
-        try {
-            const instance = axios.create({
-                baseURL: 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/',
-                timeout: 1000,
-            });
 
-            const response = await instance.get();
-            const allMonitors = response.data['monitors'];
-            const bcvData = allMonitors['bcv'];
-            return bcvData.price;
-            } catch (error) {
-                console.error(error);
-                throw error; // Lanza el error para que se propague a quien llamó a la función.
-            }
-      },
+      
 
->>>>>>> 27cf8583f942d83e41eb6908317959080bdb52a5
+
     }
   };
   
