@@ -7,7 +7,7 @@
           <div class="row" style="border-bottom: 2px solid black;">
               <div class="col-4 espace">
                 <div class="espace" style="height: 100%;">
-                    <button class="btn btn-primary" style="width: 185px; height: 65px">Agregar</button>
+                    <button class="btn btn-primary" style="width: 185px; height: 65px" @click="getMonitor">Agregar</button>
                 </div>
               </div>
               <div class="col-4 espace">
@@ -144,7 +144,7 @@
       },
       closeModal() {
         this.modalVisible = false;
-        new QRCode('andi','andi')
+        
       },
       obtenerEstadoCasillas() {
       const a = []

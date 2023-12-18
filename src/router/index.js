@@ -10,8 +10,6 @@ import PrincipalEventosC from '@/views/Clientes/PrincipalEventos.vue'
 import PrincipalPago from '@/views/Clientes/PrincipalPago.vue'
 import PrincipalProducto from '@/views/Administrador/PrincipalProducto.vue'
 import PrincipalProductoC from '@/views/Clientes/PrincipalProductos.vue'
-
-import PrincipalCarrito from '@/views/Clientes/PrincipalCarrito.vue'
 import Home from '@/views/Administrador/Home.vue'
 import Inventario from '@/views/Administrador/Inventario.vue'
 
@@ -33,8 +31,8 @@ const routes = [
     component: HomeView
   },
   {
-  path: '/DetalleProducto',
-   name: 'DetalleProducto',
+    path: '/DetalleProducto',
+    name: 'DetalleProducto',
   component: DetalleProducto
   },
   {

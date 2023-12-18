@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: var(--carne)">
         <!--Registro de datos-->
         <section class="container" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
             <div class="row content d-flex justify-content-center align-items-center">
@@ -8,54 +8,54 @@
                         <form class="mb-3">
                         <div class="row">
                              <div class=" col form-group form-floating mb-3">
-                                 <input type="text" class="form-control rounded-2" v-model="nombre">
+                                 <input type="text" class="form-control rounded-2 altura" v-model="nombre">
                                  <label>  Nombre del Evento</label> 
                              </div>
                              <div class=" col form-group form-floating mb-3">
-                                 <input type="text" class="form-control rounded-2" v-model="descripcion">
+                                 <input type="text" class="form-control rounded-2 altura" v-model="descripcion">
                                  <label>Descripcion</label> 
                              </div>
     
                          </div>
                         <div class="row">
                             <div class=" col form-group form-floating mb-3">
-                                 <input type="date" class="form-control rounded-2" v-model="fecha_inicio">
+                                 <input type="date" class="form-control rounded-2 altura" v-model="fecha_inicio">
                                  <label> Fecha de inicio</label> 
                                  
                             </div>
                             <div class=" col form-group form-floating mb-3">
-                                 <input type="date" class="form-control rounded-2" v-model="fecha_fin">
+                                 <input type="date" class="form-control rounded-2 altura" v-model="fecha_fin">
                                  <label> Fecha de fin</label> 
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col form-group form-floating mb-3 ">
-                                 <input type="text" class="form-control rounded-2 " v-model="numEnt">
+                                 <input type="text" class="form-control rounded-2 altura" v-model="numEnt">
                                  <label>Cantidad de entradas disponibles</label>
                             </div>
                         </div>
                         
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
-                                 <b-form-select  class="custom-select mr-sm-2  form-control" v-model="estado" :options="Estados"> </b-form-select>  
+                                 <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="estado" :options="Estados"> </b-form-select>  
                                  <label>Seleccione</label>
                                               
                             </div>
                             <div class="col form-group form-floating mb-3">
-                                 <b-form-select  class="custom-select mr-sm-2  form-control" v-model="municipio" :options="Municipios"> </b-form-select>  
+                                 <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="municipio" :options="Municipios"> </b-form-select>  
                                  <label>Seleccione</label>
                                               
                             </div>
                             <div class="col form-group form-floating mb-3">
-                                 <b-form-select   class="custom-select mr-sm-2  form-control" v-model="parroquia" :options="Parroquias"> </b-form-select>  
+                                 <b-form-select   class="custom-select mr-sm-2 altura  form-control" v-model="parroquia" :options="Parroquias"> </b-form-select>  
                                  <label>Seleccione</label>
                                         
                             </div>
                         </div>
                         <div class="col form-group">
                             <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2"  v-model="direccion">
+                                  <input type="text" class="form-control rounded-2 altura"  v-model="direccion">
                                   <label>Direccion</label>
                                 
                             </div>
@@ -63,9 +63,9 @@
                         
 <!--Todo a partir de aqui es solo para el input de seleccion de provedores-->
 
-                        <div>
-                            <b-form-group label-for="tags-with-dropdown">
-                                <b-form-tags id="tags-with-dropdown" v-model="value" no-outer-focus class="mb-2">
+                    <div >
+                          <b-form-group label-for="tags-with-dropdown" style="border: transparent">
+                                <b-form-tags id="tags-with-dropdown" v-model="value" no-outer-focus class="mb-2" style="border: transparent">
                                     <template v-slot="{ tags, disabled, addTag, removeTag }">
                                         <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
                                             <li v-for="tag in tags" :key="tag" class="list-inline-item">
@@ -78,9 +78,9 @@
                                             </li>
                                      </ul>
 
-                                        <b-dropdown size="sm" variant="outline-secondary" block menu-class="w-100">
-                                            <template #button-content>
-                                                <b-icon icon="tag-fill"></b-icon> Seleccione prveedores
+                                        <b-dropdown size="sm" variant="outline-secondary" block menu-class="w-100" class="centrado">
+                                            <template #button-content >
+                                                <b-icon icon="person-plus-fill"></b-icon> Seleccione prveedores
                                             </template>
                                             <b-dropdown-form @submit.stop.prevent="() => {}">
                                                  <b-form-group
@@ -119,7 +119,7 @@
 <!--Se acabo el boton select y empiaza el boton de guardar-->
 
                     <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn btn-primary btn-lg border-0 rounded-3">Guardar</button>
+                        <button type="button" class="btn  btn-lg border-0 rounded-3 " style="background-color: var(--vinotinto); color: white">Guardar</button>
                     </div>
                     <!--Cierre de etiquetas-->
                         </form>
@@ -224,3 +224,23 @@ export default {
 
     }
 </script>
+<style scoped>
+/*Cambio el color de los label*/
+label{
+  color: black !important;
+}
+
+ /*cambia la altura y el color del borde de los inputs*/
+ .altura{
+  border:1px solid rgb(0, 0, 0);
+  margin-bottom: 25px;
+  min-height: 0px !important;
+  height: 50px !important;
+}
+
+/*Centrando la etiqueta de los proveedores*/
+.centrado{
+  margin-bottom: 22px;
+  margin-top: -22px;
+}
+</style>

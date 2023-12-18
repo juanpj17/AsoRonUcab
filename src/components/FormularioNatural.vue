@@ -125,6 +125,7 @@
                           <b-form-text  v-if=" !$v.email.required" class="form-floating mb-3" text-variant="danger">Campo requerido</b-form-text >
                         </div>
 
+                        
                       <div class="col form-group " style="color: white">
                         <label style="color: gray; font-size: 16px"> El teléfono debe tener entre 12 a 15 caracteres y empezar con 0.</label>
                           <b-form-group label-for="tags-validation"  :state="state">
@@ -141,6 +142,7 @@
                               input-class="white-text" 
                             >
                             </b-form-tags>
+                            
                           </b-form-group>
                       </div>
                       <div style="height: 25px;"></div>
