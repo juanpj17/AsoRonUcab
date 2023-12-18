@@ -1,7 +1,7 @@
 <template>
     <div>
-        <NavbarVue v-if="tipoUsuario=='$'"></NavbarVue>
-         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
+        <NavbarVue v-if="tipoUsuario=='$'" class="principal"></NavbarVue>
+        <NavbarC v-if="tipoUsuario=='*'" class="principal"></NavbarC>
         <CatalogoEventosVue :tipUsuario="tipoUsuario"></CatalogoEventosVue>
         
     </div>

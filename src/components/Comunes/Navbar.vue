@@ -1,8 +1,8 @@
-<template>
+<template >
     <header class="header">
          <div class="logo">
             
-             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
+             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca" @click="PrincipalProducto()">
          </div>
          <nav >
             <ul class="nav-links">
@@ -154,4 +154,27 @@
   ul{
     margin: auto !important;
   }
+
+  /*Se eliminan los botones 'Close' y 'Ok' que trae por defecto el modal*/
+  .modal-footer {
+    display: none !important;
+  }
+ 
+  /*se elimina la X superior*/
+ .close{
+    display: none !important;
+ }
+
+ /*cambiando estilos del modal*/
+ .modal-header{
+    color: black !important;
+    justify-content: center !important;
+    border-bottom: solid black !important;
+ }
+
+ .btn-dark{
+    background-color: var(--vinotinto) !important;
+    border: solid var(--vinotinto) !important;
+ }
+
  </style>

@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div style="background-color: var(--fondo)">
         <!--<Navbar></Navbar>-->
-        <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
-      <DetalleProductoVue :idProducto="idProducto" :tipoUsuario="tipoUsuario"></DetalleProductoVue> 
+        <NavbarC v-if="tipoUsuario=='*'" class="principal"></NavbarC>
+        <DetalleProductoVue :idProducto="idProducto" :tipoUsuario="tipoUsuario" ></DetalleProductoVue> 
     
     </div>
 </template>

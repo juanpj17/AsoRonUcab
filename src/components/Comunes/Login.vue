@@ -80,6 +80,7 @@ export default {
         this.InicioSesion('$')
     }else
     this.InicioSesion('%')
+    
    }
    }
    

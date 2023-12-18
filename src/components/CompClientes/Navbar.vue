@@ -1,17 +1,7 @@
-<template>
+<template >
     <header class="header">
          <div class="logo">
-            
-    
-  
-
-
-
-
-
-
-
-             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
+             <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca" @click="Inicio()">
          </div>
          <nav >
             <ul class="nav-links">
@@ -76,6 +66,11 @@
              if (this.$route.path!='/PersonasContacto/')
              this.$router.push('/PersonasContacto/');
            },
+           Inicio() {
+             if (this.$route.name!=='home')
+             this.$router.push({name: 'home'});
+           },
+        
         
         
           },
@@ -106,6 +101,7 @@
      align-items: center;
      height: 85px;
      padding: 5px 10%;
+
  }
  
  .header .logo{

@@ -11,8 +11,14 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
-  --vinotinto: #833440;
+  
   --carne: #F2CBA5; 
+  --dorado: #DAA520;
+  --fondo: #f1e1e9;
+  --verde: #228B22;
+  --vinotinto: #833440;
+
+
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -119,6 +125,18 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+}
+
+.principal{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.titulos{
+  background-color: var(--carne);
+  color: white;
+  padding: 25px 0;
 }
 
 h1, .h1 {
@@ -4251,6 +4269,7 @@ textarea.form-control-lg {
 }
 .card-header:first-child {
   border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+  display: flex !important;
 }
 
 .card-footer {

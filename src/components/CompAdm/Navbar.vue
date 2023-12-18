@@ -1,7 +1,7 @@
 <template>
    <header class="header">
         <div class="logo">
-            <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca">
+            <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca" @click="Inicio()">
         </div>
         <nav>
            <ul class="nav-links">
@@ -42,6 +42,10 @@ import TiendaFisica from './TiendaFisica.vue';
             if (this.$route.path!='/PrincipalEventos/')
             this.$router.push('/PrincipalEventos/');
           },
+          Inicio() {
+             if (this.$route.name!=='home')
+             this.$router.push({name: 'home'});
+           },
           Inventario() {
             if (this.$route.path!='/Inventario/')
             this.$router.push('/Inventario/');
