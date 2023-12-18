@@ -7,18 +7,25 @@
            <ul class="nav-links">
                 <li><a @click="PrincipalProducto()">Productos</a></li>
                 <li><a @click="PrincipalEventos()">Eventos</a></li>
-                <li><a href="#">Empleados</a></li>
-                <li><a href="#">Clientes</a></li>
-                <li><a @click="PrincipalProveedor()">Proveedores</a></li>
-                <li><a href="#">Rol/Permiso</a></li>
-                <li><a href="#">Clientes</a></li>
+                <li><a href="#" @click="PrincipalClientes()">Clientes</a></li>
+                <li><a @click="PrincipalEmpleados()">Empleados</a></li>
+                <li><a href="#" @click="PrincipalRoles()">Rol/Permiso</a></li>
                 <li><a href="#" @click="Inventario()">Inventario</a></li>
+                <li><a href="#" @click="Pedidos()">Pedidos</a></li>
+                <li><a href="#" @click="Compras()">Compras</a></li>
+                <li><a href="#" @click="TiendaFisica()">Tienda Fisica</a></li>
+                <li><a href="#" @click="ControlAccion()">Auditoria</a></li>
+
+
+
            </ul>            
         </nav>
-        <a class="btn" href="#"><button>Contact</button></a>
+        <a class="btn" href="#"><button>Cerrar Sesion</button></a>
     </header>
 </template>
 <script>
+import TiendaFisica from './TiendaFisica.vue';
+
   
   export default{
 
@@ -27,9 +34,9 @@
             if (this.$route.path!='/PrincipalProducto/')
             this.$router.push('/PrincipalProducto/');
           },
-          PrincipalProveedor() {
-            if (this.$route.path!='/PrincipalProveedor/')
-            this.$router.push('/PrincipalProveedor/');
+          PrincipalEmpleados() {
+            if (this.$route.path!='/PrincipalEmpleados/')
+            this.$router.push('/PrincipalEmpleados/');
           },
           PrincipalEventos() {
             if (this.$route.path!='/PrincipalEventos/')
@@ -39,7 +46,30 @@
             if (this.$route.path!='/Inventario/')
             this.$router.push('/Inventario/');
           },
-       
+          Pedidos() {
+            if (this.$route.path!='/Pedidos/')
+            this.$router.push('/Pedidos/');
+          },
+          PrincipalClientes() {
+            if (this.$route.path!='/PrincipalClientes/')
+            this.$router.push('/PrincipalClientes/');
+          },
+          PrincipalRoles() {
+            if (this.$route.path!='/PrincipalRoles/')
+            this.$router.push('/PrincipalRoles/');
+          },
+          Compras(){
+            if (this.$route.path!='/Compras/'+null)
+            this.$router.push('/Compras/'+null);
+          },
+          ControlAccion(){
+            if (this.$route.path!='/ControlAccion')
+            this.$router.push('/ControlAccion');
+          },
+          TiendaFisica(){
+            if (this.$route.path!='/TiendaFisica')
+            this.$router.push('/TiendaFisica');
+          }
        
          },
   

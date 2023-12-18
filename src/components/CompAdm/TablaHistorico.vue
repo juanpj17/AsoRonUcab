@@ -103,7 +103,8 @@
         ],
         fields: [
           { key: 'valor', label: 'Equivalente en Bs', },
-          { key: 'fecha', label: 'Fecha de inicio', class: 'text-center' },
+          { key: 'fechaI', label: 'Fecha de Inicio', class: 'text-center' },
+          { key: 'fechaF', label: 'Fecha de Fin', class: 'text-center' },
         ],
         totalRows: 1,
         currentPage: 1,
@@ -142,12 +143,12 @@
     LlenarTabla(){
       if(this.tipo_historico=='a'){
         this.items=[
-        {  valor: 25, fecha: '13/03/0000'  },
+        {  valor: 25, fechaI: '13/03/0000',fechaF: '13/03/0000'  },
         ]
       }
       else{
         this.items=[
-        {  valor: 24, fecha: '13/03/0000'  },
+        {  valor: 24, fechaI: '13/03/0000',fechaF: '13/03/0000'  },
         ]
 
       }

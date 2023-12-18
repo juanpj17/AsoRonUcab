@@ -56,6 +56,10 @@
 import { numeric } from 'vuelidate/lib/validators';
 
  export default {
+  props:{
+    idProducto:'',
+    tipoUsuario:''
+  },
    data() {
      return {
        slides: ["https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg" , "https://picsum.photos/1024/480/?image=51", "https://picsum.photos/1024/480/?image=50", "https://picsum.photos/1024/480/?image=50"],
@@ -86,10 +90,19 @@ import { numeric } from 'vuelidate/lib/validators';
        this.currentSlideIndex = (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length;
      },
      Carrito(){
-      this.$router.push('/PrincipalCarrito')
-     }
+      if(this.tipoUsuario=='$')
+        this.$router.push('/PrincipalCarrito')
+      else
+      this.Advertencia()
+   },
+   Advertencia(){
+  Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Debe Iniciar Sesion como cliente antes de continuar con la compra",
+});
    }
- };
+ }}
  </script>
  
  <style>

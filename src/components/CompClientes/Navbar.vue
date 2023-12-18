@@ -2,24 +2,7 @@
     <header class="header">
          <div class="logo">
             
-    <b-button v-b-toggle.sidebar-no-header variant="BLACK" class="boton"><b-icon variant="light" scale="1.5" icon="list"></b-icon></b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
-      <template #default="{ hide }">
-        <div class="p-3">
-          <nav class="mb-3">
-            <b-nav vertical style="text-align: left;">
-              <b-nav-item  @click="MiCuenta()">Mi cuenta</b-nav-item>
-              <b-nav-item >Mis pedido</b-nav-item>
-              <b-nav-item >Metodos de pago registrado</b-nav-item>
-              <b-nav-item  @click="PrincipalAfiliados()">Afiliacion</b-nav-item>
-              <b-nav-item  @click="TiendaFisica()">TiendaFisica</b-nav-item>
-              <b-nav-item  @click="AsignarRoles()">Roles</b-nav-item>
-            </b-nav>
-          </nav>
-          <b-button variant="primary" block @click="hide">Closeidebar</b-button>
-        </div>
-      </template>
-    </b-sidebar>
+    
   
 
 
@@ -34,25 +17,36 @@
             <ul class="nav-links">
                  <li><a class="text" @click="PrincipalProducto()" >Productos</a></li>
                  <li><a class="text" @click="PrincipalEventosC()" >Eventos</a></li>
-                 <li><a class="text" href="#">Ofertas</a></li>
+                 <li><a class="text" @click="MisPedidos()">Mis Pedidos</a></li>
                  <li><a class="text" @click="Carrito()" >Carrito</a></li>
             </ul>            
          </nav>
-         <a class="btn" href="#"><button>Cerrar sesion</button></a>
+
+         <a class="btn" href="#">
+            <b-dropdown text="Cuenta">
+                 <b-dropdown-item @click="MiCuenta()">Mi cuenta</b-dropdown-item>
+                 <b-dropdown-item @click="PersonasContacto()">Personas de Contacto</b-dropdown-item>
+                 <b-dropdown-item @click="PrincipalAfiliados()">Afiliacion</b-dropdown-item>
+                <b-dropdown-item v-b-modal.modal-1 >Cerrar sesion</b-dropdown-item>
+                
+            </b-dropdown>
+         </a>
      </header
      >
  </template>
  <script>
+
+
    
    export default{
           methods:{
            PrincipalProducto() {
-             if (this.$route.path!='/PrincipalProductoC/')
-             this.$router.push('/PrincipalProductoC/');
+             if (this.$route.path!='/PrincipalProductoC/$')
+             this.$router.push('/PrincipalProductoC/$');
            },
            PrincipalEventosC() {
-             if (this.$route.path!='/PrincipalEventosC/')
-             this.$router.push('/PrincipalEventosC/');
+             if (this.$route.path!='/PrincipalEventosC/$')
+             this.$router.push('/PrincipalEventosC/$');
            },
            TiendaFisica() {
              if (this.$route.path!='/TiendaFisica/')
@@ -73,6 +67,14 @@
            Carrito() {
              if (this.$route.path!='/PrincipalCarrito/')
              this.$router.push('/PrincipalCarrito/');
+           },
+           MisPedidos() {
+             if (this.$route.path!='/MisPedidos/')
+             this.$router.push('/MisPedidos/');
+           },
+           PersonasContacto() {
+             if (this.$route.path!='/PersonasContacto/')
+             this.$router.push('/PersonasContacto/');
            },
         
         

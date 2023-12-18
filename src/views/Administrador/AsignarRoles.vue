@@ -1,7 +1,8 @@
 <template>
     <div>
         <Navbar></Navbar>
-        <AsignarRolesVue></AsignarRolesVue>
+        <h2>Crear rol</h2>
+        <AsignarRolesVue style="margin-top: 40px;" :id="$route.params.id"></AsignarRolesVue>
     
     </div>
 </template>

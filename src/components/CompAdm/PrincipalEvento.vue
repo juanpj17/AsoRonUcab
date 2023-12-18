@@ -1,15 +1,11 @@
 <template>
-    <div>
-  <b-card no-body>
-    
-        <b-container fluid class="principal">
-    <br>
-    <h1>Registro de Proveedores</h1>
+  <b-container fluid>
+      <h1>Registro de Eventos </h1>
+    <!-- User Interface controls -->
     <b-row>
-      <!-- Filtro -->
-      <b-col lg="4" class="my-1">
+      <b-col lg="6" class="my-1">
         <b-form-group
-          label="Filtro"
+          label="Filter"
           label-for="filter-input"
           label-cols-sm="3"
           label-align-sm="right"
@@ -25,67 +21,99 @@
             ></b-form-input>
 
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''" variant="info">Borrar</b-button>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
+    </b-row>
+      
+    <b-row>
+      <b-col></b-col>
+      <b-col></b-col>
+      <b-col class="my-1" >
+        <b-form-group
+          label="Max de filas"
+          label-for="per-page-select"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+          
+        >
+          <b-form-select
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+    
+      
 
     </b-row>
-    <br>
-    <br>
-    <b-button pill class="boton" size="lg"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
-    <!-- Tabla principal -->
+    <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg" @click="RegistrarEvento()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
+    
+    </div>
+    <!-- Main table element -->
     <b-table
-      :items="ejemplo"
+    id="table-transition-example"
+      :items="items"
       :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
       :filter="filter"
       :filter-included-fields="filterOn"
+      :sort-by.sync="sortBy"
+      hover
+      outlined
       stacked="md"
       show-empty
       small
       @filtered="onFiltered"
-      hover
-      sticky-header
-      head-variant="light"
+      primary-key="id"
+      :tbody-transition-props="transProps"
+
     >
-
-     
-
-      <!-- Columna de acciones con botón de eliminar y modificar -->
-      <template #cell(actions)="row">
-        <b-button icon="delete" @click="eliminar(row.item)" variant="danger" size="sm">
-          <i class="bi bi-trash-fill"></i> Eliminar
-        </b-button>
-
-        <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Mas info
+     <!-- Columna de acciones con botón de eliminar y modificar -->
+    <template #cell(actions)="row">
+      <b-button icon="delete" variant="danger" size="sm">
+        <i class="bi bi-trash-fill"></i> Eliminar
       </b-button>
-      <b-button size="sm" style="margin-left: 10px;"  class="mr-1">
-        Modificar
-      </b-button>
-     
-      </template>
 
-      
+      <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
+      Detalles
+    </b-button>
+    <b-button size="sm" style="margin-left: 10px;" @click="RegistrarEvento(row.item.Codigo)" class="mr-1">
+      Modifiar
+    </b-button>
+   
+    </template>
+<!-- Detalles del producto -->
+<template #row-details="row">
+      <b-card>
+        <ul>
+          <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+        </ul>
+      </b-card>
+    </template>
 
-
-
-      <!-- Detalles del producto -->
-      <template #row-details="row">
-        <b-card>
-          <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-          </ul>
-        </b-card>
-      </template>
     </b-table>
-
+    <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          class="my-0"
+          align="fill"
+          size="sm"
+        ></b-pagination>
     <!-- Info modal -->
-  <b-modal v-model="mostrarModal" id="modal-xl" size="xl">
+     <!-- Info modal -->
+     <b-modal v-model="mostrarModal" id="modal-xl" size="xl" scrollable>
       <template #modal-title>
+        Detalles del evento
       </template>
       <template #default>
+          <p>Informacion general</p>
           <table class="table table-bordered">
               <thead>
                   <tr>
@@ -116,46 +144,99 @@
                   </tr>
               </tbody>
           </table>
+
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Proveedor</th> 
+                      <th>Producto</th> 
+                      <th>Inventario</th> 
+                      <th>Precio Unitario</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="item in infoModal" :key="item.age">
+                      <td>{{ item.Estado}}</td> 
+                      <td>{{ item.Municipio}}</td> 
+                      <td>{{ item.Parroquia}}</td> 
+                      <td>{{ item.Direccion}}</td> 
+                  </tr>
+              </tbody>
+          </table>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Cantidad de entradas</th> 
+                      <th>Precio</th> 
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="item in infoModal" :key="item.age">
+                      <td>{{ item.Estado}}</td> 
+                      <td>{{ item.Municipio}}</td> 
+                    
+                  </tr>
+              </tbody>
+          </table>
+        
          
 
       </template>
   </b-modal>
-</b-container>
-
+  </b-container>
+</template>
 
    
-  </b-card>
-</div>
-</template>
+  
 <script>
   export default {
     data() {
       return {
-        elementos:[],
-        selected: null,
-        ejemplo:[
-              { Codigo: 1, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+        items:[
+              { Codigo: 1, Nombre_Evento: 'Evento a', Direccion: 'a',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              { Codigo: 3, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              { Codigo: 2, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              { Codigo: 10, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              { Codigo: 5, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 66, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 34, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 90, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 8, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 15, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 100, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 76, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 17, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
               ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54}
-             
           ],
-          items:[],
+         
           fields: [
-              { key: 'Codigo', label: 'Codigo', },
-              { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center' },
-              { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center' },
-              { key: 'fecha_f', label: 'Fecha de fin', class: 'text-center' },
-              { key: 'actions', label: 'Opciones', class: 'text-center' },
+              { key: 'Codigo', label: 'Codigo', sortable: true },
+              { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center',sortable: true},
+              { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center',sortable: true },
+              { key: 'fecha_f', label: 'Fecha de fin', class: 'text-center',sortable: true },
+              { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
              
           ],
+          currentPage: 1,
+          sortBy: 'Codigo',
         totalRows: 1,
-        currentPage: 1,
-        perPage: 3,
+        perPage: 5,
+        pageOptions: [5, 10, 15],
         filter: null,
         filterOn: [],
         infoModal: [],
         mostrarModal:false,
         texto:'',
         modficarN:'',
+        transProps: {
+        // Transition name
+        name: 'flip-list',
+        sortBy: 'Codigo',
+      },
 
         
       }
@@ -197,6 +278,10 @@
         const resultado = this.ejemplo.find((nota) => nota.Codigo === this.modficarN.Codigo);
         console.log(resultado)
         resultado.Descripcion=this.texto;
+      },
+      RegistrarEvento(id){
+        if (this.$route.path!='/RegistrarEvento/')
+            this.$router.push('/RegistrarEvento/'+id);
       }
     },
     
@@ -209,5 +294,11 @@
     transform: translateY(-50%);
 }
 
+
+
+
+table#table-transition-example .flip-list-move {
+transition: transform 1s;
+}
 
 </style>

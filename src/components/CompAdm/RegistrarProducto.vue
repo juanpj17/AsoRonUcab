@@ -31,6 +31,7 @@
                         <label >Codigo del proveedor</label>
                         <b-form-text  v-if="!$v.proveedor.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
                         <b-form-text  v-if="!$v.proveedor.numeric" class="form-floating mb-3" text-variant="danger">Formato invalido, solo se aceptan numeros positivos</b-form-text >  
+
                     </div>
                   </div>
                     <div class=" col form-group form-floating mb-3">
@@ -230,12 +231,125 @@
                       </b-form-group>
                     </div>
 
+                        </div>
+                      </div>
+                      <div class=" col form-group form-floating mb-3">
+                        <input type="text"  class="form-control rounded-2"  v-model=" añejamiento" />
+                        <label >Codigo del añejamiento</label>
+                        <b-form-text  v-if="!$v.añejamiento.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
+                      </div>
+
+                      <b-container>
+                        <b-row>
+                                <b-col cols="11"><p style="text-align: left;">Registrar Sabores</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="RegistrarSabores()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                        </b-row>
+                      </b-container > 
+                      <div v-for="(elemento, index) in sabores" :key="index">
+                        <b-container style="margin-bottom: 10px;">
+                          <b-row>
+                              <b-col cols="11">
+                                <div class="col form-group form-floating mb-2">
+                                  <b-form-select class="custom-select mr-sm-2  form-control" v-model="elemento.Sabor" :options="options"></b-form-select>
+                                  <label>Seleccione el Sabor</label>
+                                </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarSaborSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+
+                      <b-container>
+                        <b-row>
+                                <b-col cols="11"><p style="text-align: left;">Registrar Colores</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="RegistrarColores()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                        </b-row>
+                      </b-container > 
+                      <div v-for="(elemento, index) in colores" :key="index">
+                        <b-container style="margin-bottom: 10px;">
+                          <b-row>
+                              <b-col cols="11">
+                                <div class="col form-group form-floating mb-2">
+                                  <b-form-select class="custom-select mr-sm-2  form-control" v-model="elemento.Color" :options="options"></b-form-select>
+                                  <label>Seleccione el Color</label>
+                                </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarColorSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+  
+                      <b-container>
+                        <b-row>
+                                <b-col cols="11"><p style="text-align: left;">Registrar Materias Primas</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="RegistrarMateriaPrima()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                        </b-row>
+                      </b-container > 
+                      <div v-for="(elemento, index) in materiasPrima" :key="index">
+                        <b-container style="margin-bottom: 10px;">
+                          <b-row>
+                              <b-col cols="11">
+                                <div class="col form-group form-floating mb-2">
+                                  <b-form-select class="custom-select mr-sm-2  form-control" v-model="elemento.MateriaPrima" :options="options"></b-form-select>
+                                  <label>Seleccione la Materia Prima</label>
+                                </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarMateriaSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+
+                      <b-container>
+                        <b-row>
+                                <b-col cols="11"><p style="text-align: left;">Registrar Presentaciones</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="RegistrarPresentacion()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                        </b-row>
+                      </b-container > 
+                      <div v-for="(elemento, index) in presentaciones" :key="index">
+                        <b-container style="margin-bottom: 10px;">
+                          <b-row>
+                              <b-col cols="11">
+                                <div class="col form-group form-floating mb-2">
+                                  <b-form-select class="custom-select mr-sm-2  form-control" v-model="elemento.Presentacion" :options="options"></b-form-select>
+                                  <label>Seleccionar Presentacion</label>
+                                </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarPresentacionSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+
+                      <b-container>
+                        <b-row>
+                                <b-col cols="11"><p style="text-align: left;">Registrar Imagenes</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="RegistrarImagenes()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                        </b-row>
+                      </b-container > 
+                      <div v-for="(elemento, index) in imagenes" :key="index">
+                        <b-container style="margin-bottom: 10px;">
+                          <b-row>
+                              <b-col cols="11">
+                                <div class="col form-group form-floating mb-2">
+                                  <b-form-select class="custom-select mr-sm-2  form-control" v-model="elemento.imagen" :options="options"></b-form-select>
+                                  <label>Seleccionar Imagen</label>
+                                </div>
+                              </b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarImagenSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                          </b-row>
+                        </b-container>
+                      </div>
+
+
+
+
+
+
 
                     <div class="d-grid gap-2 mb-3">
                         <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" v-on:click="validaciones"  >Registrar</button>
                     </div>
-
-                </form>
+                  </form>
+                
               </div> 
             </div>
         </div>
@@ -271,6 +385,9 @@ label{
     import {required, numeric, maxLength, between} from 'vuelidate/lib/validators';
  
     export default{
+      props:{
+        idProducto:''
+      },
         data(){
             return{
                 añejamiento:'',
@@ -281,18 +398,20 @@ label{
                 imagenes:[],
                 Productos: '',
                 options: ['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
-                sabor: [],
-                color:[],
-                materiaPrima:[],
+                sabores:[],
+                colores:[],
+                materiasPrima:[],
                 presentaciones:[],
             }
         },
-        created(){               
-            this.mostrar()
+        created(){
+            this.RegistrarColores(),
+            this.RegistrarImagenes(),
+            this.RegistrarMateriaPrima(),
+            this.RegistrarPresentacion(),
+            this.RegistrarSabores()
         },
         methods:{
-           
-            
             validaciones(){
                 this.$v.$touch();
                
@@ -318,7 +437,43 @@ label{
                 this.proveedor='';
                 this.nombreImagen='';
                 this.añejamiento='';
-            }
+            },
+            RegistrarSabores(){
+            this.sabores.push({ Sabor: ''}); },
+
+            EliminarSaborSeleccionado(indice){
+            this.sabores.forEach((elemento,index) => { 
+            if (indice==index){
+             this.sabores.splice(index,1)}})},
+
+             RegistrarColores(){
+            this.colores.push({ Color: ''}); },
+
+            EliminarColorSeleccionado(indice){
+            this.colores.forEach((elemento,index) => { 
+            if (indice==index){
+             this.colores.splice(index,1)}})},
+             RegistrarMateriaPrima(){
+            this.materiasPrima.push({ MateriaPrima: ''}); },
+
+            EliminarMateriaSeleccionado(indice){
+            this.materiasPrima.forEach((elemento,index) => { 
+            if (indice==index){
+             this.materiasPrima.splice(index,1)}})},
+             RegistrarPresentacion(){
+            this.presentaciones.push({ presentacion: ''}); },
+
+            EliminarPresentacionSeleccionado(indice){
+            this.presentaciones.forEach((elemento,index) => { 
+            if (indice==index){
+             this.presentaciones.splice(index,1)}})},
+             RegistrarImagenes(){
+            this.imagenes.push({ imagen: ''}); },
+
+            EliminarImagenSeleccionado(indice){
+            this.imagenes.forEach((elemento,index) => { 
+            if (indice==index){
+             this.imagenes.splice(index,1)}})},
         },
 
         validations: {
@@ -342,22 +497,6 @@ label{
             nombreImagen:{required},
             añejamiento: {required},
         },   
-        computed: {
-      availableOptions() {
-        return this.options.filter(opt => this.sabor.indexOf(opt) === -1)
-      },
-      availableOptions2() {
-        return this.options.filter(opt => this.color.indexOf(opt) === -1)
-      },
-      availableOptions3() {
-        return this.options.filter(opt => this.materiaPrima.indexOf(opt) === -1)
-      },
-      availableOptions4() {
-        return this.options.filter(opt => this.presentaciones.indexOf(opt) === -1)
-      },
-      availableOptions5() {
-        return this.options.filter(opt => this.imagenes.indexOf(opt) === -1)
-      }
-    }
+        
     }
 </script>

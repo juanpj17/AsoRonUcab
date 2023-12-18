@@ -259,6 +259,9 @@
     import {required, numeric, maxLength, between} from 'vuelidate/lib/validators';
  
     export default{
+      props:{
+        idProducto:'',
+      },
         data(){
             return{
                 añejamiento:'',
@@ -277,6 +280,7 @@
         },
         created(){               
             this.mostrar()
+            console.log(this.idProducto)
         },
         methods:{
            
@@ -330,22 +334,6 @@
             nombreImagen:{required},
             añejamiento: {required},
         },   
-        computed: {
-      availableOptions() {
-        return this.options.filter(opt => this.sabor.indexOf(opt) === -1)
-      },
-      availableOptions2() {
-        return this.options.filter(opt => this.color.indexOf(opt) === -1)
-      },
-      availableOptions3() {
-        return this.options.filter(opt => this.materiaPrima.indexOf(opt) === -1)
-      },
-      availableOptions4() {
-        return this.options.filter(opt => this.presentaciones.indexOf(opt) === -1)
-      },
-      availableOptions5() {
-        return this.options.filter(opt => this.imagenes.indexOf(opt) === -1)
-      }
-    }
+        
     }
 </script>

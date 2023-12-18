@@ -1,6 +1,7 @@
 <template>
     <div>
         <NavbarVue></NavbarVue>
+        
         <PagarCompraOnlineVue ></PagarCompraOnlineVue>
         
     </div>
@@ -13,9 +14,11 @@ import PagarCompraOnlineVue from '@/components/CompClientes/PagarCompraOnline.vu
 
 
 export default{
+    
+
     components:{
   
-   NavbarVue,PagarCompraOnlineVue
+   NavbarVue,PagarCompraOnlineVue,
 }
 }
 </script>

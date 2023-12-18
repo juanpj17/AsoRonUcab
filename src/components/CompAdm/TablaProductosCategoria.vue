@@ -47,7 +47,20 @@
             ></b-form-select>
           </b-form-group>
         </b-col>
-        <b-col></b-col>
+        <b-col>  <b-form-group
+            label="Categorias"
+            label-for="per-page-select"
+            label-align-sm="right"
+            label-size="sm"
+            class="mb-0"
+            
+          >
+            <b-form-select
+            id="per-page-select"
+              v-model="Categoria"
+              :options="Categorias"
+            ></b-form-select>
+          </b-form-group></b-col>
         <b-col class="my-1" >
           <b-form-group
             label="Max de filas"
