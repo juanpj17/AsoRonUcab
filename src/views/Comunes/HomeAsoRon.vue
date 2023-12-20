@@ -35,7 +35,7 @@
                     </div>
                     
                     <!-- Botón desplegable de opciones -->
-                    <b-button href="#" variant="primary" >Ver mas</b-button>
+                    <b-button href="#" variant="primary" @click="verMas(producto.Id)">Ver mas</b-button>
                   </b-card>
                 </b-col>
               </b-row>
@@ -243,7 +243,10 @@ import { required } from 'vuelidate/lib/validators';
       descuento(dto, precio){
         const descuentoCalculado = precio - ((dto / 100) * precio);
         return descuentoCalculado.toFixed(2);
-      }
+      },
+      verMas(id){
+              this.$router.push('/DetalleProducto/'+'$'+'/'+id);
+      },
     }
   }
 </script>

@@ -8,15 +8,21 @@
                     <b-tabs pills card >
                         
                             <b-tab title="Detalle del evento" active >
-                                <b-card-title>{{ evento.Nombre }}</b-card-title>
+                                <div style="border-bottom: solid var(--dorado)">
+                                    <b-card-title style="font-family: 'Libre Baskerville', serif; color: var(--dorado)">{{ evento.Nombre }}</b-card-title>
+                                </div>
+                                <div style="margin-top: 10px;"></div>
                                 <b-card-sub-title>Desde {{ evento.Fecha_i }} hasta {{ evento.Fecha_f }}</b-card-sub-title>
-                                <b-card-sub-title>Lugar:</b-card-sub-title>
-                                <b-card-text>{{ evento.direccion }}</b-card-text>
+                                <div style="margin-top: 10px;"></div>
+                                <b-card-sub-title>Lugar: {{ evento.direccion }}</b-card-sub-title>
+                                <div style="margin-top: 10px;"></div>
                                 <b-card-text> {{ evento.descripcion }}</b-card-text>
                             </b-tab>
                             <b-tab title="Comprar entradas" >
+                                
                                 <b-card-sub-title>Selecione una fecha</b-card-sub-title>
-                                <b-form-select v-model="selected" :options="options"></b-form-select>
+                                <b-form-select v-model="selected" :options="options"></b-form-select> 
+                                
                                 <b-container class="bv-example-row" style="margin-top:20px">
                                     <b-row>
                                         <b-card-sub-title>Selecione la cantidad de entradas</b-card-sub-title>
@@ -44,26 +50,64 @@
 
         data(){
             return{
-                Eventos:[{Nombre:'Evento 1', Fecha_i:'22/33/3435',Fecha_f: '25/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'},{Nombre:'Evento 1', Fecha_i:'22/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'},{Nombre:'Evento 1', Fecha_i:'22/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'},{Nombre:'Evento 1', Fecha_i:'22/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'},{Nombre:'Evento 1', Fecha_i:'22/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'},{Nombre:'Evento 1', Fecha_i:'22/33/3435',id:4,descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
-tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
-se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
-disponibles para asignar 252.`,direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'}],
-selected: null,
+                Eventos:[
+                    {
+                        Nombre:'Evento 1', 
+                        Fecha_i:'22/05/3435',
+                        Fecha_f: '25/05/3435',
+                        id:4,
+                        descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
+                        tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
+                        se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
+                        disponibles para asignar 252.`,
+                        direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'
+                    },
+                    {
+                        Nombre:'Evento 1',
+                        Fecha_i:'22/05/3435',
+                        Fecha_f: '28/05/3435',
+                        id:4,
+                        descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
+                        tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
+                        se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
+                        disponibles para asignar 252.`,
+                        direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'
+                    },
+                    {
+                        Nombre:'Evento 1',
+                        Fecha_i:'22/05/3435',
+                        Fecha_f: '23/05/3435',
+                        id:4,
+                        descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
+                        tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
+                        se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
+                        disponibles para asignar 252.`,
+                        direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'
+                    },
+                    {
+                        Nombre:'Evento 1',
+                        Fecha_i:'22/05/3435',
+                        Fecha_f: '24/05/3435',
+                        id:4,
+                        descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
+                        tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
+                        se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
+                        disponibles para asignar 252.`,
+                        direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'
+                    },
+                    {
+                        Nombre:'Evento 1',
+                        Fecha_i:'22/05/3435',
+                        Fecha_f: '25/05/3435',
+                        id:4,
+                        descripcion:`Hay que llenar también el máximo número de usuarios: en este caso 252, ya que
+                        tenemos una dirección barra 24 que deja disponible 254 host asignables de los cuales ya
+                        se usaron dos uno para la Gateway y otro para la ip del servidor, quedándonos entonces
+                        disponibles para asignar 252.`,
+                        direccion:'Distrito capital,Municip libertador parroquia los simbolos, plaza las 3 gracias calle 5'
+                    },
+                ],
+        selected: null,
         options: [
           { value: null, text: 'Please select an option' },
           { value: 'a', text: 'This is First option' },
@@ -91,13 +135,13 @@ selected: null,
             },
             Advertencia(){
                 Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "Para realizar la compra debe Iniciar Sesion",
-});
-            }
+            icon: "error",
+            title: "Oops...",
+            text: "Para realizar la compra debe Iniciar Sesion",
+            });
+            },
 
-             
+
 
           
         },
@@ -126,8 +170,6 @@ selected: null,
  .color{
     color: var(--verde);
  }
-
-
 
 
 
