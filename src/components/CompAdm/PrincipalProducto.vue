@@ -1,20 +1,20 @@
 <template>
     <div class="contenedor">
       <br>
-      <h1>Nuestros productos</h1>
+      <h1 class="titulos">Nuestros productos</h1>
      
       <b-button block variant="primary" @click="RegistrarProducto()">Registrar nuevo producto</b-button>
       <b-row class="mt-5">
         <b-col cols="12" md="3" v-for="producto in Productos" :key="producto.Id">
           <b-card style="max-width: 20rem;margin-left: 10PX;" class="mb-2">
-            <img :src="producto.Imagen" class="card-img-top">
+            <img :src="producto.Imagen" class="card-img-top" style="border-bottom: 2px solid var(--vinotinto);">
             <b-card-title><h3>{{ producto.Nombre }}</h3></b-card-title>
             <h5 class="card-subtitle mb-2 mr-5 text-body-secondary">{{ producto.Presentacion }}</h5>
             <h5 class="card-subtitle mb-2 mr-5 text-body-secondary">{{ producto.Precio }} Bs</h5>
             <!-- Botón desplegable de opciones -->
-            <b-dropdown class="card-options" right text="Opciones" variant="outline-secondary">
-              <template #button-content>
-                <b-icon icon="gear-fill"></b-icon>
+            <b-dropdown class="card-options" right text="Opciones" variant="outline-secondary" >
+              <template #button-content style="height: 85%; " >
+                <b-icon icon="gear-fill" ></b-icon>
               </template>
               <b-dropdown-item @click="RegistrarProducto(producto.Id)">Modificar</b-dropdown-item>
               <b-dropdown-item >Eliminar</b-dropdown-item>
@@ -22,7 +22,7 @@
               <b-dropdown-item @click="RegistrarNotaCata()">Agregar nota de cata</b-dropdown-item>
 
             </b-dropdown>
-            <b-button href="#" variant="primary" @click="verMas()" >Ver mas</b-button>
+            <b-button href="#" variant="primary" @click="verMas()" style="background-color: var(--vinotinto) !important; border-color: var(--vinotinto) !important;">Ver más</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -81,6 +81,14 @@
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+
+  .icono{
+    color: var(--dorado);
+  }
+
+  .icono:hover{
+    color: white
   }
   
   </style>

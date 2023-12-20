@@ -4,7 +4,7 @@
     <div>
         <section class="container" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; margin-top: 20px;" >
     <b-form-group
-      label="Selecciones los premios ganados"
+      label="Seleccione los premios ganados"
       label-for="table-select-mode-select"
       label-cols-md="4"
     >
