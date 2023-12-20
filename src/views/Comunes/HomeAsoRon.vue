@@ -125,7 +125,7 @@
 .oferta{
   color: red !important; 
   border: transparent !important;
-  height: 3rem !important;
+  height: 2rem !important;
 }
 
 .diario{

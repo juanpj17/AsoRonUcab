@@ -133,10 +133,16 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   z-index: 100;
 }
 
+.altura{
+  min-height: 0px !important;
+  height: 50px !important;
+}
+
 .titulos{
   background-color: var(--carne);
   color: white;
   padding: 25px 0;
+  font-family: 'Libre Baskerville', serif;
 }
 
 h1, .h1 {

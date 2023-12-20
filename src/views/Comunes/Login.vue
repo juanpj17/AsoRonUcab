@@ -2,7 +2,7 @@
     <div>
         <Navbar></Navbar>
         
-        <Login style="margin-top: 200px;"></Login>
+        <Login style="margin-top:2%"></Login>
         
        
     

@@ -3,9 +3,9 @@
         <br>
         <section class="container" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
             <div style="background-color: var(--carne)" class="row content d-flex justify-content-center align-items-center">
-                <div class="col-md-9 principal">
+                <div class="col-md-9 principal" style="z-index: 50;">
                
-                  <div class="box  bg-white p-4 ">
+                  <div class="box  bg-white p-4 " >
                     <b-alert show variant="danger" v-if="enviado">Campos vacios</b-alert>
                         
                     <form class="mb-3">
@@ -21,8 +21,8 @@
                               v-model="pnombre"
                             >
                            <label for="pnombre">Primer nombre</label> 
-                           <div style="height: 25px">
-                            </div>
+                           <div style="height: 25px"></div>
+                            
                           </div>
 
                           <div class=" col form-group form-floating mb-3">
@@ -34,8 +34,8 @@
                               v-model="snombre"
                             >
                            <label for="snombre" >Segundo nombre</label> 
-                            <div style="height: 25px">
-                            </div>
+                            <div style="height: 25px"></div>
+                            
                           </div>
 
                       </div>
@@ -116,32 +116,12 @@
                            <label for="email">Email</label>
                         </div>
 
-                        
-                      <div class="col form-group " style="color: white">
-                        <label style="color: gray; font-size: 16px"> El teléfono debe tener entre 12 a 15 caracteres y empezar con 0.</label>
-                          <b-form-group label-for="tags-validation"  :state="state">
-                            <b-form-tags
-                              input-id="tags-validation"
-                              v-model="tags"
-                              tag-variant="dark"
-                              :input-attrs="{ 'aria-describedby': 'tags-validation-help' }"
-                              :tag-validator="tagValidator"
-                              :state="state"
-                              separator=" "
-                              placeholder="Ingrese sus números de teléfono"
-                              style="background-color: var(--vinotinto); color:var(--carne)"
-                              input-class="white-text" 
-                            >
-                            </b-form-tags>
-                            
-                          </b-form-group>
-                      </div>
 
                       <b-container>
                             <b-row>
                                 
-                                <b-col cols="11"><p style="text-align: left;">Registrar telefonos</p></b-col>
-                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click=" RegistrarTelefonos()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2"></b-icon></b-button></b-col>
+                                <b-col cols="11"><p style="text-align: left;">Registrar teléfonos</p></b-col>
+                                <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click=" RegistrarTelefonos()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
                               </b-row>
                         </b-container> 
                         <div v-for="(elemento, index) in telefonos" :key="index">
@@ -149,16 +129,16 @@
                             <b-row>
                               <b-col cols="11">
                                   <div class="col form-group form-floating mb-2">
-                                   <b-input v-model="elemento.numero"></b-input>
-                                    <label>Ingrese el numero</label>
+                                   <b-input v-model="elemento.numero" class="altura"></b-input>
+                                    <label>El teléfono debe tener entre 12 a 15 caracteres y empezar con 0.</label>
                                   </div>
                               </b-col>
-                              <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash"></b-icon></b-button></b-col>
+                              <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                             </b-row>
                             </b-container>
                             </div>
 
-                      <div style="height: 25px;"></div>
+                     
 
                         <label style="color: gray; font-size: 16px">Debe estar en el rango de 6-15 caracteres</label>
                         <div class="form-floating mb-3">
@@ -173,19 +153,19 @@
       
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
+                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control altura" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
                               </b-form-select>  
                               <label for="estado">Seleccione</label>
                             </div>
                           <div class="col form-group">
                               <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2" id="direccion"  placeholder="direccion" v-model="direccion">
+                                  <input type="text" class="form-control rounded-2 altura" id="direccion"  placeholder="direccion" v-model="direccion">
                                   <label for="direccion">Direccion</label>
                               </div>
                           </div>
                         </div>
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3">Guardar</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3">Registrar</button>
                         </div>
                       </form>
                   
@@ -196,11 +176,7 @@
       </div>  
   </template>
   <style>
-  /*cambia la altura de los inputs*/
-  .altura{
-    min-height: 0px !important;
-    height: 50px !important;
-  }
+  
  
   /*Modifica el color de la X para eliminar números de teléfono*/
   .b-form-tag > button.b-form-tag-remove {
@@ -230,7 +206,7 @@
   .white-text {
     color: white !important; 
   }
-  
+
 
 </style>
 <script>

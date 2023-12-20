@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div style="background-color: var(--fondo)">
         <Navbar v-if="tipoUsuario=='%'"></Navbar>
         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
         <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
 
-        <h2 style="margin-bottom:60px">Formulario de registro</h2>
+        <h2 class="titulos" style="margin: 2% 0 4% 0 !important">Formulario de registro</h2>
         <FormularioJuridicoVue :id="$route.params.id"></FormularioJuridicoVue>
     
     </div>

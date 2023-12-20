@@ -1,8 +1,8 @@
 <template>
-    <b-container style="box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; max-width: 1500px;">
+    <b-container style="box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; ">
         <b-row>
             <b-col>
-        <h3 style="text-align: left; margin-bottom: 50PX; margin-top: 10px;">Ya estoy registrado</h3>
+        <h3 style="text-align: left; margin-bottom: 50PX; margin-top: 10px;">Ingresa tu e-mail y contraseña de ASORON</h3>
         <b-row>
             <b-col>
                 <b-col>
@@ -40,8 +40,8 @@
     <div style="background-color:#FfF; width:2px;height:500px;border-right:2px solid rgb(98, 97, 97);padding-left:20px;margin-left:20px;"></div>
     <b-col>
       <h2 style="text-align: left; margin-top: 10px;">Soy nuevo</h2>
-      <p style="text-align: left;"> Crear una cuenta en suegunsos.Solo haz click en el boton,rellena los campos y disfruta de los beneficios</p>
-      <b-button  v-b-modal.modal-1 variant="dark" pill style="margin-top: 290px;">Crear una cuenta</b-button>
+      <p style="text-align: left;"> Crear una cuenta en segundos. Solo presiona el botón 'Crear cuenta', rellena los campos y ¡listo! Disfruta de los beneficios de formar parte de ASORON ¿Qué estás esperando?</p>
+      <b-button  v-b-modal.modal-1 variant="dark" pill style="margin-top: 28%;">Crear una cuenta</b-button>
       <div>
   <b-modal id="modal-1" title="Seleccione el tipo de persona" scrollable>
   <b-button style="margin-right: 20px;" variant="dark" @click="RegistroNatural()">Natural</b-button>  
@@ -89,8 +89,10 @@ export default {
 <style>
 hr{
     border-left: thick solid #000;
- height:100%;
- left: 50%;
- position: absolute;
+    height:100%;
+    left: 50%;
+    position: absolute;
 }
+
+
 </style>

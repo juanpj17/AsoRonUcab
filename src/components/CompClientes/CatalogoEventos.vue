@@ -150,9 +150,7 @@
 <style  scoped>
 
  
- h1{
-    font-family: 'Libre Baskerville', serif;
- }
+
  .contenedor{
    background-color:#F4EFEE;
 ;
