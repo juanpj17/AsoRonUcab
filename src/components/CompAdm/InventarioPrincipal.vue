@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid>
+    <b-container fluid style="background-color: var(--fondo)">
       <h1 class="titulos">Inventario</h1>
       <!-- User Interface controls -->
       <b-row>
@@ -163,13 +163,13 @@
           this.currentPage = 1
         },
       LlenarTabla(){
-        this.items=[{id:1,nombre:'Ron Santa teresa',presentacion:'0,75ml',stock:'9'},
-        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80ml',stock:'9'},
-        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90ml',stock:'9'},
-        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95ml',stock:'9'},
-        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66ml',stock:'9'},
-        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94ml',stock:'9'},
-        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68ml',stock:'9'}]
+        this.items=[{id:1,nombre:'Ron Santa teresa',presentacion:'0,75l',stock:'9'},
+        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80l',stock:'9'},
+        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90l',stock:'9'},
+        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95l',stock:'9'},
+        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66l',stock:'9'},
+        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94l',stock:'9'},
+        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68l',stock:'9'}]
       },
       decreaseStock(item) {
           if (item.stock > 0) {
