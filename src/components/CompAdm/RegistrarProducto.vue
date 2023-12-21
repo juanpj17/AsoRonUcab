@@ -39,197 +39,110 @@
                       <label for="añejamiento">Código del añejamiento</label>
                       <b-form-text  v-if="!$v.añejamiento.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
                   </div>
-                  <div> 
-                    <b-form-group label="Selecciona los saboras" label-for="tags-component-select">
-                      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-                      <b-form-tags
-                        id="tags-component-select"
-                        v-model="sabor"
-                        size="lg"
-                        class="mb-2"
-                        add-on-change
-                        no-outer-focus
-                      >
-                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                              <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                                <b-form-tag
-                                    @remove="removeTag(tag)"
-                                    :title="tag"
-                                    :disabled="disabled"
-                                    style="background-color: black;"
-                                >{{ tag }}</b-form-tag>
-                              </li>
-                          </ul>
-                          <b-form-select
-                              v-bind="inputAttrs"
-                              v-on="inputHandlers"
-                              :disabled="disabled || availableOptions.length === 0"
-                              :options="availableOptions"
-                          >
-                                <template #first>
-                                  <!-- This is required to prevent bugs with Safari -->
-                                  <option disabled sabor="" style="background-color: bisque;">Seleccione</option>
-                                </template>
-                          </b-form-select>
-                        </template>
-                      </b-form-tags>
-                    </b-form-group>
+                  <b-container>
+                    <b-row>
+                        
+                        <b-col cols="11"><p style="text-align: left;">Selecciona los sabores</p></b-col>
+                        <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="registrarSabor()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
+                      </b-row>
+                  </b-container> 
+                  <div v-for="(elemento, index) in sabor" :key="index">
+                    <b-container style="margin-bottom: 10px;">
+                      <b-row>
+                        <b-col cols="11">
+                          <div class="col form-group form-floating mb-2">
+                           <b-input v-model="elemento.valor" class="altura"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col cols="1" ><b-button @click="eliminarSaborSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                      </b-row>
+                    </b-container>
+                  </div>
+                  
+                  <b-container>
+                    <b-row>
+                        
+                        <b-col cols="11"><p style="text-align: left;">Selecciona los colores</p></b-col>
+                        <b-col cols="1" style="margin-bottom: 25px;">   <b-button style="border-radius: 110%;"  variant="light">  <b-icon   @click="registrarColor()" icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
+                      </b-row>
+                  </b-container> 
+                  <div v-for="(elemento, index) in color" :key="index">
+                    <b-container style="margin-bottom: 10px;">
+                      <b-row>
+                        <b-col cols="11">
+                          <div class="col form-group form-floating mb-2">
+                           <b-input v-model="elemento.valor" class="altura"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col cols="1" ><b-button @click="eliminarColorSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                      </b-row>
+                    </b-container>
                   </div>
 
-                  <div > 
-                    <b-form-group label="Seleccione colores" label-for="tags-component-select">
-                    <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-                      <b-form-tags
-                        id="tags-component-select"
-                        v-model="color"
-                        size="lg"
-                        class="mb-2"
-                        add-on-change
-                        no-outer-focus
-                      >
-                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                              <b-form-tag
-                                @remove="removeTag(tag)"
-                                :title="tag"
-                                :disabled="disabled"
-                                style="background-color: black;"
-                              >{{ tag }}</b-form-tag>
-                            </li>
-                          </ul>
-                          <b-form-select
-                            v-bind="inputAttrs"
-                            v-on="inputHandlers"
-                            :disabled="disabled || availableOptions2.length === 0"
-                            :options="availableOptions"
-                          >
-                            <template #first>
-                              <!-- This is required to prevent bugs with Safari -->
-                              <option disabled color="" style="background-color: bisque;">Seleccione</option>
-                            </template>
-                          </b-form-select>
-                        </template>
-                      </b-form-tags>
-                    </b-form-group>
+                  <b-container>
+                    <b-row>
+                        
+                        <b-col cols="11"><p style="text-align: left;">Selecciona las materias primas</p></b-col>
+                        <b-col cols="1" style="margin-bottom: 25px;">   <b-button style="border-radius: 110%;"  variant="light">  <b-icon   @click="registrarmateriaPrima()" icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
+                      </b-row>
+                  </b-container> 
+                  <div v-for="(elemento, index) in materiaPrima" :key="index">
+                    <b-container style="margin-bottom: 10px;">
+                      <b-row>
+                        <b-col cols="11">
+                          <div class="col form-group form-floating mb-2">
+                           <b-input v-model="elemento.valor" class="altura"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col cols="1" ><b-button @click="eliminarmateriaPrimaSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                      </b-row>
+                    </b-container>
                   </div>
 
-                  <div> 
-                    <b-form-group label="Selecciona la materia prima" label-for="tags-component-select">
-                      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-                      <b-form-tags
-                        id="tags-component-select"
-                        v-model="materiaPrima"
-                        size="lg"
-                        class="mb-2"
-                        add-on-change
-                        no-outer-focus
-                      >
-                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                              <b-form-tag
-                              @remove="removeTag(tag)"
-                              :title="tag"
-                              :disabled="disabled"
-                              style="background-color: black;"
-                              >{{ tag }}</b-form-tag>
-                            </li>
-                          </ul>
-                          <b-form-select
-                            v-bind="inputAttrs"
-                            v-on="inputHandlers"
-                            :disabled="disabled || availableOptions3.length === 0"
-                            :options="availableOptions"
-                          >
-                            <template #first>
-                              <!-- This is required to prevent bugs with Safari -->
-                              <option disabled materiaPrima="" style="background-color: bisque;">Seleccione</option>
-                            </template>
-                          </b-form-select>
-                        </template>
-                      </b-form-tags>
-                    </b-form-group>
+                  <b-container>
+                    <b-row>
+                        
+                        <b-col cols="11"><p style="text-align: left;">Selecciona las imagenes</p></b-col>
+                        <b-col cols="1" style="margin-bottom: 25px;">   <b-button style="border-radius: 110%;"  variant="light">  <b-icon   @click="registrarImagenes()" icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
+                      </b-row>
+                  </b-container> 
+                  <div v-for="(elemento, index) in imagenes" :key="index">
+                    <b-container style="margin-bottom: 10px;">
+                      <b-row>
+                        <b-col cols="11">
+                          <div class="col form-group form-floating mb-2">
+                           <b-input v-model="elemento.valor" class="altura"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col cols="1" ><b-button @click="eliminarImagenesSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                      </b-row>
+                    </b-container>
                   </div>
-            
-                  <div > 
-                    <b-form-group label="Selecciona las imagenes" label-for="tags-component-select">
-                      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-                      <b-form-tags
-                        id="tags-component-select"
-                        v-model="imagenes"
-                        size="lg"
-                        class="mb-2"
-                        add-on-change
-                        no-outer-focus
-                      >
-                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                              <b-form-tag
-                                @remove="removeTag(tag)"
-                                :title="tag"
-                                :disabled="disabled"
-                                style="background-color: black;"
-                              >{{ tag }}
-                              </b-form-tag>
-                            </li>
-                          </ul>
-                          <b-form-select
-                           v-bind="inputAttrs"
-                           v-on="inputHandlers"
-                           :disabled="disabled || availableOptions5.length === 0"
-                           :options="availableOptions"
-                          >
-                            <template #first>
-                              <!-- This is required to prevent bugs with Safari -->
-                              <option disabled imagenes="" style="background-color: bisque;">Seleccione</option>
-                            </template>
-                          </b-form-select>
-                        </template>
-                      </b-form-tags>
-                    </b-form-group>
+
+
+                  <b-container>
+                    <b-row>
+                        
+                        <b-col cols="11"><p style="text-align: left;">Selecciona las presentaciones</p></b-col>
+                        <b-col cols="1" style="margin-bottom: 25px;">   <b-button style="border-radius: 110%;"  variant="light">  <b-icon   @click="registrarPresentaciones()" icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
+                      </b-row>
+                  </b-container> 
+                  <div v-for="(elemento, index) in presentaciones" :key="index">
+                    <b-container style="margin-bottom: 10px;">
+                      <b-row>
+                        <b-col cols="11">
+                          <div class="col form-group form-floating mb-2">
+                           <b-input v-model="elemento.valor" class="altura"></b-input>
+                          </div>
+                        </b-col>
+                        <b-col cols="1" ><b-button @click="eliminarPresentacionesSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                      </b-row>
+                    </b-container>
                   </div>
+                  
+
+                  
               
-                  <div > 
-                    <b-form-group label="Selecciona las presentaciones" label-for="tags-component-select">
-                      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-                      <b-form-tags
-                        id="tags-component-select"
-                        v-model="presentaciones"
-                        size="lg"
-                        class="mb-2"
-                        add-on-change
-                        no-outer-focus
-                      >
-                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                              <b-form-tag
-                                @remove="removeTag(tag)"
-                                :title="tag"
-                                :disabled="disabled"
-                                style="background-color: black;"
-                              >{{ tag }}
-                              </b-form-tag>
-                            </li>
-                          </ul>
-                          <b-form-select
-                            v-bind="inputAttrs"
-                            v-on="inputHandlers"
-                            :disabled="disabled || availableOptions4.length === 0"
-                            :options="availableOptions"
-                          >
-                            <template #first>
-                              <!-- This is required to prevent bugs with Safari -->
-                              <option disabled presentaciones="" style="background-color: bisque;">Seleccione</option>
-                            </template>
-                          </b-form-select>
-                        </template>
-                      </b-form-tags>
-                    </b-form-group>
-                  </div>
                   
                   <div class="d-grid gap-2 mb-3">
                       <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" v-on:click="validaciones"  >Registrar</button>
@@ -281,6 +194,29 @@ font-size: 40px;
           this.mostrar()
           console.log(this.idProducto)
       },
+
+      validations: {
+          nombre: {required},
+          descripcion: { 
+              required,
+              maxLengthValue: maxLength(100)
+          },
+          precio:{
+              required,
+              numeric,
+              maxLengthValue: maxLength(1000000),
+              between: between(1,1000000)
+          },
+          stock:{
+              required,
+              numeric,
+              maxLengthValue: maxLength(1000000),
+              between: between(1,1000000)
+          },
+          nombreImagen:{required},
+          añejamiento: {required},
+      },   
+
       methods:{
          
           
@@ -309,30 +245,59 @@ font-size: 40px;
               this.stock='';
               this.nombreImagen='';
               this.añejamiento='';
+          },
+         
+          registrarSabor(){
+            this.sabor.push({valor: ''})
+          },
+          eliminarSaborSeleccionado(indice){
+            this.sabor.forEach((elemento,index) => { 
+                if (indice==index){
+                  this.sabor.splice(index,1)}}
+              )
+          },
+          registrarColor(){
+            this.color.push({valor: ''})
+          },
+          eliminarColorSeleccionado(indice){
+            this.color.forEach((elemento,index) => { 
+                if (indice==index){
+                  this.color.splice(index,1)}}
+              )
+          },
+          registrarmateriaPrima(){
+            this.materiaPrima.push({valor: ''})
+          },
+          eliminarmateriaPrimaSeleccionado(indice){
+            this.materiaPrima.forEach((elemento,index) => { 
+                if (indice==index){
+                  this.materiaPrima.splice(index,1)}}
+              )
+          },
+          registrarImagenes(){
+            this.imagenes.push({valor: ''})
+          },
+          eliminarImagenesSeleccionado(indice){
+            
+            this.imagenes.forEach((elemento,index) => { 
+                if (indice==index){
+                  this.imagenes.splice(index,1)}}
+              )
+          },
+          registrarPresentaciones(){
+            this.presentaciones.push({valor: ''})
+          },
+          eliminarPresentacionesSeleccionado(indice){
+            
+            this.presentaciones.forEach((elemento,index) => { 
+                if (indice==index){
+                  this.presentaciones.splice(index,1)}}
+              )
           }
+          
       },
 
-      validations: {
-          nombre: {required},
-          descripcion: { 
-              required,
-              maxLengthValue: maxLength(100)
-          },
-          precio:{
-              required,
-              numeric,
-              maxLengthValue: maxLength(1000000),
-              between: between(1,1000000)
-          },
-          stock:{
-              required,
-              numeric,
-              maxLengthValue: maxLength(1000000),
-              between: between(1,1000000)
-          },
-          nombreImagen:{required},
-          añejamiento: {required},
-      },   
+     
       
   }
 </script>

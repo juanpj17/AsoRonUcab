@@ -1,5 +1,6 @@
 <template>
-    <b-container fluid>
+    <b-container fluid style="background-color: var(--fondo)">
+      <h1 class="titulos">Registro de Roles</h1>
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">
@@ -72,9 +73,11 @@
 
       >
       <template #cell(actions)="row">
-    <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">Detalles</b-button>
-    <b-button size="sm" style="margin-left: 10px;" class="mr-1" @click="AsignarRoles(row.item.id)">Modificar</b-button>
-    <b-button size="sm" style="margin-left: 10px;" class="mr-1">Eliminar</b-button>
+
+        <b-button size="sm" style="margin-left: 10px; background-color: red; border-color: red" class="mr-1">Eliminar</b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">Detalles</b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" class="mr-1" @click="AsignarRoles(row.item.id)">Modificar</b-button>
+    
       </template>
         <template #row-details="row">
           <b-card>

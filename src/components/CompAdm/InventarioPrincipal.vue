@@ -1,5 +1,6 @@
 <template>
     <b-container fluid>
+      <h1 class="titulos">Inventario</h1>
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">

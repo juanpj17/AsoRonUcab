@@ -1,8 +1,7 @@
 <template >
-    <b-container fluid style="background-color: #F6F1F1; "  >
-      <div style="background-color: #56070C;">
-        <h3 style="color: #F6F1F1;">REGISTRO DE PEDIDOS</h3>
-      </div>
+    <b-container fluid style="background-color: var(--fondo); "  >
+      <h1 class="titulos">Registro de Pedidos</h1>
+ 
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">
@@ -74,10 +73,9 @@
 
       >
       <template #cell(actions)="row">
-    <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Detalles
-      </b-button>
-      
+        <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
+          Detalles
+        </b-button>
       </template>
         <template #row-details="row">
           <b-card>

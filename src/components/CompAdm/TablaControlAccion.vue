@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid>
-      <h1>Auditoria </h1>
+  <b-container fluid style="background-color: var(--fondo)">
+      <h1 class="titulos">Auditoria</h1>
     <!-- User Interface controls -->
     <b-row>
       <b-col lg="6" class="my-1">
