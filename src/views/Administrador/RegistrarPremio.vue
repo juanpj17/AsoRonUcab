@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div style="background-color: var(--fondo); ">
         <Navbar></Navbar>
-        <RegistrarPremio></RegistrarPremio>
+        <h1 class="titulos" style="margin-top: 15px">Registrar Premios</h1>
+        <RegistrarPremio ></RegistrarPremio>
         
        
     

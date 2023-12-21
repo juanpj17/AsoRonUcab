@@ -1,6 +1,6 @@
 <template>
-    <b-container fluid>
-        <h1>Registro de empleados</h1>
+    <b-container fluid style="background-color: var(--fondo);">
+        <h1 class="titulos">Registro de empleados</h1>
       <!-- User Interface controls -->
       <b-row>
         <b-col lg="6" class="my-1">
@@ -74,18 +74,18 @@
         :tbody-transition-props="transProps"
 
       >
-       <!-- Columna de acciones con botón de eliminar y modificar -->
+<!------------------ Columna de acciones con botón de eliminar y modificar --------------------->
       <template #cell(actions)="row">
         <b-button icon="delete" variant="danger" size="sm">
           <i class="bi bi-trash-fill"></i> Eliminar
         </b-button>
 
-        <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-        Detalles
-      </b-button>
-      <b-button size="sm" style="margin-left: 10px;" @click="RegistrarEmpleado()" class="mr-1">
-        Modifiar
-      </b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
+          Detalles
+        </b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado()" class="mr-1">
+         Modifiar
+        </b-button>
      
       </template>
 <template #row-details="row">

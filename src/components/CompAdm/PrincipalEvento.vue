@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-      <h1>Registro de Eventos </h1>
+    <h1 class="titulos">Consulta de Eventos </h1>
     <!-- User Interface controls -->
     <b-row>
       <b-col lg="6" class="my-1">
@@ -47,16 +47,11 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-    
-      
-
     </b-row>
-    <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg" @click="RegistrarEvento()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
     
-    </div>
     <!-- Main table element -->
     <b-table
-    id="table-transition-example"
+      id="table-transition-example"
       :items="items"
       :fields="fields"
       :current-page="currentPage"
@@ -74,28 +69,27 @@
       :tbody-transition-props="transProps"
 
     >
-     <!-- Columna de acciones con botón de eliminar y modificar -->
-    <template #cell(actions)="row">
-      <b-button icon="delete" variant="danger" size="sm">
-        <i class="bi bi-trash-fill"></i> Eliminar
-      </b-button>
-
-      <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-      Detalles
-    </b-button>
-    <b-button size="sm" style="margin-left: 10px;" @click="RegistrarEvento(row.item.Codigo)" class="mr-1">
-      Modifiar
-    </b-button>
+<!---------------------------- Columna de acciones con botón de eliminar y modificar ---------------------------->
+      <template #cell(actions)="row">
+        <b-button icon="delete" variant="danger" size="sm">
+          <i class="bi bi-trash-fill"></i> Eliminar
+        </b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
+          Detalles
+        </b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEvento(row.item.Codigo)" class="mr-1">
+          Modifiar
+        </b-button>
    
-    </template>
-<!-- Detalles del producto -->
-<template #row-details="row">
-      <b-card>
-        <ul>
-          <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-        </ul>
-      </b-card>
-    </template>
+      </template>
+<!----------------------------- Detalles del producto ---------------------------------------------------------->
+      <template #row-details="row">
+        <b-card>
+          <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul>
+        </b-card>
+      </template>
 
     </b-table>
     <b-pagination
@@ -105,10 +99,10 @@
           class="my-0"
           align="fill"
           size="sm"
-        ></b-pagination>
+    ></b-pagination>
     <!-- Info modal -->
      <!-- Info modal -->
-     <b-modal v-model="mostrarModal" id="modal-xl" size="xl" scrollable>
+    <b-modal v-model="mostrarModal" id="modal-xl" size="xl" scrollable>
       <template #modal-title>
         Detalles del evento
       </template>
@@ -182,7 +176,7 @@
          
 
       </template>
-  </b-modal>
+    </b-modal>
   </b-container>
 </template>
 

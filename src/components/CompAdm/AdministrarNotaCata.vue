@@ -73,7 +73,7 @@
           <i class="bi bi-trash-fill"></i> Eliminar
         </b-button>
 
-        <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="info(row.item)" class="mr-1">
         Mas info/Modificar
       </b-button>
      

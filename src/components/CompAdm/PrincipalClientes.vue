@@ -1,137 +1,125 @@
 <template>
-  <b-container fluid>
-      <h1>Registro de Clientes </h1>
-    <!-- User Interface controls -->
-    <b-row>
-      <b-col lg="6" class="my-1">
-        <b-form-group
-          label="Filter"
-          label-for="filter-input"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="sm"
-          class="mb-0"
-        >
-          <b-input-group size="sm">
-            <b-form-input
-              id="filter-input"
-              v-model="filter"
-              type="search"
-              placeholder="Type to Search"
-            ></b-form-input>
+  <b-container fluid style="background-color: var(--fondo);">
+      <h1 class="titulos" >Registro de Clientes </h1>
+      <!-- User Interface controls -->
+      <b-row>
+        <b-col lg="6" class="my-1">
+          <b-form-group
+            label="Filter"
+            label-for="filter-input"
+            label-cols-sm="3"
+            label-align-sm="right"
+            label-size="sm"
+            class="mb-0"
+          >
+            <b-input-group size="sm">
+              <b-form-input
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                placeholder="Type to Search"
+              ></b-form-input>
 
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-    </b-row>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+      </b-row>
       
-    <b-row>
-      <b-col></b-col>
-      <b-col></b-col>
-      <b-col class="my-1" >
-        <b-form-group
-          label="Max de filas"
-          label-for="per-page-select"
-          label-align-sm="right"
-          label-size="sm"
-          class="mb-0"
-          
-        >
-          <b-form-select
-            id="per-page-select"
-            v-model="perPage"
-            :options="pageOptions"
-          ></b-form-select>
-        </b-form-group>
-      </b-col>
-    
-      
-
-    </b-row>
-    <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg" @click="modalShow = !modalShow"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
-    
-    </div>
-   
-
-<b-modal v-model="modalShow" size="lg" scrollable="true">
-  <template #modal-title>
-     <h2 >Seleccione el tipo de Cliente</h2>
-   </template>
-     <b-container><b-row>
-      <b-col><b-button size="lg" pill @click="RegistroNatural('*')">Natural</b-button></b-col>
-      <b-col><b-button size="lg" pill @click="RegistroJuridico('*')">Juridico</b-button></b-col>
-     </b-row></b-container>
-      
-</b-modal>
+      <b-row>
+        <b-col></b-col>
+        <b-col></b-col>
+        <b-col class="my-1" >
+          <b-form-group
+            label="Max de filas"
+            label-for="per-page-select"
+            label-align-sm="right"
+            label-size="sm"
+            class="mb-0"        
+          >
+            <b-form-select
+              id="per-page-select"
+              v-model="perPage"
+              :options="pageOptions"
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <div style="margin-bottom: 50px;"> 
+        <b-button pill class="boton" size="lg" @click="modalShow = !modalShow"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
+      </div>
+      <b-modal v-model="modalShow" size="lg" scrollable="true">
+        <template #modal-title>
+          <h2 >Seleccione el tipo de Cliente</h2>
+        </template>
+        <b-container>
+          <b-row>
+            <b-col><b-button size="lg" pill @click="RegistroNatural('*')">Natural</b-button></b-col>
+            <b-col><b-button size="lg" pill @click="RegistroJuridico('*')">Juridico</b-button></b-col>
+          </b-row>
+        </b-container>
+      </b-modal>
     <!-- Main table element -->
-    <b-table
-    id="table-transition-example"
-      :items="items"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :filter-included-fields="filterOn"
-      :sort-by.sync="sortBy"
-      hover
-      outlined
-      stacked="md"
-      show-empty
-      small
-      @filtered="onFiltered"
-      primary-key="id"
-      :tbody-transition-props="transProps"
-
-    >
-     <!-- Columna de acciones con botón de eliminar y modificar -->
-    <template #cell(actions)="row">
-      <b-button icon="delete" variant="danger" size="sm">
-        <i class="bi bi-trash-fill"></i> Eliminar
-      </b-button>
-
-      <b-button size="sm" style="margin-left: 10px;" @click="info(row.item)" class="mr-1">
-      Detalles
-    </b-button>
-    <b-button size="sm" style="margin-left: 10px;" @click="Modificar(row.item.Codigo)" class="mr-1">
-      Modifiar
-    </b-button>
-   
-    </template>
-<!-- Detalles del producto -->
-<template #row-details="row">
-      <b-card>
-        <ul>
-          <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-        </ul>
-      </b-card>
-    </template>
-
-    </b-table>
-    <b-pagination
+      <b-table
+        id="table-transition-example"
+        :items="items"
+        :fields="fields"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :filter="filter"
+        :filter-included-fields="filterOn"
+        :sort-by.sync="sortBy"
+        hover
+        outlined
+        stacked="md"
+        show-empty
+        small
+        @filtered="onFiltered"
+        primary-key="id"
+        :tbody-transition-props="transProps"
+      >
+<!------------------------------- Columna de acciones con botón de eliminar y modificar ------------------------->
+        <template #cell(actions)="row">
+          <b-button icon="delete" variant="danger" size="sm">
+            <i class="bi bi-trash-fill"></i> Eliminar
+          </b-button>
+          <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
+            Detalles
+          </b-button>
+          <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="Modificar(row.item.Codigo)" class="mr-1">
+            Modifiar
+          </b-button>
+        </template>
+<!----------------------------------- Detalles del producto -------------------------------------------------->
+        <template #row-details="row">
+          <b-card>
+            <ul>
+              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            </ul>
+          </b-card>
+        </template>
+      </b-table>
+      <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
           :per-page="perPage"
           class="my-0"
           align="fill"
           size="sm"
-        ></b-pagination>
-    <!-- Info modal -->
-     <!-- Info modal -->
-<b-modal v-model="mostrarModal" size="xl" scrollable>
-    <template #modal-title>
-     
-      <h2 >Detalles del empleado</h2>
-    </template>
-    <template #default>
-        <table class="table table-bordered">
+      ></b-pagination>
+<!-------------------------------- Info modal --------------------------------------->
+      <b-modal v-model="mostrarModal" size="xl" scrollable>
+        <template #modal-title>
+          <h2 >Detalles del empleado</h2>
+        </template>
+        <template #default>
+          <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Direccion fisica</th>
-                    <th v-if="tipoRegistro=='J'">Direccion fiscal </th>
-                   
+                    <th>Dirección física</th>
+                    <th v-if="tipoRegistro=='J'">Dirección fiscal </th>                  
                 </tr>
             </thead>
             <tbody>
@@ -140,11 +128,11 @@
                     <td v-if="tipoRegistro=='J'">{{ item.Direccion }} </td>
                 </tr>
             </tbody>
-        </table>
-        <table class="table table-bordered" >
+          </table>
+          <table class="table table-bordered" >
             <thead>
                 <tr>
-                    <th>Telefonos</th> 
+                    <th>Teléfonos</th> 
                 </tr>
             </thead>
             <tbody>
@@ -152,8 +140,8 @@
                     <td>{{ item }}</td>
                 </tr>
             </tbody>
-        </table>
-        <table class="table table-bordered">
+          </table>
+          <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Correos</th> 
@@ -164,13 +152,13 @@
                     <td>{{ item }}</td>
                 </tr>
             </tbody>
-        </table>
+          </table>
         
-        <table  v-if="tipoRegistro=='J'" class="table table-bordered">
+          <table  v-if="tipoRegistro=='J'" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Razon social</th> 
-                    <th>Pagina web</th> 
+                    <th>Razón social</th> 
+                    <th>Página web</th> 
                     <th>Capital</th>
                 </tr>
             </thead>
@@ -179,13 +167,13 @@
                     <td>{{ item }}</td>
                 </tr>
             </tbody>
-        </table>
-        <p v-if="tipoRegistro=='J'">Personas de contacto</p>
-        <table  v-if="tipoRegistro=='J'" class="table table-bordered" title="Personas de contacto">
+          </table>
+          <p v-if="tipoRegistro=='J'">Personas de contacto</p>
+          <table  v-if="tipoRegistro=='J'" class="table table-bordered" title="Personas de contacto">
             <thead>
                 <tr>
                     <th>Nombre</th> 
-                    <th>Telefono</th> 
+                    <th>Teléfono</th> 
                     <th>Correo</th>
                 </tr>
             </thead>
@@ -194,12 +182,9 @@
                     <td>{{ item }}</td>
                 </tr>
             </tbody>
-        </table>
-        
-
-    </template>
-</b-modal>
-
+          </table>
+        </template>
+      </b-modal>
   </b-container>
 </template>
 

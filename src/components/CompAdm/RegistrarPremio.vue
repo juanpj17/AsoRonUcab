@@ -1,74 +1,75 @@
 <template>
-    <div>
+  <div >
   
-    <div>
-        <section class="container" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; margin-top: 20px;" >
-    <b-form-group
-      label="Seleccione los premios ganados"
-      label-for="table-select-mode-select"
-      label-cols-md="4"
-    >
-      
-    </b-form-group>
-    <b-col lg="4" class="my-1">
-          <b-form-group
-            label="Filtro"
-            label-for="filter-input"
-            label-cols-sm="3"
-            label-align-sm="right"
-            label-size="sm"
-            class="mb-0"
-          >
-            <b-input-group size="sm">
-              <b-form-input
-                id="filter-input"
-                v-model="filter"
-                type="search"
-                placeholder="Type to Search"
-              ></b-form-input>
+    <div >
+      <section  class="container"  style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; margin-top: 20px; ">
+          <div style="background-color: var(--carne) !important" class="row content d-flex justify-content-center align-items-center">
+            <h2 style="color: white; margin-bottom: -15px">Seleccion los premios ganados</h2>
+            <b-form-group
+              
+              label-for="table-select-mode-select"
+              label-cols-md="4"
+            >
+            
+            </b-form-group>
+            <b-col lg="4" class="my-1">
+              <b-form-group
+                label="Filtro"
+                label-for="filter-input"
+                label-cols-sm="3"
+                label-align-sm="right"
+                label-size="sm"
+                class="mb-0"
+              >
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="filter-input"
+                    v-model="filter"
+                    type="search"
+                    placeholder="Type to Search"
+                  ></b-form-input>
   
-              <b-input-group-append>
-                <b-button :disabled="!filter" @click="filter = ''" variant="info">Borrar</b-button>
-              </b-input-group-append>
-            </b-input-group>
-          </b-form-group>
-        </b-col>
-    <b-table
-      :items="items"
-      :fields="fields"
-      :select-mode="selectMode"
-      :filter="filter"
-    :filter-included-fields="filterOn"
-      responsive="sm"
-      ref="selectableTable"
-      selectable
-      @row-selected="onRowSelected"
-    >
-      <!-- Example scoped slot for select state illustrative purposes -->
-      <template #cell(selected)="{ rowSelected }">
-        <template v-if="rowSelected" >
-          <span aria-hidden="true">&check;</span>
-          <!-- <span class="sr-only">Selected</span> -->
-        
-          
-        </template>
-        <template v-else>
-          <span aria-hidden="true">&nbsp;</span>
-          <span class="sr-only">Not selected</span>
-        </template>
-      </template>
-    </b-table>
-    <p>
-      <b-button size="lg" @click="selectAllRows" style="margin-right: 20px;">Seleccionar todo</b-button>
+                  <b-input-group-append>
+                    <b-button :disabled="!filter" @click="filter = ''" variant="info">Borrar</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+            <b-table
+              :items="items"
+              :fields="fields"
+              :select-mode="selectMode"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              responsive="sm"
+              ref="selectableTable"
+              selectable
+              @row-selected="onRowSelected"
+              
+            >
+              <!-- Example scoped slot for select state illustrative purposes -->
+              <template #cell(selected)="{ rowSelected }">
+                <template v-if="rowSelected" >
+                  <span aria-hidden="true">&check;</span>
+                  <!-- <span class="sr-only">Selected</span> -->    
+                </template>
+                <template v-else>
+                  <span aria-hidden="true">&nbsp;</span>
+                  <span class="sr-only">Not selected</span>
+                </template>
+              </template>
+            </b-table>
+            <p>
+              <b-button size="lg" @click="selectAllRows" style="margin-right: 20px; background-color: var(--vinotinto); border-color: var(--vinotinto)">Seleccionar todo</b-button>
       
-      <b-button size="lg" @click="clearSelected">Borrar Seleccion</b-button>
-      <b-button size="lg" style="margin-left: 20px;">Aplicar cambios</b-button>
-   
-    </p>
+              <b-button size="lg" @click="clearSelected" style=" background-color: var(--vinotinto); border-color: var(--vinotinto)">Borrar Seleccion</b-button>
+              <b-button size="lg" style="margin-left: 20px; background-color: var(--vinotinto); border-color: var(--vinotinto)">Aplicar cambios</b-button>
+            </p>
     
-</section>
-  </div>
-</div>
+          </div>
+        </section>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -112,3 +113,10 @@
       },
   }
 </script>
+<style>
+
+th{
+  background-color: var(--dorado) !important;
+}
+
+</style>

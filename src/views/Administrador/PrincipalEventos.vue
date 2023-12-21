@@ -1,23 +1,23 @@
 <template>
     <div>
-<navbar></navbar>
+      <navbar></navbar>
 
-<div>
-  <b-tabs  justified>
+      <div>
+        <b-tabs  justified>
     
-    <b-tab title="Registrar evento" active > 
-     <RegistrarEvento></RegistrarEvento>
-   
-    </b-tab>
-  
-    <b-tab title="Consultar Eventos"> <PrincipalEventoVue></PrincipalEventoVue></b-tab>
-    
-  </b-tabs>
-</div>   
-=======
- <PrincipalEventoVue></PrincipalEventoVue>
-
-      
+          <b-tab  title="Registrar evento" active > 
+            <div style="background-color: var(--fondo)">
+              <RegistrarEvento></RegistrarEvento> 
+            </div>
+          </b-tab>
+          <b-tab title="Consultar Eventos"> 
+            <div style="background-color: var(--fondo)">
+              <PrincipalEventoVue></PrincipalEventoVue>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </div>   
+     
     </div>
 </template>
 
@@ -26,11 +26,18 @@ import Navbar from '../../components/CompAdm/Navbar.vue';
 
 
 import PrincipalEventoVue from '@/components/CompAdm/PrincipalEvento.vue';
+import RegistrarEvento from '@/components/CompAdm/RegistrarEvento.vue';
 
 export default{
     components:{
+      Navbar,PrincipalEventoVue, RegistrarEvento
+    },
   
-   Navbar,PrincipalEventoVue
-}
 }
 </script>
+<style scoped>
+
+
+
+
+</style>

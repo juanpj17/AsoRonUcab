@@ -33,7 +33,7 @@
         </b-row>
         <b-row style="margin-top:30px;">
             <b-col></b-col>
-            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px;" @click="VerificarUsuario()">Iniciar Sesión</b-button></b-col>
+            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px; display: inline-block;" @click="VerificarUsuario()">Iniciar Sesión</b-button></b-col>
             <b-col></b-col>
         </b-row>
     </b-col>
@@ -41,13 +41,13 @@
     <b-col>
       <h2 style="text-align: left; margin-top: 10px;">Soy nuevo</h2>
       <p style="text-align: left;"> Crear una cuenta en segundos. Solo presiona el botón 'Crear cuenta', rellena los campos y ¡listo! Disfruta de los beneficios de formar parte de ASORON ¿Qué estás esperando?</p>
-      <b-button  v-b-modal.modal-1 variant="dark" pill style="margin-top: 28%;">Crear una cuenta</b-button>
+      <b-button  v-b-modal.modal-1 variant="dark" pill style="margin-top: 28%; display: inline-block">Crear una cuenta</b-button>
       <div>
-  <b-modal id="modal-1" title="Seleccione el tipo de persona" scrollable>
-  <b-button style="margin-right: 20px;" variant="dark" @click="RegistroNatural()">Natural</b-button>  
-  <b-button variant="dark" @click="RegistroJuridico()">Juridico</b-button>
-  </b-modal>
-</div>
+        <b-modal id="modal-1" title="Seleccione el tipo de persona" scrollable>
+            <b-button style="margin-right: 20px; " variant="dark" @click="RegistroNatural()">Natural</b-button>  
+            <b-button variant="dark" @click="RegistroJuridico()">Juridico</b-button>
+        </b-modal>
+      </div>
     </b-col>
         </b-row>
     </b-container>
