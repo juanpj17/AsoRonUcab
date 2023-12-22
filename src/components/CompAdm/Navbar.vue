@@ -1,7 +1,7 @@
 <template>
    <header class="header">
         <div class="logo">
-            <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca" @click="Inicio()">
+            <img src="@/assets/Logo_amarillo.png" alt="Logo de la marca" @click="InicioAdm()">
         </div>
         <nav>
            <ul class="nav-links">
@@ -15,7 +15,6 @@
                 <li><a href="#" @click="Compras()">Compras</a></li>
                 <li><a href="#" @click="TiendaFisica()">Tienda Fisica</a></li>
                 <li><a href="#" @click="ControlAccion()">Auditoria</a></li>
-
 
 
            </ul>            
@@ -42,9 +41,9 @@ import TiendaFisica from './TiendaFisica.vue';
             if (this.$route.path!='/PrincipalEventos/')
             this.$router.push('/PrincipalEventos/');
           },
-          Inicio() {
-             if (this.$route.name!=='home')
-             this.$router.push({name: 'home'});
+          InicioAdm() {
+            if (this.$route.path!='/Home')
+            this.$router.push('/Home');
            },
           Inventario() {
             if (this.$route.path!='/Inventario/')

@@ -20,6 +20,16 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-row style="margin-top:10px; m">
+        <b-col cols="1" class="col form-group form-floating mb-2">
+           <b-form-select v-model="TipoDeVenta" :options="tipo"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+           <label>Tipo de venta</label>
+        </b-col>
+        <b-col cols="2" class="col form-group form-floating mb-2" v-if="TipoDeVenta=='----Evento----'"> 
+           <b-form-select :options="Eventos"  v-model="EventoSeleccionado"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+          <label>Evento</label>
+          </b-col>
+    </b-row>
     <b-row>
       <b-col >
          <b-input-group prepend="Codigo del producto" class="mt-3">
@@ -97,12 +107,17 @@
           { key: 'Precio', label: 'Precio', class: 'text-center' },
         ],
         canjear:'',
+        tipo:['----Tienda----','----Evento----'],
+        TipoDeVenta:'Evento',
+        EventoSeleccionado:'',
+        Eventos:['1','2'],
       }
     },
     methods: {
       CrearOrden(){
             let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
             this.items.push(producto);
+           
         },
         async getMonitor() {
          // https://bcv-api.deno.dev/v1/exchange

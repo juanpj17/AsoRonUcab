@@ -29,8 +29,7 @@
       </b-row>
         
       <b-row>
-        <b-col></b-col>
-        <b-col></b-col>
+        <b-col cols="11"></b-col>
         <b-col class="my-1" >
           <b-form-group
             label="Max de filas"
@@ -40,7 +39,7 @@
             class="mb-0"
             
           >
-            <b-form-select
+            <b-form-select  class="custom-select mr-sm-2  form-control altura"
               id="per-page-select"
               v-model="perPage"
               :options="pageOptions"

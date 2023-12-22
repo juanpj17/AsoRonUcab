@@ -29,8 +29,8 @@
       </b-row>
         
       <b-row>
-        <b-col></b-col>
-        <b-col></b-col>
+        <b-col cols="11"></b-col>
+       
         <b-col class="my-1" >
           <b-form-group
             label="Max de filas"
@@ -40,7 +40,7 @@
             class="mb-0"
             
           >
-            <b-form-select
+            <b-form-select  class="custom-select mr-sm-2  form-control altura"
               id="per-page-select"
               v-model="perPage"
               :options="pageOptions"
@@ -121,6 +121,7 @@
             { key: 'nombre', label: 'Nombre', class: 'text-center',sortable: true  },
             { key: 'presentacion', label: 'Presentacion', class: 'text-center',sortable: true  },
             { key: 'stock', label: 'Stock', class: 'text-center',sortable: true  },
+            { key: 'tipo', label: 'Tipo de inventario', class: 'text-center',sortable: true  },
 
           ],
           totalRows: 1,
@@ -163,13 +164,13 @@
           this.currentPage = 1
         },
       LlenarTabla(){
-        this.items=[{id:1,nombre:'Ron Santa teresa',presentacion:'0,75l',stock:'9'},
-        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80l',stock:'9'},
-        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90l',stock:'9'},
-        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95l',stock:'9'},
-        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66l',stock:'9'},
-        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94l',stock:'9'},
-        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68l',stock:'9'}]
+        this.items=[{id:1,nombre:'Ron Santa teresa',presentacion:'0,75l',stock:'9',tipo:'Virtual'},
+        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80l',stock:'9',tipo:'Fisico'},
+        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90l',stock:'9',tipo:'Virtual'},
+        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95l',stock:'9',tipo:'Fisico'},
+        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66l',stock:'9',tipo:'Virtual'},
+        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94l',stock:'9',tipo:'Fisico'},
+        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68l',stock:'9',tipo:'Fisico'}]
       },
       decreaseStock(item) {
           if (item.stock > 0) {

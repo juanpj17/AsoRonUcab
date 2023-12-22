@@ -1,8 +1,9 @@
 <template>
+    <b-container fluid style="background-color: var(--fondo)">
     <div>
         <Navbar></Navbar>
         <div style="background-color: black;">
-            <h3 style="color: azure;">~Estadisticas Diarias~</h3>
+            <h1 class="titulos">Estadísticas</h1>
         </div>
         <b-container style="margin-top: 20px;">
             <b-row style="margin-bottom: 20px; margin-left: 0%;">
@@ -15,20 +16,21 @@
             </b-row>
             <b-row> 
                 <b-col >
-                    <b-card border-variant="success" text-variant="black" class="text-center hov" >
+                    <b-card border-variant="warning" text-variant="black" class="text-center hov" >
                         <b-card-title>Valor actual del punto</b-card-title>
                         <b-card-title>1</b-card-title>
                         <b-card-text>Ultima fecha de actualizacion</b-card-text>
                         <b-card-text>12/22/2023</b-card-text>
-                        <b-button v-b-toggle.collapse-1 @click=" tipo_historico()"> Consultar Historico</b-button>
+                        <b-button v-b-toggle.collapse-1 @click=" tipo_historico()" variant="warning"> Consultar Historico</b-button>
                      </b-card>
                 </b-col>
                 <b-col> 
-                    <b-card border-variant="success" text-variant="black" header="Valor actual del cambio"  class="text-center hov" >
+                    <b-card border-variant="warning" text-variant="black" class="text-center hov" >
+                        <b-card-title>Valor actual del dolar</b-card-title>
                         <b-card-title>1</b-card-title>
                         <b-card-text>Ultima fecha de actualizacion</b-card-text>
                         <b-card-text>12/22/2023</b-card-text>
-                        <b-button v-b-toggle.collapse-1  @click="tipo_historicob()"> Consultar Historico</b-button>
+                        <b-button v-b-toggle.collapse-1  @click="tipo_historicob()"  variant="warning"> Consultar Historico</b-button>
                      </b-card>
                  </b-col>
             </b-row>
@@ -47,17 +49,30 @@
                 <b-col></b-col>
             </b-row>
         </b-container>
-        <b-sidebar id="sidebar-no-header" title="Notificaciones"  no-header shadow>
+        <b-sidebar id="sidebar-no-header"   no-header shadow>
             <template #default="{ hide }">
         <div class="p-3">
-          <b-button variant="primary" block @click="hide">Close Sidebar</b-button>
+          <b-button variant="light" block @click="hide" style="margin-left: 80%;" ><b-icon icon="x-lg" scale="0.60"></b-icon></b-button>
           <div v-for="(elemento, index) in OrdenesDeCompra" :key="index">
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
+            
         </div>
         </div>
       </template>
         </b-sidebar>
     </div>
+</b-container>
 </template>
 
 <script>

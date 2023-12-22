@@ -4,7 +4,7 @@
         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
         <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
         <h2 class="titulos" style="margin: 2% 0 4% 0 !important">Formulario de registro</h2>
-        <FormularioNaturalVue :id="$route.params.id"></FormularioNaturalVue>
+        <FormularioNaturalVue :id="$route.params.id" :tipo="tipoUsuario"></FormularioNaturalVue>
     
     </div>
 </template>

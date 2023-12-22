@@ -164,6 +164,12 @@
                               </div>
                           </div>
                         </div>
+                        <div>
+                          <div class="col form-group form-floating mb-3" v-if="tipo=='%'">
+                            <b-form-select :options="Roles"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+                            <label>Seleccione el rol</label>
+                          </div>
+                        </div>
                         <div class="d-grid gap-2 mb-3">
                             <button type="button" class="btn btn-primary btn-lg border-0 rounded-3">Registrar</button>
                         </div>
@@ -213,7 +219,8 @@
 import '../assets/styles.css'
 export default {
   props:{
-    id:''
+    id:'',
+    tipo:''
   
 },
     data: function() {
@@ -230,7 +237,8 @@ export default {
           direccion:'',
           enviado:false,
           estado:'',
-        telefonos:[]
+        telefonos:[],
+        Roles:['Administrador','vendedor','cajero']
 
         }
       },
