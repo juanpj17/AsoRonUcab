@@ -3,7 +3,7 @@
         <Navbar></Navbar>
        <PrincipalComprasVue></PrincipalComprasVue>
        <b-modal v-model="modalShow" scrollable size="xl">
-        <FacturaVentaVue></FacturaVentaVue>
+        <OrdeDeCompraVue></OrdeDeCompraVue>
     </b-modal>
     
     </div>
@@ -12,7 +12,7 @@
 <script>
 import PrincipalComprasVue from '@/components/CompAdm/PrincipalCompras.vue';
 import Navbar from '../../components/CompAdm/Navbar.vue';
-import FacturaVentaVue from '@/components/CompClientes/FacturaVenta.vue';
+import OrdeDeCompraVue from '@/components/CompAdm/OrdeDeCompra.vue';
 export default{
     props:{
         idOrdenCompra:''
@@ -23,7 +23,7 @@ export default{
         
       }},
     components:{
-        Navbar,PrincipalComprasVue,FacturaVentaVue
+        Navbar,PrincipalComprasVue,OrdeDeCompraVue
 },
 created(){
     this.idOrdenCompra=this.$route.params.id
