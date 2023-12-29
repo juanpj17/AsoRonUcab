@@ -157,8 +157,8 @@
           items: [
           ],
           fields: [
-          { key: 'Codigo', label: 'Codigo',sortable: true  },
-              { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center',sortable: true  },
+              { key: 'Nombres', label: 'Nombres',sortable: true  },
+              { key: 'Apellidos', label: 'Apellidos', class: 'text-center',sortable: true  },
               { key: 'Cedula', label: 'Cedula', class: 'text-center',sortable: true  },
               { key: 'Rol', label: 'Rol', class: 'text-center', sortable: true },
               { key: 'actions', label: 'Opciones', class: 'text-center', sortable: true },
@@ -175,16 +175,16 @@
           transProps: {
           // Transition name
           name: 'flip-list',
-          sortBy: 'Codigo',
+          sortBy: 'Nombres',
           empleado: {}
-        },
+          },
 
          
         }
       },
       created(){
         this.ObtenerEmpleados();
-       this.LlenarTabla();
+ 
       },
      
       computed: {
@@ -217,11 +217,22 @@
           this.currentPage = 1
         },
 
-        LlenarTabla(){
-            this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
-            { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-            ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-            ]
+        LlenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              Nombres: data[i].nombres_empleado,
+              Apellidos: data[i].apellidos_empleado,
+              Cedula: data[i].cedula_empleado,
+              Rol: data[i].rol_empleado
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+          // this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
+          // { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+          // ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+          // ]
         },
 
         RegistrarEmpleado(){
@@ -234,6 +245,7 @@
             await this.axios.get(url).then(response => {
                 this.empleado = response.data;
                 console.log(this.empleado)
+                this.LlenarTabla(this.empleado)
             }).catch(error => {
                 console.log(error);
             });

@@ -38,7 +38,7 @@
                         </div>
                         
                         <div class="row"  style="margin-top: 10px;">
-                            <div class="col form-group form-floating mb-3">
+                            <!-- <div class="col form-group form-floating mb-3">
 
                                  <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="estado" :options="Estados"> </b-form-select>  
                                  <label>Seleccione</label>
@@ -61,9 +61,9 @@
                                  <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="municipio" :options="Municipios"> </b-form-select>  
                                  <label>Seleccione/Municipo</label>
                                               
-                            </div>
+                            </div> -->
                             <div class="col form-group form-floating mb-3">
-                                 <b-form-select   class="custom-select mr-sm-2  form-control altura" v-model="parroquia" :options="Parroquias"> </b-form-select>  
+                                 <b-form-select   class="custom-select mr-sm-2  form-control " v-model="parroquia" :options="parroquias.map(item => ({ text: item.nombre_parroquia, value: item.id }))"> </b-form-select>  
                                  <label>Seleccione/Parroquia</label>
 
                                         
@@ -178,7 +178,7 @@
                        </div>       
 
                     <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn  btn-lg border-0 rounded-3 " style="background-color: var(--vinotinto); color: white">Guardar</button>
+                        <button type="button" class="btn  btn-lg border-0 rounded-3 " style="background-color: var(--vinotinto); color: white" @click="registrarEvento()">Guardar</button>
                     </div>
                         </form>
                     </div>
@@ -200,19 +200,20 @@ export default {
           descripcion:'',
           estado:'',
           municipio:'',
-          parroquia:'',
+          parroquia:null,
           nombre:'',
           fecha_fin:'',
           fecha_inicio:'',
         Estados:[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia'],
         Municipios:['1','2','3'],
-        Parroquias:['a','b','c'],
+        parroquias:[],
         inventario:[],
 
         }
       
       },
       created(){
+        this.obtenerParroquias()
         this.RegistrarInventario()
         this.id=this.$route.params.id
       },
@@ -235,7 +236,54 @@ export default {
           }
       })
 
-      }
+      },
+
+      registrarEvento(){
+    
+        const url = 'http://localhost:3000/api/evento';
+        const datos = {
+            nombre: this.nombre,
+            descripcion: this.descripcion, 
+            num_entradas: this.numEnt, 
+            fecha_hora_inicial: this.fecha_inicio, 
+            fecha_hora_final: this.fecha_fin, 
+            direccion: this.direccion,
+            parroquia: this.parroquia
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+
+        }).catch(error => {
+            console.log(error);
+        });
+    
+    },
+
+    llenarParroquias(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_parroquia: data[i].lug_nombre,
+              id: data[i].lug_id
+            };
+            console.log(data[i].lug_nombre)            
+            this.parroquias.push(item)
+            console.log(item)
+          }
+        },
+
+    async obtenerParroquias() {
+            const url = 'http://localhost:3000/api/parroquia';
+            await this.axios.get(url).then(response => {
+              const parroquia = response.data;
+              
+              console.log(parroquia)
+              console.log(parroquia.length)
+              this.llenarParroquias(parroquia)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
                
     },
     
