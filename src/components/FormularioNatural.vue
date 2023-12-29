@@ -171,7 +171,7 @@
                           </div>
                         </div>
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3">Registrar</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" v-on:click="registrarEmpleado" >Registrar</button>
                         </div>
                       </form>
                   
@@ -256,6 +256,31 @@ export default {
              this.telefonos.splice(index,1)}})}
                
     },
+
+    registrarEmpleado(){
+        const url = 'http://localhost:3000/empleado';
+        const datos = {
+            primerNombre: this.pnombre,
+            segundoNombre: this.snombre,
+            primerApellido: this.papellido,
+            segundoApellido: this.sapellido,
+            cedula: this.ci,
+            rif: this.rif,
+            direccion: this.direccion,
+            email: this.email,
+            password: this.password,
+            estado: this.estado,
+            telefonos: this.telefonos
+        }
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.enviado=true;
+            this.$router.push('/PrincipalRegistroNatural/*/%');
+        }).catch(error => {
+            console.log(error);
+        });
+    }
     
 
     }

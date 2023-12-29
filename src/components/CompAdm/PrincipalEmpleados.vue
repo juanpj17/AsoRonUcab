@@ -176,12 +176,14 @@
           // Transition name
           name: 'flip-list',
           sortBy: 'Codigo',
+          empleado: {}
         },
 
          
         }
       },
       created(){
+        this.ObtenerEmpleados();
        this.LlenarTabla();
       },
      
@@ -207,25 +209,35 @@
               this.infoTelefonos=[1,2,3]
               this.mostrarModal = true;
             
-          },
+        },
+
         onFiltered(filteredItems) {
           // Trigger pagination to update the number of buttons/pages due to filtering
           this.totalRows = filteredItems.length
           this.currentPage = 1
         },
-      LlenarTabla(){
-        this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
-        { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-        ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-      ]
-      },
-      RegistrarEmpleado(){
-         
+
+        LlenarTabla(){
+            this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
+            { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+            ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
+            ]
+        },
+
+        RegistrarEmpleado(){
              if (this.$route.path!='/PrincipalRegistroNatural/*/%')
              this.$router.push('/PrincipalRegistroNatural/*/%');
-           
-      },
-      
+        },
+
+        async ObtenerEmpleados() {
+            const url = 'http://localhost:3000/api/empleado';
+            await this.axios.get(url).then(response => {
+                this.empleado = response.data;
+                console.log(this.empleado)
+            }).catch(error => {
+                console.log(error);
+            });
+        },
 
       }
     }
