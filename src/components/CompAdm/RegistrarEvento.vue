@@ -150,7 +150,8 @@
                             <b-row>
                               <b-col cols="4">
                                   <div class="col form-group form-floating mb-2">
-                                    <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="elemento.Proveedor"  :options="Estados"> </b-form-select>  
+                                    <b-form-select   class="custom-select mr-sm-2  form-control " v-model="proveedor" :options="proveedores.map(item => ({ text: item.Nombre, value: item.Rif }))"> </b-form-select>  
+                                    <!-- <b-form-select  class="custom-select mr-sm-2  form-control" v-model="elemento.Proveedor"  :options="Estados"> </b-form-select>   -->
                                     <label>Seleccione/Proveedor</label>
                                   </div>
                               </b-col>
@@ -201,6 +202,7 @@ export default {
           estado:'',
           municipio:'',
           parroquia:null,
+          proveedor: null,
           nombre:'',
           fecha_fin:'',
           fecha_inicio:'',
@@ -208,12 +210,14 @@ export default {
         Municipios:['1','2','3'],
         parroquias:[],
         inventario:[],
+        proveedores:[],
 
         }
       
       },
       created(){
         this.obtenerParroquias()
+        this.obtenerProveedores()
         this.RegistrarInventario()
         this.id=this.$route.params.id
       },
@@ -239,7 +243,7 @@ export default {
       },
 
       registrarEvento(){
-    
+        console.log(this.proveedor)
         const url = 'http://localhost:3000/api/evento';
         const datos = {
             nombre: this.nombre,
@@ -285,6 +289,30 @@ export default {
               console.log(error);
             });
         },
+
+        llenarProveedores(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              Nombre: data[i].nombre,
+              Rif: data[i].rif,
+            };
+            
+            this.proveedores.push(item)
+            console.log(this.proveedores)
+          }
+        },
+        async obtenerProveedores() {
+            const url = 'http://localhost:3000/api/proveedor';
+            await this.axios.get(url).then(response => {
+              const proveedor = response.data;
+           
+              console.log(proveedor)
+              this.llenarProveedores(proveedor)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+
                
     },
     
