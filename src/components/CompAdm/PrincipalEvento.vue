@@ -71,7 +71,7 @@
     >
 <!---------------------------- Columna de acciones con botón de eliminar y modificar ---------------------------->
       <template #cell(actions)="row">
-        <b-button icon="delete" variant="danger" size="sm">
+        <b-button icon="delete" variant="danger" size="sm" @click="eliminarEvento(row.item)">
           <i class="bi bi-trash-fill"></i> Eliminar
         </b-button>
         <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
@@ -232,7 +232,8 @@
         // Transition name
         name: 'flip-list',
         sortBy: 'Codigo',
-        evento:{}
+        evento:{},
+      
       },
 
         
@@ -288,6 +289,7 @@
       LlenarTabla(data){
           for (let i = 0; i < data.length; i++) {
             const item = {
+              Codigo: data[i].codigo,
               Nombre_Evento: data[i].nombre,
               Fecha_i: data[i].fecha_hora_inicial,
               Fecha_f: data[i].fecha_hora_final,
@@ -308,6 +310,25 @@
               console.log(error);
             });
         },
+
+        async eliminarEvento(data){
+          console.log(data.Codigo)
+          const url = 'http://localhost:3000/api/evento'
+         
+          try {
+            const response = await this.axios.delete(url, { params: { codigo: data.Codigo } });
+            const evento = response.data;
+            console.log(evento);
+    
+          } catch (error) {
+            console.log('Error al eliminar el evento:', error);
+          }
+            console.log('console')
+            this.obtenerEventos();
+            console.log('console')
+        }
+        
+    
 
     },
     
