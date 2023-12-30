@@ -145,14 +145,14 @@
                                     <b-input  placeholder="direccion" v-model="direccion"></b-input>
                                   </b-col>
                             </b-row>
-                            <b-row style="margin-top: 10px;" >
+                            <b-row style="margin-top: 10px;" v-if="tipo=='%Empleado'" >
                                 <b-col>
-                                  <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
+                                  <b-form-select   class="custom-select mr-sm-2  form-control " v-model="rol" :options="roles.map(item => ({ text: item.nombre_rol, value: item.id }))"> </b-form-select>  
                                 </b-col>
-                                <b-col v-if="tipo=='%Empleado'">
-                                  <b-input v-model="Sueldo"  placeholder="Sueldo" ></b-input>
+                                <b-col >
+                                  <b-input v-model="sueldo"  placeholder="Sueldo" ></b-input>
                                 </b-col>
-                                <b-col v-if="tipo=='%Empleado'">
+                                <b-col >
                                   <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control " ></b-form-select>
                                 </b-col>
                             </b-row>
@@ -229,36 +229,43 @@ export default {
           sapellido:'',
           direccion:'',
         telefonos:[],
-        Roles:['Administrador','vendedor','cajero','cliente'],
+        roles:[],
         tipoCedula:['V','E'],
         tipoRif:['N'],
         tipCed:'V',
         tipRif:'N',
-        rol:'cliente',
+        rol:'',
         parroquia:'',
         parroquias:[],
-        Sueldo:''
+        numeros:[],
+
+        sueldo:''
 
 
         }
       },
       created(){
-        console.log(tipo)
-        this.obtenerParroquias();
+        this.obtenerParroquias()
+        this.obtenerRoles()
         this.RegistrarTelefonos()
+    
         console.log(this.tipo +'johohoho')
+        this.id=this.$route.params.id
       },
+     
     methods: {
          
       RegistrarTelefonos(){
       this.telefonos.push({ numero: ''});
+      
       },
       EliminarTelefonoSeleccionado(indice){
       this.telefonos.forEach((elemento,index) => { 
           if (indice==index){
-             this.telefonos.splice(index,1)}})},
+             this.telefonos.splice(index,1)}})
+      },
                
-             llenarParroquias(data){
+    llenarParroquias(data){
           for (let i = 0; i < data.length; i++) {
             const item = {
               nombre_parroquia: data[i].lug_nombre,
@@ -268,7 +275,7 @@ export default {
             this.parroquias.push(item)
             console.log(item)
           }
-        },
+      },
 
     async obtenerParroquias() {
             const url = 'http://localhost:3000/api/parroquia';
@@ -282,25 +289,56 @@ export default {
               console.log(error);
             });
         },
-         
+
+
+        llenarRoles(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_rol: data[i].nombre,
+              id: data[i].codigo
+            };
+            console.log(data[i].nombre)            
+            this.roles.push(item)
+            console.log(item)
+          }
+      },
+
+    async obtenerRoles() {
+            const url = 'http://localhost:3000/api/roles';
+            await this.axios.get(url).then(response => {
+              const rol = response.data;
+              
+              console.log(rol)
+              console.log(rol.length)
+              this.llenarRoles(rol)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+             
          
              registrarEmpleado(){
+              console.log(this.telefonos)
+             // Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
+              const num = this.telefonos.map(t => t.numero).slice();
+              console.log(num)
+
               console.log(this.parroquia)
                  const url = 'http://localhost:3000/api/empleado';
                  const datos = {
-                   cedula: this.ci,
+                   ced: this.ci,
                    rif: this.rif,
-                   primerNombre: this.pnombre,
-                   segundoNombre: this.snombre,
-                   primerApellido: this.papellido,
-                   segundoApellido: this.sapellido,
+                   p_nombre: this.pnombre,
+                   s_nombre: this.snombre,
+                   p_apellido: this.papellido,
+                   s_apellido: this.sapellido,
                    direccion: this.direccion,
                    sueldo: this.sueldo,
-                   fecha_ing: '2003-05-01',
                    parroquia: this.parroquia,
-                    password: this.password,
-                    rol: 1,
-                    telf: []
+                   password: this.password,
+                   rol: this.rol,
+                   correo: this.email,
+                   telf: num,
                     
                  }
              
@@ -315,8 +353,6 @@ export default {
              },
 
              registrarCliente(){
-
-              console.log(this.proveedor)
                 const url = 'http://localhost:3000/api/cliente/natural';
                 const datos = {
                    ced: this.ci,
@@ -326,13 +362,9 @@ export default {
                    p_apellido: this.papellido,
                    s_Apellido: this.sapellido,
                    direccion: this.direccion,
-                   parroquia: 1,
+                   parroquia: this.parroquia,
                 };
 
-
-                console.log(this.ci.length)
-                console.log(this.rif.length)
-                console.log(datos);
                 this.axios.post(url, datos).then(response => {
                   console.log(response.data);
 
@@ -340,7 +372,7 @@ export default {
                   console.log(error);
                 });
 
-},
+            },
 
     },
 
