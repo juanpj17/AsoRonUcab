@@ -213,6 +213,7 @@ export default {
           password: '',
           rif:'',
           ci:'',
+          sueldo:10,
           pnombre:'',
           snombre:'',
           papellido:'',
@@ -233,6 +234,7 @@ export default {
         }
       },
       created(){
+        this.obtenerParroquias();
         this.RegistrarTelefonos()
       },
     methods: {
@@ -244,37 +246,66 @@ export default {
       this.telefonos.forEach((elemento,index) => { 
           if (indice==index){
              this.telefonos.splice(index,1)}})},
-    registrar()
-    {console.log('f')},
-    registrarEmpleado(){
-        const url = 'http://localhost:3000/empleado';
-        const datos = {
-            primerNombre: this.pnombre,
-            segundoNombre: this.snombre,
-            primerApellido: this.papellido,
-            segundoApellido: this.sapellido,
-            cedula: this.ci,
-            rif: this.rif,
-            direccion: this.direccion,
-            email: this.email,
-            password: this.password,
-            estado: this.estado,
-            telefonos: this.telefonos
-        }
-        console.log(datos);
-        this.axios.post(url, datos).then(response => {
-            console.log(response.data);
-            this.enviado=true;
-            this.$router.push('/PrincipalRegistroNatural/*/%');
-        }).catch(error => {
-            console.log(error);
-        });
-    },
-
                
+             llenarParroquias(data){
+                   for (let i = 0; i < data.length; i++) {
+                     const item = {
+                       nombre_parroquia: data[i].lug_nombre,
+                       id: data[i].lug_id
+                     };
+                     console.log(data[i].lug_nombre)            
+                     this.parroquias.push(item)
+                     console.log(item)
+                   }
+                 },
+         
+             async obtenerParroquias() {
+                   console.log('aqui')
+                     const url = 'http://localhost:3000/api/parroquia';
+                     await this.axios.get(url).then(response => {
+                       const parroquia = response.data;
+                       
+                       console.log(parroquia)
+                       console.log(parroquia.length)
+                       this.llenarParroquias(parroquia)
+                     }).catch(error => {
+                       console.log(error);
+                     });
+                 },
+         
+         
+             registrarEmpleado(){
+              console.log(this.parroquia)
+                 const url = 'http://localhost:3000/api/empleado';
+                 const datos = {
+                   cedula: this.ci,
+                   rif: this.rif,
+                   primerNombre: this.pnombre,
+                   segundoNombre: this.snombre,
+                   primerApellido: this.papellido,
+                   segundoApellido: this.sapellido,
+                   direccion: this.direccion,
+                   sueldo: this.sueldo,
+                   fecha_ing: '2003-05-01',
+                   parroquia: this.parroquia,
+                    password: this.password,
+                    rol: 1,
+                    telf: []
+                    
+                 }
+             
+                 console.log(datos, typeof datos);
+                 this.axios.post(url, datos).then(response => {
+                     console.log(response.data);
+                     this.enviado=true;
+                     this.$router.push('/PrincipalRegistroNatural/*/%');
+                 }).catch(error => {
+                     console.log(error.response.data);
+                 });
+             }
     },
 
-    
+
     
 
     }

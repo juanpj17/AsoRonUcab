@@ -187,36 +187,38 @@
     data() {
       return {
         items:[
-              { Codigo: 1, Nombre_Evento: 'Evento a', Direccion: 'a',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
-              { Codigo: 3, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
-              { Codigo: 2, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
-              { Codigo: 10, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
-              { Codigo: 5, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 66, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 34, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 90, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 8, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 15, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 100, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 76, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 17, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
-              ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54}
+              // { Codigo: 1, Nombre_Evento: 'Evento a', Direccion: 'a',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              // { Codigo: 3, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              // { Codigo: 2, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              // { Codigo: 10, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},
+              // { Codigo: 5, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 66, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 34, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 90, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 8, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 15, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 100, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 76, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54},{ Codigo: 17, Nombre_Evento: 'Evento 1', Direccion: 'Macdonald',Estado:'Portuguesa', Municipio:'Araure'
+            
+              // ,Parroquia:'Acarigua',Descripcion:"fgngkjngmmkknklnknnnlnljn  lnlnlnlnlnln nlnlnln nlnnlnlnl nlnlnln nklnlnlnlnjnjndgnbdnbjdfubnjldbndlnjbxlnboxnblnlxonbldnbouthtjnuglxdb nbdlfjnlfnnln", Fecha_i:'22/22/2222',fecha_f:'33/44/3223',cantidadEnt:54}
+             
           ],
          
           fields: [
-              { key: 'Codigo', label: 'Codigo', sortable: true },
-              { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center',sortable: true},
-              { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center',sortable: true },
-              { key: 'fecha_f', label: 'Fecha de fin', class: 'text-center',sortable: true },
+            { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center',sortable: true},
+            { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center',sortable: true },
+            { key: 'Fecha_f', label: 'Fecha de fin', class: 'text-center',sortable: true },
+            { key: 'Direccion', label: 'Direccion', sortable: true },
               { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
              
           ],
           currentPage: 1,
-          sortBy: 'Codigo',
+          sortBy: 'Nombre_Evento',
         totalRows: 1,
         perPage: 5,
         pageOptions: [5, 10, 15],
@@ -230,10 +232,14 @@
         // Transition name
         name: 'flip-list',
         sortBy: 'Codigo',
+        evento:{}
       },
 
         
       }
+    },
+    created(){
+     this.obtenerEventos();
     },
     computed: {
       sortOptions() {
@@ -276,7 +282,32 @@
       RegistrarEvento(id){
         if (this.$route.path!='/RegistrarEvento/')
             this.$router.push('/RegistrarEvento/'+id);
-      }
+      },
+
+      LlenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              Nombre_Evento: data[i].nombre,
+              Fecha_i: data[i].fecha_hora_inicial,
+              Fecha_f: data[i].fecha_hora_final,
+              Direccion: data[i].direccion
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+        },
+        async obtenerEventos() {
+            const url = 'http://localhost:3000/api/evento';
+            await this.axios.get(url).then(response => {
+              this.evento = response.data;
+              console.log(this.evento)
+              this.LlenarTabla(this.evento)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+
     },
     
   }

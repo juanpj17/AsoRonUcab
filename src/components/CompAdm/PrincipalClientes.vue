@@ -195,10 +195,10 @@
         items: [
         ],
         fields: [
-        { key: 'Codigo', label: 'Codigo',sortable: true },
-            { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center',sortable: true },
+            { key: 'Nombres', label: 'Nombres',sortable: true },
+            { key: 'Apellidos', label: 'Apellidos', class: 'text-center',sortable: true },
             { key: 'Cedula', label: 'Cedula', class: 'text-center',sortable: true },
-            { key: 'Rif', label: 'Rif', class: 'text-center',sortable: true },
+            { key: 'Puntos_Acumulados', label: 'Puntos acumulados', class: 'text-center',sortable: true },
             { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
         ],
         totalRows: 1,
@@ -214,15 +214,15 @@
         transProps: {
         // Transition name
         name: 'flip-list',
-        sortBy: 'Codigo',
-      },
+        sortBy: 'Nombres',
+        cliente: {}
+        },
       modalShow: false,
-
        
       }
     },
     created(){
-     this.LlenarTabla();
+     this.ObtenerClientes();
     },
    
     computed: {
@@ -253,10 +253,31 @@
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
-    LlenarTabla(){
-      this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
-          ]
-    },
+      LlenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
+            const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
+            const item = {
+              Nombres: nombreCompleto,
+              Apellidos: apellidosCompleto,
+              Cedula: data[i].cedula,
+              Puntos_Acumulados: data[i].puntos_acumulados
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+        },
+        async ObtenerClientes() {
+            const url = 'http://localhost:3000/api/cliente';
+            await this.axios.get(url).then(response => {
+              this.cliente = response.data;
+              console.log(this.cliente)
+              this.LlenarTabla(this.cliente)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
    RegistroNatural(id){
     if (this.$route.path!='/PrincipalRegistroNatural/')
            this.$router.push('/PrincipalRegistroNatural/'+id+'/%Cliente');
