@@ -153,8 +153,9 @@
       
                         <div class="row">
                             <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control altura" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
-                              </b-form-select>  
+                              <b-form-select class="custom-select mr-sm-2 form-control " v-model="parroquia" :options="parroquias.map(item => ({ text: item.nombre_parroquia, value: item.id }))"> </b-form-select>  
+
+                             
                               <label for="estado">Seleccione</label>
                             </div>
                           <div class="col form-group">
@@ -166,12 +167,12 @@
                         </div>
                         <div>
                           <div class="col form-group form-floating mb-3" v-if="tipo=='%'">
-                            <b-form-select :options="Roles"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+                            <b-form-select v-model="rol" :options="Roles"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
                             <label>Seleccione el rol</label>
                           </div>
                         </div>
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" v-on:click="registrarEmpleado" >Registrar</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" @click="registrarEmpleado()" >Registrar</button>
                         </div>
                       </form>
                   
@@ -230,6 +231,7 @@ export default {
           nombreCompleto:'',
           rif:'',
           ci:'',
+          sueldo:10,
           pnombre:'',
           snombre:'',
           papellido:'',
@@ -237,12 +239,16 @@ export default {
           direccion:'',
           enviado:false,
           estado:'',
+          parroquia: null,
+          parroquias:[],
         telefonos:[],
+        rol: null,
         Roles:['Administrador','vendedor','cajero']
 
         }
       },
       created(){
+        this.obtenerParroquias();
         this.RegistrarTelefonos()
       },
     methods: {
@@ -253,34 +259,67 @@ export default {
       EliminarTelefonoSeleccionado(indice){
       this.telefonos.forEach((elemento,index) => { 
           if (indice==index){
-             this.telefonos.splice(index,1)}})}
+             this.telefonos.splice(index,1)}})},
                
+             llenarParroquias(data){
+                   for (let i = 0; i < data.length; i++) {
+                     const item = {
+                       nombre_parroquia: data[i].lug_nombre,
+                       id: data[i].lug_id
+                     };
+                     console.log(data[i].lug_nombre)            
+                     this.parroquias.push(item)
+                     console.log(item)
+                   }
+                 },
+         
+             async obtenerParroquias() {
+                   console.log('aqui')
+                     const url = 'http://localhost:3000/api/parroquia';
+                     await this.axios.get(url).then(response => {
+                       const parroquia = response.data;
+                       
+                       console.log(parroquia)
+                       console.log(parroquia.length)
+                       this.llenarParroquias(parroquia)
+                     }).catch(error => {
+                       console.log(error);
+                     });
+                 },
+         
+         
+             registrarEmpleado(){
+              console.log(this.parroquia)
+                 const url = 'http://localhost:3000/api/empleado';
+                 const datos = {
+                   cedula: this.ci,
+                   rif: this.rif,
+                   primerNombre: this.pnombre,
+                   segundoNombre: this.snombre,
+                   primerApellido: this.papellido,
+                   segundoApellido: this.sapellido,
+                   direccion: this.direccion,
+                   sueldo: this.sueldo,
+                   fecha_ing: '2003-05-01',
+                   parroquia: this.parroquia,
+                    password: this.password,
+                    rol: 1,
+                    telf: []
+                    
+                 }
+             
+                 console.log(datos, typeof datos);
+                 this.axios.post(url, datos).then(response => {
+                     console.log(response.data);
+                     this.enviado=true;
+                     this.$router.push('/PrincipalRegistroNatural/*/%');
+                 }).catch(error => {
+                     console.log(error.response.data);
+                 });
+             }
     },
 
-    registrarEmpleado(){
-        const url = 'http://localhost:3000/empleado';
-        const datos = {
-            primerNombre: this.pnombre,
-            segundoNombre: this.snombre,
-            primerApellido: this.papellido,
-            segundoApellido: this.sapellido,
-            cedula: this.ci,
-            rif: this.rif,
-            direccion: this.direccion,
-            email: this.email,
-            password: this.password,
-            estado: this.estado,
-            telefonos: this.telefonos
-        }
-        console.log(datos);
-        this.axios.post(url, datos).then(response => {
-            console.log(response.data);
-            this.enviado=true;
-            this.$router.push('/PrincipalRegistroNatural/*/%');
-        }).catch(error => {
-            console.log(error);
-        });
-    }
+
     
 
     }

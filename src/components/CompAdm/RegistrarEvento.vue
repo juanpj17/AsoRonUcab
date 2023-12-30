@@ -250,6 +250,7 @@ export default {
             direccion: this.direccion,
             parroquia: this.parroquia
         };
+   
         console.log(datos);
         this.axios.post(url, datos).then(response => {
             console.log(response.data);
