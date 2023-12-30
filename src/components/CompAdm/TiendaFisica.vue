@@ -1,7 +1,12 @@
 <template>
   <b-container class="bv-example-row">
     <b-row style="margin-top: 20px;">
-      <b-input-group prepend="Cedula del Cliente" class="mt-3">
+      <b-input-group >
+        <b-form-select
+              id="per-page-select"
+              v-model="perPage"
+              :options="pageOptions"
+            >Na</b-form-select>
            <b-form-input  v-model="Cliente"></b-form-input>
              <b-input-group-append>
                 <b-button variant="info">Buscar</b-button>
@@ -103,6 +108,8 @@
 
     data() {
       return {
+        pageOptions:['Natural', 'Juridico'],
+        perPage: 'Natural',
         Cliente:'',
         CodigoProducto:'',
         Nombre:'Gabriela Martinez',

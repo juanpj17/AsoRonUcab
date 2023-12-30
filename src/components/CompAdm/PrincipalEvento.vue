@@ -265,6 +265,7 @@
       info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
               this.infoModal = [item];
+              console.log(item)
               this.mostrarModal = true;
               this.modficarN=item
           },
