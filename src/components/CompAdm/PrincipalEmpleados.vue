@@ -1,9 +1,9 @@
 <template>
-<<<<<<< HEAD
-    <b-container fluid style="background-color: var(--fondo);">
-        <h1 class="titulos">Registro de empleados</h1>
+
+    <!-- <b-container fluid style="background-color: var(--fondo);"> -->
+        <!-- <h1 class="titulos">Registro de empleados</h1> -->
       <!-- User Interface controls -->
-      <b-row>
+      <!-- <b-row>
         <b-col lg="6" class="my-1">
           <b-form-group
             label="Filter"
@@ -27,9 +27,9 @@
             </b-input-group>
           </b-form-group>
         </b-col>
-      </b-row>
+      </b-row> -->
         
-      <b-row>
+      <!-- <b-row>
         <b-col cols="11"></b-col>
        
         <b-col class="my-1"  cols="1">
@@ -51,12 +51,12 @@
       
         
   
-      </b-row>
-      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="RegistrarEmpleado('*')"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
-      </div>
+      </b-row> -->
+      <!-- <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="RegistrarEmpleado('*')"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
+      </div> -->
      
       <!-- Main table element -->
-      <b-table
+      <!-- <b-table
       id="table-transition-example"
         :items="items"
         :fields="fields"
@@ -72,8 +72,8 @@
         small
         @filtered="onFiltered"
         primary-key="id"
-        :tbody-transition-props="transProps"
-=======
+        :tbody-transition-props="transProps" -->
+
   <b-container fluid style="background-color: var(--fondo);">
     <h1 class="titulos">Registro de empleados</h1>
     <b-row>
@@ -93,7 +93,7 @@
               type="search"
               placeholder="Type to Search"
             ></b-form-input>
->>>>>>> 0787a9126f38008f5d39864b2073b56f4372cf00
+
 
             <b-input-group-append>
               <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
@@ -150,13 +150,10 @@
         <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
           Detalles
         </b-button>
-<<<<<<< HEAD
+
         <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado(row.item.Codigo)" class="mr-1">
          Modifiar
-=======
-        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado" class="mr-1">
-          Modificar
->>>>>>> 0787a9126f38008f5d39864b2073b56f4372cf00
+
         </b-button>
       </template>
 
@@ -244,40 +241,21 @@ export default {
       this.mostrarModal = true;
     },
 
-<<<<<<< HEAD
-        onFiltered(filteredItems) {
-          // Trigger pagination to update the number of buttons/pages due to filtering
-          this.totalRows = filteredItems.length
-          this.currentPage = 1
-        },
 
-        LlenarTabla(){
-            this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' },
-            { Codigo: 3, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-            ,{ Codigo: 2, Nombre_Completo: 'Gabriela Martinez', Direccion: 'Caracas,Los simbolos edificio Toscana',Correo:'gaby@gmail.com',Rif:'314531182',Rol:'Administrador' }
-            ]
-        },
+
+     
 
         RegistrarEmpleado(id){
              if (this.$route.path!='/PrincipalRegistroNatural/'+id+'/%Empleado')
              this.$router.push('/PrincipalRegistroNatural/'+id+'/%Empleado');
         },
 
-        async ObtenerEmpleados() {
-            const url = 'http://localhost:3000/api/empleado';
-            await this.axios.get(url).then(response => {
-                this.empleado = response.data;
-                console.log(this.empleado)
-            }).catch(error => {
-                console.log(error);
-            });
-        },
-=======
+ 
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
->>>>>>> 0787a9126f38008f5d39864b2073b56f4372cf00
+
 
     LlenarTabla(data) {
       for (let i = 0; i < data.length; i++) {
@@ -291,9 +269,7 @@ export default {
       }
     },
 
-    RegistrarEmpleado() {
-      if (this.$route.path != '/PrincipalRegistroNatural/*/%') this.$router.push('/PrincipalRegistroNatural/*/%');
-    },
+  
 
     async ObtenerEmpleados() {
       const url = 'http://localhost:3000/api/empleado';
