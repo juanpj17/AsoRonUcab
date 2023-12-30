@@ -326,7 +326,7 @@ export default {
               console.log(this.parroquia)
                  const url = 'http://localhost:3000/api/empleado';
                  const datos = {
-                   ced: this.ci,
+                   cedula: this.ci,
                    rif: this.rif,
                    p_nombre: this.pnombre,
                    s_nombre: this.snombre,
@@ -335,10 +335,10 @@ export default {
                    direccion: this.direccion,
                    sueldo: this.sueldo,
                    parroquia: this.parroquia,
-                   password: this.password,
+                   contraseña: this.password,
                    rol: this.rol,
                    correo: this.email,
-                   telf: num,
+                   telefonos: num,
                     
                  }
              
