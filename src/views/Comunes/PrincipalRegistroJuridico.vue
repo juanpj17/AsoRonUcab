@@ -1,11 +1,11 @@
 <template>
     <div style="background-color: var(--fondo)">
         <Navbar v-if="tipoUsuario=='%ClienteJ'"></Navbar>
-        <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
+        <NavbarC v-if="tipoUsuario=='*Nuevo'"></NavbarC>
         <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
 
         <h2 class="titulos" style="margin: 2% 0 4% 0 !important">Formulario de registro</h2>
-        <FormularioJuridicoVue :id="$route.params.id"></FormularioJuridicoVue>
+        <FormularioJuridicoVue :id="$route.params.id" :tipoUsuario="tipoUsuario"></FormularioJuridicoVue>
     
     </div>
 </template>
@@ -22,7 +22,7 @@ import NavbarCli from '@/components/CompClientes/Navbar.vue';
 export default{
     props:{
         tipoUsuario:'',
-       
+        
 
     },
     components:{

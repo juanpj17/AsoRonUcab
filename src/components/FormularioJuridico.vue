@@ -114,6 +114,11 @@
                               <b-input  placeholder="Direccion fiscal" v-model="direccionFiscal" ></b-input>
                             </b-col>
                           </b-row>
+                          <b-row style="margin-top: 10px;">
+                              <b-col v-if="tipoUsuario=='%ClienteJ'">
+                                <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
+                              </b-col>
+                          </b-row>
                         </b-container>
                   
 
@@ -131,7 +136,8 @@
 <script>;
 export default {
   props:{
-    id:''
+    id:'',
+    tipoUsuario:''
   },
     data() {
       return {
@@ -150,7 +156,9 @@ export default {
           parroquiaFiscal:'parroquia1',
           parroquiaFisica:'parrquia2',
           direccionFisica:'',
-          direccionFiscal:''
+          direccionFiscal:'',
+          Roles:['Administrador','vendedor','cajero','cliente'],
+          rol:'cliente'
 
 
 
@@ -167,8 +175,8 @@ export default {
         
     methods: {
        RegistroNatural(){
-        if (this.$route.path!='/PrincipalRegistroNatural/*/%PersonaContacto')
-           this.$router.push('/PrincipalRegistroNatural/*/%PersonaContacto');
+        if (this.$route.path!='/PrincipalRegistroNatural/*/NuevoPersonaC')
+           this.$router.push('/PrincipalRegistroNatural/*/NuevoPersonaC');
        },
         
             

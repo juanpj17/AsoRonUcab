@@ -144,7 +144,7 @@
                                     <b-input  placeholder="direccion" v-model="direccion"></b-input>
                                   </b-col>
                             </b-row>
-                            <b-row style="margin-top: 10px;" v-if="tipo=='%Cliente'">
+                            <b-row style="margin-top: 10px;" v-if="tipo=='%Cliente' || '%Empleado'">
                                 <b-col>
                                   <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
                                 </b-col>
@@ -242,6 +242,7 @@ export default {
         console.log(tipo)
         this.obtenerParroquias();
         this.RegistrarTelefonos()
+        console.log(this.tipo +'johohoho')
       },
     methods: {
          
