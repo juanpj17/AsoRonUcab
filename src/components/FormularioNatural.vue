@@ -151,7 +151,12 @@
                                 <b-col v-if="tipo=='%Empleado'">
                                   <b-input v-model="Sueldo"  placeholder="Sueldo" ></b-input>
                                 </b-col>
+                                <b-col v-if="tipo=='%Empleado'">
+                                  <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control " ></b-form-select>
+                                </b-col>
                             </b-row>
+
+
                         </b-container>
                       
                         <div class="d-grid gap-2 mb-3">
@@ -234,6 +239,7 @@ export default {
         }
       },
       created(){
+        console.log(tipo)
         this.obtenerParroquias();
         this.RegistrarTelefonos()
       },

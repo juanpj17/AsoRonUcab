@@ -157,6 +157,7 @@ export default {
         }
       },
       created(){
+        console.log(tipo)
        this.RegistrarCorreo()
        this.RegistrarTelefonos() 
       },

@@ -150,14 +150,20 @@
                             <b-row>
                               <b-col cols="4">
                                   <div class="col form-group form-floating mb-2">
-                                    <b-form-select   class="custom-select mr-sm-2  form-control " v-model="proveedor" :options="proveedores.map(item => ({ text: item.Nombre, value: item.Rif }))"> </b-form-select>  
+                                    <b-form-select   
+                                      class="custom-select mr-sm-2  form-control " 
+                                      v-model="inventario[index].proveedor" 
+                                      :options="proveedores.map(item => ({ text: item.Nombre, value: item.Rif }))"
+                                      @change="filtrarProductosPorProveedor(index)"
+                                      > </b-form-select>  
                                     <!-- <b-form-select  class="custom-select mr-sm-2  form-control" v-model="elemento.Proveedor"  :options="Estados"> </b-form-select>   -->
                                     <label>Seleccione/Proveedor</label>
                                   </div>
                               </b-col>
                               <b-col cols="3">
                                 <div class="col form-group form-floating mb-3">
-                                  <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="elemento.Proveedor" :options="Estados"> </b-form-select>
+                                  <b-form-select  class="custom-select mr-sm-2  form-control " v-model="inventario[index].productoFiltrado" :options="inventario[index].productos.map(item => ({ text: item.nombre_producto, value: item.codigo }))"> </b-form-select>  
+                                  <!-- <b-form-select  class="custom-select mr-sm-2  form-control " v-model="elemento.Proveedor" :options="productosFiltrados"> </b-form-select> -->
                                   <label>Seleccione/Producto</label>
                                 </div>
                                </b-col>
@@ -196,6 +202,9 @@ export default {
   },
     data() {
       return {
+        inventario:[
+          {proveedor: null, productos: [], cantidad:0, precio: 0, productoFiltrado: null}
+        ],
          numEnt:0,
          direccion:'',
           descripcion:'',
@@ -203,6 +212,7 @@ export default {
           municipio:'',
           parroquia:null,
           proveedor: null,
+          // productoFiltrado: null,
           nombre:'',
           fecha_fin:'',
           fecha_inicio:'',
@@ -211,6 +221,7 @@ export default {
         parroquias:[],
         inventario:[],
         proveedores:[],
+        productosFiltrados:[],
 
         }
       
@@ -224,7 +235,7 @@ export default {
 
     methods: {
     RegistrarInventario(){
-      this.inventario.push({ Proveedor: '', cantidad: '' ,precio:''});
+      this.inventario.push({ proveedor: null, cantidad: 0 ,precio:0, productos:[], productoFiltrado: null});
         console.log(this.Inventario)
         this.guardar=true
       },
@@ -242,8 +253,34 @@ export default {
 
       },
 
+      llenarProductos(data, index){
+         const producto1 = []
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_producto: data[i].nombre,
+              codigo: data[i].codigo
+            };
+            producto1.push(item)
+          }
+          this.inventario[index].productos=producto1;
+        
+        },
+
+      async filtrarProductosPorProveedor(index){
+        const proveedorSeleccionado = this.inventario[index].proveedor;
+        const url = 'http://localhost:3000/api/producto/proveedor';
+        
+        await this.axios.get(url, {params:{proveedor:proveedorSeleccionado}}).then(response => {
+              const producto = response.data;
+                this.llenarProductos(producto, index)
+            }).catch(error => {
+              console.log(error);
+            });
+      },
+
       registrarEvento(){
-        console.log(this.proveedor)
+
+         console.log(this.proveedor)
         const url = 'http://localhost:3000/api/evento';
         const datos = {
             nombre: this.nombre,
