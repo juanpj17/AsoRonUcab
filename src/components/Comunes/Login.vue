@@ -75,7 +75,7 @@ export default {
    },
    //Aqui debe buscar el usuario e identificar el tipo de rol, ignora lo que esta adentro esta en modo prueba
    VerificarUsuario(){
-    let tipUsuario='%'
+    let tipUsuario='$'
     if (tipUsuario=='$'){
         this.InicioSesion('$')
     }else

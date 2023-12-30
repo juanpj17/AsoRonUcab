@@ -6,7 +6,6 @@
                 <div class="col-md-9 principal" style="z-index: 50;">
                
                   <div class="box  bg-white p-4 " >
-                    <b-alert show variant="danger" v-if="enviado">Campos vacios</b-alert>
                         
                     <form class="mb-3">
 
@@ -72,36 +71,22 @@
 
                       <div class="row">
 
-                        <div class="col form-group ">
-                            <label style="color: gray; font-size: 16px">Ej:29919287</label>
-
-                            <div class="form-floating mb-3">
-                                <input 
-                                  type="text" 
-                                  class="form-control rounded-2 altura" 
-                                  placeholder="ci"
-                                  v-model="ci"
-                                >
-                                <label>Cedula</label>
-                                <div style="height: 25px">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col form-group">
-                            <label style="color: gray; font-size: 16px">Ej:314531193</label>
-                            <div class="form-floating mb-3">
-                                <input 
-                                  type="text" 
-                                  class="form-control rounded-2 altura" 
-                                  placeholder="numDoc" 
-                                  v-model="rif"
-                                >
-                                <label>Rif</label>
-                                <div style="height: 25px">
-                                </div>
-                            </div>
-                        </div>
+                      <b-container>
+                          <b-row>
+                            <b-col cols="1">
+                              <b-form-select :options="tipoCedula"  v-model="tipCed"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+                            </b-col>
+                            <b-col cols="5">
+                              <b-input placeholder="Cedula" v-model="ci" ></b-input> 
+                            </b-col>
+                            <b-col  cols="1">
+                              <b-form-select :options="tipoRif" v-model="tipRif" class="custom-select mr-sm-2  form-control altura"></b-form-select>
+                            </b-col>
+                            <b-col cols="5">
+                              <b-input placeholder="Rif" v-model="rif" ></b-input>
+                            </b-col>
+                          </b-row>
+                      </b-container>
 
                       </div>
                         <label style="color: gray; font-size: 16px">Ej: example@gmail.com</label>
@@ -150,28 +135,27 @@
                               v-model="password">
                            <label for="floatingPassword">Password</label>
                         </div>
-      
-                        <div class="row">
-                            <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado" id="estado"  class="custom-select mr-sm-2  form-control altura" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
-                              </b-form-select>  
-                              <label for="estado">Seleccione</label>
-                            </div>
-                          <div class="col form-group">
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2 altura" id="direccion"  placeholder="direccion" v-model="direccion">
-                                  <label for="direccion">Direccion</label>
-                              </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div class="col form-group form-floating mb-3" v-if="tipo=='%'">
-                            <b-form-select :options="Roles"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
-                            <label>Seleccione el rol</label>
-                          </div>
-                        </div>
+                        <b-container>
+                            <b-row>
+                                  <b-col cols="6">
+                                    <b-form-select v-model="parroquia"  class="custom-select mr-sm-2  form-control altura" :options="parroquias">  </b-form-select>  
+                                  </b-col>
+                                  <b-col cols="6">
+                                    <b-input  placeholder="direccion" v-model="direccion"></b-input>
+                                  </b-col>
+                            </b-row>
+                            <b-row style="margin-top: 10px;" v-if="tipo=='%Cliente'">
+                                <b-col>
+                                  <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
+                                </b-col>
+                                <b-col v-if="tipo=='%Empleado'">
+                                  <b-input v-model="Sueldo"  placeholder="Sueldo" ></b-input>
+                                </b-col>
+                            </b-row>
+                        </b-container>
+                      
                         <div class="d-grid gap-2 mb-3">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3" v-on:click="registrarEmpleado" >Registrar</button>
+                            <b-button @click=" registrarEmpleado()" > Registrar</b-button>
                         </div>
                       </form>
                   
@@ -227,7 +211,6 @@ export default {
       return {
           email: '',
           password: '',
-          nombreCompleto:'',
           rif:'',
           ci:'',
           pnombre:'',
@@ -235,10 +218,17 @@ export default {
           papellido:'',
           sapellido:'',
           direccion:'',
-          enviado:false,
-          estado:'',
         telefonos:[],
-        Roles:['Administrador','vendedor','cajero']
+        Roles:['Administrador','vendedor','cajero','cliente'],
+        tipoCedula:['V','E'],
+        tipoRif:['N'],
+        tipCed:'V',
+        tipRif:'N',
+        rol:'cliente',
+        parroquia:'parroqia1',
+        parroquias:['parroqia1','parroquia2'],
+        Sueldo:''
+
 
         }
       },
@@ -253,10 +243,9 @@ export default {
       EliminarTelefonoSeleccionado(indice){
       this.telefonos.forEach((elemento,index) => { 
           if (indice==index){
-             this.telefonos.splice(index,1)}})}
-               
-    },
-
+             this.telefonos.splice(index,1)}})},
+    registrar()
+    {console.log('f')},
     registrarEmpleado(){
         const url = 'http://localhost:3000/empleado';
         const datos = {
@@ -280,7 +269,12 @@ export default {
         }).catch(error => {
             console.log(error);
         });
-    }
+    },
+
+               
+    },
+
+    
     
 
     }

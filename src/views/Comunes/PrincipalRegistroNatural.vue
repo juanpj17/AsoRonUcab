@@ -1,6 +1,6 @@
 <template>
     <div style="background-color: var(--fondo);">
-        <Navbar v-if="tipoUsuario=='%'"></Navbar>
+        <Navbar v-if="tipoUsuario=='%Cliente' ||'%ClienteJ' || '%Empleado' || '%PersonaContacto' "></Navbar>
         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
         <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
         <h2 class="titulos" style="margin: 2% 0 4% 0 !important">Formulario de registro</h2>

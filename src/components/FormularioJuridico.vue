@@ -7,17 +7,15 @@
                
                     <div class="box  bg-white p-4 ">
                         
-                        <b-alert show variant="danger" v-if="enviado">Campos vacíos</b-alert>
-                        
                       <form class="mb-3">
                         <div class="row">
                         <div class=" col form-group form-floating mb-3">
-                           <input type="text" class="form-control rounded-2 altura" placeholder="nombre" v-model="nombre">
+                           <input type="text" class="form-control rounded-2 altura" placeholder="nombre" v-model="denominacionCom">
                            <label>  Denominación Comercial</label> 
                            <div style="height: 25px"></div>
                         </div>
                         <div class=" col form-group form-floating mb-3">
-                           <input type="text" class="form-control rounded-2 altura"  placeholder="RazonSocial" v-model="apellido">
+                           <input type="text" class="form-control rounded-2 altura"  placeholder="RazonSocial" v-model="RazonSoc">
                            <label>Razón social</label> 
                            <div style="height: 25px"></div>
                       </div>
@@ -25,27 +23,29 @@
                     <div class="row">
     
                         <div class=" col form-group form-floating mb-3">
-                            <input type="text" class="form-control rounded-2 altura"  placeholder="PagWeb" v-model="nombre">
+                            <input type="text" class="form-control rounded-2 altura"  placeholder="PagWeb" v-model="PaginaW">
                             <label> Página web</label> 
                             <div style="height: 25px"></div>
                         </div>
                         <div class=" col form-group form-floating mb-3">
-                             <input type="text" class="form-control rounded-2 altura"  placeholder="CapDip" v-model="apellido">
+                             <input type="text" class="form-control rounded-2 altura"  placeholder="CapDip" v-model="Capital">
                              <label > Capital Disponible</label> 
                              <div style="height: 25px"></div>
        
                         </div>
                     </div>
 
-                        <div class="row">
-                          <div class="col form-group">
-                            <label style="color: gray; font-size: 16px">Ej:314531181</label>
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2 altura"  placeholder="rif" v-model="numDoc">
-                                  <label>Rif</label>
-                              </div>
-                          </div>
-                        </div>
+                    <b-container>
+                      <b-row>
+                          <b-col>
+                              <b-form-select :options="tipoRif" v-model="tipRif" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
+                          </b-col>
+                          <b-col cols="11">
+                              <b-input  placeholder="Rif" v-model="numDoc"></b-input>
+                          </b-col>
+                        </b-row>
+                      </b-container>
+
                         <b-container>
                             <b-row>
                                 
@@ -97,40 +97,27 @@
                         
                         </div>
       
-                        <div class="row">
-                            <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado"  class="custom-select mr-sm-2  form-control altura" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
-                              </b-form-select>  
-                              <label>Seleccione</label>
-                                                       
-                            </div>
-                          <div class="col form-group">
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2 altura"   placeholder="direccion" v-model="direccion">
-                                  <label >Dirección</label>
-                                  
-                              </div>
-                          </div>
-                        </div>
-
-                        
-                        <div class="row">
-                            <div class="col form-group form-floating mb-3">
-                              <b-form-select v-model="estado"   class="custom-select mr-sm-2  form-control altura" :options="[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia']" :value="null"> 
-                              </b-form-select>  
-                              <label >Seleccione</label>
-                                      
-                            </div>
-                          <div class="col form-group">
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control rounded-2 altura"  placeholder="direccion" v-model="direccion">
-                                  <label>Dirección</label>
-                              </div>
-                          </div>
-                        </div>
+                        <b-container>
+                          <b-row>
+                            <b-col cols="6">
+                              <b-form-select v-model="parroquiaFisica"   class="custom-select mr-sm-2  form-control altura"  :options="parroquias"> </b-form-select>
+                            </b-col>
+                            <b-col cols="6">
+                              <b-input  placeholder="Direccion fisica" v-model="direccionFisica"></b-input>
+                            </b-col>
+                          </b-row>
+                          <b-row style="margin-top: 10px;">
+                              <b-col cols="6">
+                                <b-form-select v-model="parroquiaFiscal"   class="custom-select mr-sm-2  form-control altura" :options="parroquias" > </b-form-select>
+                              </b-col>
+                              <b-col cols="6">
+                              <b-input  placeholder="Direccion fiscal" v-model="direccionFiscal" ></b-input>
+                            </b-col>
+                          </b-row>
+                        </b-container>
                   
 
-                        <div class="d-grid gap-2 mb-3">
+                        <div class="d-grid gap-2 mb-3" style="margin-top: 10px;">
                             <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  @click="RegistroNatural()" >Registrar</button>
                         </div>
                       </form>
@@ -148,17 +135,23 @@ export default {
   },
     data() {
       return {
-          correos: [],
+          denominacionCom:'',
+          RazonSoc:'',
+          PaginaW:'',
+          Capital:'',
+          correos:[],
           password: '',
-          nombreCompleto:'',
           numDoc:'',
-          direccion:'',
-          enviado:false,
           tipDoc:'',
-          estado:'',
-          nombre:'',
-          apellido:'',
-          telefonos:[]
+          telefonos:[],
+          tipoRif:['J','G'],
+          tipRif:'J',
+          parroquias:['parroquia1','parrquia2','parroquia3'],
+          parroquiaFiscal:'parroquia1',
+          parroquiaFisica:'parrquia2',
+          direccionFisica:'',
+          direccionFiscal:''
+
 
 
         }
@@ -173,8 +166,8 @@ export default {
         
     methods: {
        RegistroNatural(){
-        if (this.$route.path!='/PrincipalRegistroNatural/*/*')
-           this.$router.push('/PrincipalRegistroNatural/*/*');
+        if (this.$route.path!='/PrincipalRegistroNatural/*/%PersonaContacto')
+           this.$router.push('/PrincipalRegistroNatural/*/%PersonaContacto');
        },
         
             

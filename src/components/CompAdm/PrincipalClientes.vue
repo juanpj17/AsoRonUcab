@@ -259,11 +259,11 @@
     },
    RegistroNatural(id){
     if (this.$route.path!='/PrincipalRegistroNatural/')
-           this.$router.push('/PrincipalRegistroNatural/'+id);
+           this.$router.push('/PrincipalRegistroNatural/'+id+'/%Cliente');
    },
    RegistroJuridico(id){
     if (this.$route.path!='/PrincipalRegistroJuridico/')
-           this.$router.push('/PrincipalRegistroJuridico/'+id);
+           this.$router.push('/PrincipalRegistroJuridico/'+id+'/%ClienteJ');
    },
    Modificar(id){
     if (this.tipoRegistro=='J'){

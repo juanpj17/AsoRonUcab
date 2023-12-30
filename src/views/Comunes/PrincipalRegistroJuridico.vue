@@ -1,6 +1,6 @@
 <template>
     <div style="background-color: var(--fondo)">
-        <Navbar v-if="tipoUsuario=='%'"></Navbar>
+        <Navbar v-if="tipoUsuario=='%ClienteJ'"></Navbar>
         <NavbarC v-if="tipoUsuario=='*'"></NavbarC>
         <NavbarCli v-if="tipoUsuario=='$'"></NavbarCli>
 

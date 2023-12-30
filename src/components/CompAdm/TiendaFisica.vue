@@ -1,6 +1,15 @@
 <template>
   <b-container class="bv-example-row">
     <b-row style="margin-top: 20px;">
+      <b-input-group prepend="Cedula del Cliente" class="mt-3">
+           <b-form-input  v-model="Cliente"></b-form-input>
+             <b-input-group-append>
+                <b-button variant="info">Buscar</b-button>
+            </b-input-group-append>
+      </b-input-group>
+    </b-row>
+    
+    <b-row style="margin-top: 20px;">
       <b-col sm="6"><b-card bg-variant="light" text-variant="black"  class="text-center">
         <b-card-title>Datos del cliente</b-card-title>
           <b-card-text >
@@ -33,7 +42,7 @@
     <b-row>
       <b-col >
          <b-input-group prepend="Codigo del producto" class="mt-3">
-           <b-form-input></b-form-input>
+           <b-form-input v-model="CodigoProducto"></b-form-input>
              <b-input-group-append>
                 <b-button variant="info" @click="CrearOrden()">Agregar</b-button>
             </b-input-group-append>
@@ -94,6 +103,8 @@
 
     data() {
       return {
+        Cliente:'',
+        CodigoProducto:'',
         Nombre:'Gabriela Martinez',
         Cedula:29919287,
         telf:'04145767916',
@@ -116,6 +127,7 @@
     methods: {
       CrearOrden(){
             let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
+            console.log(this.Cliente + this.CodigoProducto)
             this.items.push(producto);
            
         },

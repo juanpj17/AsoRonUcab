@@ -51,7 +51,7 @@
         
   
       </b-row>
-      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="RegistrarEmpleado()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
+      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="RegistrarEmpleado('*')"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button>
       </div>
      
       <!-- Main table element -->
@@ -83,7 +83,7 @@
         <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
           Detalles
         </b-button>
-        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado()" class="mr-1">
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado(row.item.Codigo)" class="mr-1">
          Modifiar
         </b-button>
      
@@ -224,9 +224,9 @@
             ]
         },
 
-        RegistrarEmpleado(){
-             if (this.$route.path!='/PrincipalRegistroNatural/*/%')
-             this.$router.push('/PrincipalRegistroNatural/*/%');
+        RegistrarEmpleado(id){
+             if (this.$route.path!='/PrincipalRegistroNatural/'+id+'/%Empleado')
+             this.$router.push('/PrincipalRegistroNatural/'+id+'/%Empleado');
         },
 
         async ObtenerEmpleados() {
