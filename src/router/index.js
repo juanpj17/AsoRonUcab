@@ -196,7 +196,8 @@ const routes = [
   {
     path: '/RegistrarEvento/:id',
     name: 'RegistrarEvento',
-    component:RegistrarEvento
+    component:RegistrarEvento,
+    props: true
   },
   {
     path: '/ControlAccion',

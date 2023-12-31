@@ -227,6 +227,8 @@
             });
             const clienteNatural = response.data;
             console.log(clienteNatural);
+            
+
             this.Nombre = clienteNatural[0].p_nombre;
             this.Cedula = cliente;
             this.Direccion = clienteNatural[0].direccion;

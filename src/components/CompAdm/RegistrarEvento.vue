@@ -136,7 +136,7 @@
 
 <!-------------------------------Se acabo el boton select y empiaza el boton de guardar--------------------------------->
 
-
+                    <div v-if="isModify">
                         <b-container>
                             <b-row>
                                 
@@ -183,7 +183,7 @@
                             </b-row>
                           </b-container>
                        </div>       
-
+                    </div>
                     <div class="d-grid gap-2 mb-3">
                         <button type="button" class="btn  btn-lg border-0 rounded-3 " style="background-color: var(--vinotinto); color: white" @click="registrarEvento()">Guardar</button>
                     </div>
@@ -223,11 +223,16 @@ export default {
         inventario:[],
         proveedores:[],
         productosFiltrados:[],
-
+        isModify: true
         }
       
       },
+      mounted() {
+        const cod = this.$route.query.id;
+      },
       created(){
+        this.verificarModificar(this.$route.query.id)
+        console.log(this.$route.query.id)
         this.obtenerParroquias()
         this.obtenerProveedores()
         this.RegistrarInventario()
@@ -235,6 +240,48 @@ export default {
       },
 
     methods: {
+      verificarModificar(data){
+        if(data != undefined){
+          console.log('modificar')
+          console.log(data)
+          this.llenarCampos(data)
+          this.isModify= false;
+        }else{
+          console.log('registrar')
+          console.log(data)
+          this.isModify= true;
+        }
+      },
+
+      
+
+
+      llenarCampos(data){
+        console.log(data)
+        const url = 'http://localhost:3000/api/evento/consultar';
+        const datos = {
+            codigo: data
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            //esto es para convertir la fecha al fromato solicitado
+            const fecha_cortada_inicial = response.data.fecha_hora_inicial.slice(0, 10);
+            const fecha_cortada_final = response.data.fecha_hora_final.slice(0, 10);
+            console.log(fecha_cortada_inicial); 
+            console.log(fecha_cortada_final);   
+            this.nombre = response.data.nombre,
+            this.descripcion =  response.data.descripcion
+            this.numEnt = response.data.num_entradas, 
+            this.fecha_inicio = fecha_cortada_inicial, 
+            this.fecha_fin = fecha_cortada_final, 
+            this.direccion = response.data.direccion,
+            this.parroquia = response.data.parroquia
+
+        }).catch(error => {
+            console.log(error);
+        });
+      },
     RegistrarInventario(){
       this.inventario.push({ proveedor: null, cantidad: 0 ,precio:0, productos:[], productoFiltrado: null});
         console.log(this.Inventario)
@@ -283,10 +330,9 @@ export default {
 
       async ultimoEvento(){
         const url = 'http://localhost:3000/api/evento/ultimo'
-        
         await this.axios.get(url).then(response => {
               const numE = response.data;
-             this.max_e = numE[0].codigo;
+             this.max_e = numE[0].codigo+1;
             }).catch(error => {
               console.log(error);
           
@@ -318,9 +364,11 @@ export default {
 
 
       registrarEvento(){
-        
-        const url = 'http://localhost:3000/api/evento';
-        const datos = {
+    
+        if(this.isModify){
+          console.log(this.parroquia)
+          const url = 'http://localhost:3000/api/evento';
+          const datos = {
             nombre: this.nombre,
             descripcion: this.descripcion, 
             num_entradas: this.numEnt, 
@@ -328,19 +376,41 @@ export default {
             fecha_hora_final: this.fecha_fin, 
             direccion: this.direccion,
             parroquia: this.parroquia
-        };
+          };
    
-        console.log(datos);
-        this.axios.post(url, datos).then(response => {
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
             console.log(response.data);
             const num = this.inventario.map(t => t.numero).slice();
             for (let i = 0; i < this.inventario.length; i++) {
               console.log(this.inventario[i])
               this.regPresentacionEvento(this.inventario[i])
             };
-        }).catch(error => {
+          }).catch(error => {
             console.log(error);
-        });
+          });
+        }else{
+          console.log('paso por aca')
+          const url = 'http://localhost:3000/api/evento';
+          const datos = {
+            codigo: this.$route.query.id,
+            nombre: this.nombre,
+            descripcion: this.descripcion, 
+            num_entradas: this.numEnt, 
+            fecha_hora_inicial: this.fecha_inicio, 
+            fecha_hora_final: this.fecha_fin, 
+            direccion: this.direccion,
+            parroquia: this.parroquia
+          };
+   
+          console.log(datos);
+          this.axios.put(url, datos).then(response => {
+            console.log(response.data);
+          }).catch(error => {
+            console.log(error);
+          });
+
+        }
     
     },
 

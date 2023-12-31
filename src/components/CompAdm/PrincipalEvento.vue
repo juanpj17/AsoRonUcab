@@ -235,6 +235,7 @@
         evento:{},
       
       },
+        datos:-1,
 
         
       }
@@ -282,8 +283,15 @@
         resultado.Descripcion=this.texto;
       },
       RegistrarEvento(id){
-        if (this.$route.path!='/RegistrarEvento/')
-            this.$router.push('/RegistrarEvento/'+id);
+        if (this.$route.path!='/RegistrarEvento/'){
+          this.$router.push({
+            path: '/RegistrarEvento/'+id,
+            query: {
+              id: id,
+            }
+          });
+        }
+            // this.$router.push('/RegistrarEvento/'+id);
       },
 
       LlenarTabla(data){
