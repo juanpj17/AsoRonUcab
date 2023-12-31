@@ -53,7 +53,7 @@
          <b-input-group prepend="Codigo del producto" class="mt-3">
            <b-form-input v-model="CodigoProducto"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info" @click="CrearOrden()">Agregar</b-button>
+                <b-button variant="info" @click="cargarProducto(CodigoProducto)">Agregar</b-button>
             </b-input-group-append>
           </b-input-group>
       </b-col>
@@ -131,7 +131,7 @@
         canjear:'',
         tipo:['----Tienda----','----Evento----'],
         TipoDeVenta:'Evento',
-        EventoSeleccionado:'',
+        EventoSeleccionado:-1,
         Eventos:[],
       }
     },
@@ -212,6 +212,53 @@
 
       },
 
+        llenarTabla(nombre, precio){
+          console.log(nombre)
+          console.log(precio)
+          const item = {
+              Nombre: nombre,
+              Cantidad: 1,
+              Precio: precio,
+            };
+          this.items.push(item)
+        },
+      
+
+      traerNombre(data, precio){
+        const url = 'http://localhost:3000/api/tiendafisica/particular';
+        const datos = {
+            cod_pro: data,
+        };
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data[0].presentacion_particular);
+        this.llenarTabla(response.data[0].presentacion_particular, precio.verificar_presentacion)
+  
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+      cargarProducto(data){
+        console.log(data)
+        console.log(this.EventoSeleccionado )
+        if (this.EventoSeleccionado == -1){
+        }else{
+          const url = 'http://localhost:3000/api/tiendafisica';
+          const datos = {
+              cod_pro: data,
+              cod_eve: this.EventoSeleccionado,
+          };
+        
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data[0]);
+        this.traerNombre(data, response.data[0])
+        }).catch(error => {
+            console.log(error);
+        });
+      }
+
+      },
 
 
       llenarEventos(data){
