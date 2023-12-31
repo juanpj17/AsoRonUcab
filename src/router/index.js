@@ -83,7 +83,7 @@ const routes = [
     component: PrincipalProveedor
   },
   {
-    path: '/PrincipalAfiliados',
+    path: '/PrincipalAfiliados/:tipo_codigo_usuario',
     name: 'PrincipalAfiliados',
     component: PrincipalAfiliados
   },
