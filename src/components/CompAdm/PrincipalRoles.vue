@@ -51,7 +51,7 @@
         
   
       </b-row>
-      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
+      <div  style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
       <!-- Main table element -->
       <b-table
       id="table-transition-example"

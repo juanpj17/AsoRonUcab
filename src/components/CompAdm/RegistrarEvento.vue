@@ -216,6 +216,7 @@ export default {
           nombre:'',
           fecha_fin:'',
           fecha_inicio:'',
+          max_e: '',
         Estados:[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia'],
         Municipios:['1','2','3'],
         parroquias:[],
@@ -280,9 +281,44 @@ export default {
             });
       },
 
-      registrarEvento(){
+      async ultimoEvento(){
+        const url = 'http://localhost:3000/api/evento/ultimo'
+        
+        await this.axios.get(url).then(response => {
+              const numE = response.data;
+             this.max_e = numE[0].codigo;
+            }).catch(error => {
+              console.log(error);
+          
+            });
 
-         console.log(this.proveedor)
+      },
+
+      regPresentacionEvento(data){
+        this.ultimoEvento()
+        console.log(data.cantidad)
+        console.log(data.productos[0].codigo)
+        const url = 'http://localhost:3000/api/evento/actual';
+        const datos = {
+            cantidad: data.cantidad,
+            precio: data.precio,
+            cod_presentacion: data.productos[0].codigo,
+            cod_evento: this.max_e,
+            cod_premio: 1,
+        };
+   
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+          
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+
+      registrarEvento(){
+        
         const url = 'http://localhost:3000/api/evento';
         const datos = {
             nombre: this.nombre,
@@ -297,7 +333,11 @@ export default {
         console.log(datos);
         this.axios.post(url, datos).then(response => {
             console.log(response.data);
-
+            const num = this.inventario.map(t => t.numero).slice();
+            for (let i = 0; i < this.inventario.length; i++) {
+              console.log(this.inventario[i])
+              this.regPresentacionEvento(this.inventario[i])
+            };
         }).catch(error => {
             console.log(error);
         });
