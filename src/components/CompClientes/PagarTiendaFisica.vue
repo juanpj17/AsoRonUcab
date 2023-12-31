@@ -92,6 +92,13 @@
 <script>
 import FacturaVentaVue from './FacturaVenta.vue';
   export default {
+    mounted() {
+   
+    const array = this.$route.query.array;
+    const doc = this.$route.query.doc;
+    const tipo = this.$route.query.tipo;
+    const evento = this.$route.query.evento;
+  },
     components:{
         FacturaVentaVue
     }
@@ -109,13 +116,21 @@ import FacturaVentaVue from './FacturaVenta.vue';
         selected: [],
         btAgregar:false,
         Montos:[],
-        total:'400',
+        total:0,
         pagar:false,
         Efectivo:'',
         Cheques:[],
-        
+        evento: -1,
+        doc : '',
+        array: [],
+        tipo: '',
       }
     },
+    created(){
+       
+        this.calcularTotal()
+    },
+
     methods: {
       onRowSelected(items) {
         this.selected = items;
@@ -136,8 +151,22 @@ import FacturaVentaVue from './FacturaVenta.vue';
           if (indice==index){
              this.Cheques.splice(index,1)}})},
     Pagar(){
+        console.log(this.$route.query.valor1)
         //Aqui deberia verificar que el pago se realiza conrrectamente emite factura
         this.pagar=true
+    },
+
+    calcularTotal(){ 
+        this.evento = this.$route.query.evento;
+        this.doc = this.$route.query.doc;
+        this.tipo = this.$route.query.tipo;
+        this.array = this.$route.query.array;
+        for (let i = 0; i < this.$route.query.array.length; i++) {
+            const precioNumerico = parseFloat(this.$route.query.array[i].Precio.replace(',', '.')); 
+            console.log(`Precio para ${this.$route.query.array[i].Nombre}: ${precioNumerico}`);
+            console.log(this.$route.query.array[i].stock)
+            this.total = this.total + (this.$route.query.array[i].stock * precioNumerico )
+        }
     }
 
       

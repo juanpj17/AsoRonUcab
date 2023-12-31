@@ -71,6 +71,13 @@
             <template #cell(name)="row">
               {{ row.value.first }} {{ row.value.last }}
             </template>
+            <template #cell(stock)="row">
+              <div class="d-flex justify-content-center">
+                <b-button @click="decreaseStock(row.item)" variant="danger" size="sm">-</b-button>
+                <span class="mx-2">{{ row.item.stock }}</span>
+                <b-button @click="increaseStock(row.item)" variant="success" size="sm">+</b-button>
+              </div>
+            </template>
             <template #row-details="row">
               <b-card>
                 <ul>
@@ -84,15 +91,15 @@
       <b-col></b-col>
       <b-col></b-col>
       
-      <b-col><b-button v-b-modal.modal-center>Canjear</b-button></b-col>
+      <b-col><b-button v-b-modal.modal-center @click="mostrarModal()">Canjear</b-button></b-col>
       <b-col ><b-button @click="Pagar()"> Pagar</b-button></b-col>
 
   
-    <b-modal id="modal-center" centered title="Canjear puntos">
+    <b-modal id="modal-center" centered title="Canjear puntos" v-if="modal">
       <b-input-group prepend="Cantidad" class="mt-3">
            <b-form-input v-model="canjear"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info">Aceptar</b-button>
+                <b-button variant="info" @click="mostrarModal()">Aceptar</b-button>
             </b-input-group-append>
           </b-input-group>
     </b-modal>
@@ -112,6 +119,7 @@
 
     data() {
       return {
+        modal: false,
         pageOptions:['Natural', 'Juridico'],
         perPage: 'Natural',
         Cliente:'',
@@ -123,12 +131,14 @@
         Puntos:'',
         total:'falta poner la api aqui',
         items: [],
+        colocados: [],
         fields: [
           { key: 'Nombre', label: 'Nombre', },
-          { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
+          { key: 'stock', label: 'Stock', class: 'text-center',sortable: true  },
+          // { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
           { key: 'Precio', label: 'Precio', class: 'text-center' },
         ],
-        canjear:'',
+        canjear:0,
         tipo:['----Tienda----','----Evento----'],
         TipoDeVenta:'Evento',
         EventoSeleccionado:-1,
@@ -173,9 +183,39 @@
             }
       },
       Pagar(){
-        if (this.$route.path!='/PagarTiendaFisica')
-             this.$router.push('/PagarTiendaFisica');
+        console.log(this.items)
+        if (this.$route.path!='/PagarTiendaFisica'){
+          this.$router.push({
+            path: '/PagarTiendaFisica',
+            query: {
+              array: this.items,
+              doc: this.Cedula,
+              tipo: this.perPage,
+              evento: this.EventoSeleccionado,
+              punto: this.canjear,
+            }
+          });
+        }
+            
       },
+
+      mostrarModal(){
+        if(this.modal == false){
+          this.modal = true
+        }else{
+          this.modal=false
+        }
+      },
+
+      decreaseStock(item) {
+          if (item.stock > 0) {
+            item.stock--;
+          }
+        },
+        increaseStock(item) {
+          item.stock++;
+          
+        },
 
       async buscarCliente(cliente){
         console.log(cliente)
@@ -212,15 +252,20 @@
 
       },
 
-        llenarTabla(nombre, precio){
+        llenarTabla(nombre, precio, cod){
           console.log(nombre)
           console.log(precio)
           const item = {
               Nombre: nombre,
-              Cantidad: 1,
+              stock: 1,
               Precio: precio,
+              Codigo: cod,
             };
           this.items.push(item)
+          for (let i = 0; i < this.items.length; i++) {
+            console.log(this.items[i].stock)}
+          console.log(this.items)
+         
         },
       
 
@@ -231,7 +276,7 @@
         };
         this.axios.post(url, datos).then(response => {
         console.log(response.data[0].presentacion_particular);
-        this.llenarTabla(response.data[0].presentacion_particular, precio.verificar_presentacion)
+        this.llenarTabla(response.data[0].presentacion_particular, precio.verificar_presentacion,data)
   
         }).catch(error => {
             console.log(error);
@@ -242,6 +287,7 @@
         console.log(data)
         console.log(this.EventoSeleccionado )
         if (this.EventoSeleccionado == -1){
+
         }else{
           const url = 'http://localhost:3000/api/tiendafisica';
           const datos = {
@@ -252,12 +298,23 @@
         console.log(datos);
         this.axios.post(url, datos).then(response => {
         console.log(response.data[0]);
-        this.traerNombre(data, response.data[0])
+        if (this.verificarNumeroEnArray(data, this.colocados)) {
+          console.log(`${data} está en el array.`);
+        } else {
+          console.log(`${data} no está en el array.`);
+          this.colocados.push(data)
+          console.log(this.colocados)
+          this.traerNombre(data, response.data[0])
+        }
         }).catch(error => {
             console.log(error);
         });
       }
 
+      },
+
+      verificarNumeroEnArray(numero, array) {
+        return array.includes(numero);
       },
 
 

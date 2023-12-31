@@ -136,8 +136,8 @@ const routes = [
   {
     path: '/TiendaFisica',
     name: 'TiendaFisica',
-    component: TiendaFisica
-
+    component: TiendaFisica,
+    props: true
   },
   {
     path: '/Pedidos',
