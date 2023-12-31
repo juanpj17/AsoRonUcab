@@ -82,7 +82,7 @@
       >
 <!------------------------------- Columna de acciones con botón de eliminar y modificar ------------------------->
         <template #cell(actions)="row">
-          <b-button icon="delete" variant="danger" size="sm" @click="eliminarEmpleado(row.item)">
+          <b-button icon="delete" variant="danger" size="sm" @click="eliminarClienteN(row.item)">
             <i class="bi bi-trash-fill"></i> Eliminar
           </b-button>
           <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
@@ -195,9 +195,9 @@
         items: [
         ],
         fields: [
-            { key: 'Nombres', label: 'Nombres',sortable: true },
-            { key: 'Apellidos', label: 'Apellidos', class: 'text-center',sortable: true },
-            { key: 'Cedula', label: 'Cedula', class: 'text-center',sortable: true },
+            { key: 'Nombres', label: 'Nombre',sortable: true },
+            { key: 'Apellidos', label: 'Apellidos o Razon Social', class: 'text-center',sortable: true },
+            { key: 'Cedula', label: 'Documento', class: 'text-center',sortable: true },
             { key: 'Puntos_Acumulados', label: 'Puntos acumulados', class: 'text-center',sortable: true },
             { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
         ],
@@ -281,7 +281,7 @@
             });
         },
 
-        async eliminarEmpleado(data) {
+        async eliminarClienteN(data) {
           console.log(data)
           const url = 'http://localhost:3000/api/cliente/natural'
           try {

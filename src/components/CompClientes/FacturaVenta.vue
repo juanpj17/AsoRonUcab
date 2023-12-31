@@ -14,7 +14,7 @@
           <b-col style="margin-left: 30PX;">
               <H4 style="text-align: left;" >ASORONUCAB C.A</H4>
               <h6  style="text-align: left;">Avenida Teherán, Caracas 1020, Distrito Capital</h6>
-              <h6 style="text-align: left;">RIF: J-315531182</h6>
+              <h6 style="text-align: left;">RIF: J-2531343012</h6>
           </b-col>
           <b-col></b-col>
           <b-col></b-col>

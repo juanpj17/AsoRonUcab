@@ -257,21 +257,23 @@ export default {
          const producto1 = []
           for (let i = 0; i < data.length; i++) {
             const item = {
-              nombre_producto: data[i].nombre,
-              codigo: data[i].codigo
+              nombre_producto: data[i].nombre_presentacion,
+              codigo: data[i].presentacion_id
             };
             producto1.push(item)
           }
           this.inventario[index].productos=producto1;
-        
+          console.log(this.inventario)
         },
 
       async filtrarProductosPorProveedor(index){
+        console.log('aqui?')
         const proveedorSeleccionado = this.inventario[index].proveedor;
-        const url = 'http://localhost:3000/api/producto/proveedor';
+        const url = 'http://localhost:3000/api/producto/proveedor/presentacion';
         
         await this.axios.get(url, {params:{proveedor:proveedorSeleccionado}}).then(response => {
               const producto = response.data;
+              console.log(producto)
                 this.llenarProductos(producto, index)
             }).catch(error => {
               console.log(error);
