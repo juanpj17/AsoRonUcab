@@ -82,7 +82,7 @@
       >
 <!------------------------------- Columna de acciones con botón de eliminar y modificar ------------------------->
         <template #cell(actions)="row">
-          <b-button icon="delete" variant="danger" size="sm">
+          <b-button icon="delete" variant="danger" size="sm" @click="eliminarEmpleado(row.item)">
             <i class="bi bi-trash-fill"></i> Eliminar
           </b-button>
           <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
@@ -258,6 +258,7 @@
             const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
             const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
             const item = {
+              Codigo: data[i].codigo,
               Nombres: nombreCompleto,
               Apellidos: apellidosCompleto,
               Cedula: data[i].cedula,
@@ -269,6 +270,7 @@
           }
         },
         async ObtenerClientes() {
+
             const url = 'http://localhost:3000/api/cliente';
             await this.axios.get(url).then(response => {
               this.cliente = response.data;
@@ -278,21 +280,53 @@
               console.log(error);
             });
         },
-   RegistroNatural(id){
-    if (this.$route.path!='/PrincipalRegistroNatural/')
+
+        async eliminarEmpleado(data) {
+          console.log(data)
+          const url = 'http://localhost:3000/api/cliente/natural'
+          try {
+            const response = await this.axios.delete(url, { params: { codigo: data.Codigo , cedula: data.Cedula} });
+            const evento = response.data;
+            console.log(evento);
+    
+          } catch (error) {
+            console.log('Error al eliminar el evento:', error);
+          }
+
+          console.log('pasa')
+          this.ObtenerClientes()
+          // this.axios.delete(`http://localhost:3000/api/empleado/` + cedula)
+          // .then((response) => {
+          //   console.log(response);
+          // })
+          // .catch((error) => {
+          //   console.log(error);
+          // });
+          // console.log('Eliminar empleado con cédula:', cedula);
+
+         
+         
+          
+        
+
+
+        },
+
+        RegistroNatural(id){
+          if (this.$route.path!='/PrincipalRegistroNatural/')
            this.$router.push('/PrincipalRegistroNatural/'+id+'/%Cliente');
-   },
-   RegistroJuridico(id){
-    if (this.$route.path!='/PrincipalRegistroJuridico/')
+        },
+        RegistroJuridico(id){
+          if (this.$route.path!='/PrincipalRegistroJuridico/')
            this.$router.push('/PrincipalRegistroJuridico/'+id+'/%ClienteJ');
-   },
-   Modificar(id){
-    if (this.tipoRegistro=='J'){
-      this.RegistroJuridico(id)
-    }
-    else
-    this.RegistroNatural(id)
-   }
+        },
+        Modificar(id){
+          if (this.tipoRegistro=='J'){
+            this.RegistroJuridico(id)
+          }
+          else
+            this.RegistroNatural(id)
+          }
 
     }
   }

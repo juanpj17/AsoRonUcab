@@ -120,8 +120,8 @@
                               </b-col>
                               <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                             </b-row>
-                            </b-container>
-                            </div>
+                          </b-container>
+                        </div>
 
                      
 
@@ -222,7 +222,7 @@ export default {
           password: '',
           rif:'',
           ci:'',
-          sueldo:10,
+          sueldo:'',
           pnombre:'',
           snombre:'',
           papellido:'',
