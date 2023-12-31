@@ -136,7 +136,7 @@
 
 <!-------------------------------Se acabo el boton select y empiaza el boton de guardar--------------------------------->
 
-
+                    <div v-if="isModify">
                         <b-container>
                             <b-row>
                                 
@@ -150,14 +150,20 @@
                             <b-row>
                               <b-col cols="4">
                                   <div class="col form-group form-floating mb-2">
-                                    <b-form-select   class="custom-select mr-sm-2  form-control " v-model="proveedor" :options="proveedores.map(item => ({ text: item.Nombre, value: item.Rif }))"> </b-form-select>  
+                                    <b-form-select   
+                                      class="custom-select mr-sm-2  form-control " 
+                                      v-model="inventario[index].proveedor" 
+                                      :options="proveedores.map(item => ({ text: item.Nombre, value: item.Rif }))"
+                                      @change="filtrarProductosPorProveedor(index)"
+                                      > </b-form-select>  
                                     <!-- <b-form-select  class="custom-select mr-sm-2  form-control" v-model="elemento.Proveedor"  :options="Estados"> </b-form-select>   -->
                                     <label>Seleccione/Proveedor</label>
                                   </div>
                               </b-col>
                               <b-col cols="3">
                                 <div class="col form-group form-floating mb-3">
-                                  <b-form-select  class="custom-select mr-sm-2  form-control altura" v-model="elemento.Proveedor" :options="Estados"> </b-form-select>
+                                  <b-form-select  class="custom-select mr-sm-2  form-control " v-model="inventario[index].productoFiltrado" :options="inventario[index].productos.map(item => ({ text: item.nombre_producto, value: item.codigo }))"> </b-form-select>  
+                                  <!-- <b-form-select  class="custom-select mr-sm-2  form-control " v-model="elemento.Proveedor" :options="productosFiltrados"> </b-form-select> -->
                                   <label>Seleccione/Producto</label>
                                 </div>
                                </b-col>
@@ -177,7 +183,7 @@
                             </b-row>
                           </b-container>
                        </div>       
-
+                    </div>
                     <div class="d-grid gap-2 mb-3">
                         <button type="button" class="btn  btn-lg border-0 rounded-3 " style="background-color: var(--vinotinto); color: white" @click="registrarEvento()">Guardar</button>
                     </div>
@@ -196,6 +202,9 @@ export default {
   },
     data() {
       return {
+        inventario:[
+          {proveedor: null, productos: [], cantidad:0, precio: 0, productoFiltrado: null}
+        ],
          numEnt:0,
          direccion:'',
           descripcion:'',
@@ -203,19 +212,27 @@ export default {
           municipio:'',
           parroquia:null,
           proveedor: null,
+          // productoFiltrado: null,
           nombre:'',
           fecha_fin:'',
           fecha_inicio:'',
+          max_e: '',
         Estados:[ 'Amazonas', 'Anzoátegui', 'Apure', 'Aragua', 'Barinas', 'Bolívar', 'Carabobo', 'Cojedes', 'Delta Amacuro', 'Dependencias Federales',' Distrito Federal',' Falcón', 'Guárico', 'Lara', 'Mérida', 'Miranda', 'Monagas', 'Nueva Esparta', 'Portuguesa', 'Sucre', 'Táchira', 'Trujillo', 'Vargas', 'Yaracuy', 'Zulia'],
         Municipios:['1','2','3'],
         parroquias:[],
         inventario:[],
         proveedores:[],
-
+        productosFiltrados:[],
+        isModify: true
         }
       
       },
+      mounted() {
+        const cod = this.$route.query.id;
+      },
       created(){
+        this.verificarModificar(this.$route.query.id)
+        console.log(this.$route.query.id)
         this.obtenerParroquias()
         this.obtenerProveedores()
         this.RegistrarInventario()
@@ -223,8 +240,50 @@ export default {
       },
 
     methods: {
+      verificarModificar(data){
+        if(data != undefined){
+          console.log('modificar')
+          console.log(data)
+          this.llenarCampos(data)
+          this.isModify= false;
+        }else{
+          console.log('registrar')
+          console.log(data)
+          this.isModify= true;
+        }
+      },
+
+      
+
+
+      llenarCampos(data){
+        console.log(data)
+        const url = 'http://localhost:3000/api/evento/consultar';
+        const datos = {
+            codigo: data
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            //esto es para convertir la fecha al fromato solicitado
+            const fecha_cortada_inicial = response.data.fecha_hora_inicial.slice(0, 10);
+            const fecha_cortada_final = response.data.fecha_hora_final.slice(0, 10);
+            console.log(fecha_cortada_inicial); 
+            console.log(fecha_cortada_final);   
+            this.nombre = response.data.nombre,
+            this.descripcion =  response.data.descripcion
+            this.numEnt = response.data.num_entradas, 
+            this.fecha_inicio = fecha_cortada_inicial, 
+            this.fecha_fin = fecha_cortada_final, 
+            this.direccion = response.data.direccion,
+            this.parroquia = response.data.parroquia
+
+        }).catch(error => {
+            console.log(error);
+        });
+      },
     RegistrarInventario(){
-      this.inventario.push({ Proveedor: '', cantidad: '' ,precio:''});
+      this.inventario.push({ proveedor: null, cantidad: 0 ,precio:0, productos:[], productoFiltrado: null});
         console.log(this.Inventario)
         this.guardar=true
       },
@@ -242,10 +301,74 @@ export default {
 
       },
 
-      registrarEvento(){
-        console.log(this.proveedor)
-        const url = 'http://localhost:3000/api/evento';
+      llenarProductos(data, index){
+         const producto1 = []
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_producto: data[i].nombre_presentacion,
+              codigo: data[i].presentacion_id
+            };
+            producto1.push(item)
+          }
+          this.inventario[index].productos=producto1;
+          console.log(this.inventario)
+        },
+
+      async filtrarProductosPorProveedor(index){
+        console.log('aqui?')
+        const proveedorSeleccionado = this.inventario[index].proveedor;
+        const url = 'http://localhost:3000/api/producto/proveedor/presentacion';
+        
+        await this.axios.get(url, {params:{proveedor:proveedorSeleccionado}}).then(response => {
+              const producto = response.data;
+              console.log(producto)
+                this.llenarProductos(producto, index)
+            }).catch(error => {
+              console.log(error);
+            });
+      },
+
+      async ultimoEvento(){
+        const url = 'http://localhost:3000/api/evento/ultimo'
+        await this.axios.get(url).then(response => {
+              const numE = response.data;
+             this.max_e = numE[0].codigo+1;
+            }).catch(error => {
+              console.log(error);
+          
+            });
+
+      },
+
+      regPresentacionEvento(data){
+        this.ultimoEvento()
+        console.log(data.cantidad)
+        console.log(data.productos[0].codigo)
+        const url = 'http://localhost:3000/api/evento/actual';
         const datos = {
+            cantidad: data.cantidad,
+            precio: data.precio,
+            cod_presentacion: data.productos[0].codigo,
+            cod_evento: this.max_e,
+            cod_premio: 1,
+        };
+   
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+          
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+
+      registrarEvento(){
+    
+        if(this.isModify){
+          console.log(this.parroquia)
+          const url = 'http://localhost:3000/api/evento';
+          const datos = {
             nombre: this.nombre,
             descripcion: this.descripcion, 
             num_entradas: this.numEnt, 
@@ -253,15 +376,41 @@ export default {
             fecha_hora_final: this.fecha_fin, 
             direccion: this.direccion,
             parroquia: this.parroquia
-        };
+          };
    
-        console.log(datos);
-        this.axios.post(url, datos).then(response => {
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
             console.log(response.data);
-
-        }).catch(error => {
+            const num = this.inventario.map(t => t.numero).slice();
+            for (let i = 0; i < this.inventario.length; i++) {
+              console.log(this.inventario[i])
+              this.regPresentacionEvento(this.inventario[i])
+            };
+          }).catch(error => {
             console.log(error);
-        });
+          });
+        }else{
+          console.log('paso por aca')
+          const url = 'http://localhost:3000/api/evento';
+          const datos = {
+            codigo: this.$route.query.id,
+            nombre: this.nombre,
+            descripcion: this.descripcion, 
+            num_entradas: this.numEnt, 
+            fecha_hora_inicial: this.fecha_inicio, 
+            fecha_hora_final: this.fecha_fin, 
+            direccion: this.direccion,
+            parroquia: this.parroquia
+          };
+   
+          console.log(datos);
+          this.axios.put(url, datos).then(response => {
+            console.log(response.data);
+          }).catch(error => {
+            console.log(error);
+          });
+
+        }
     
     },
 

@@ -136,8 +136,8 @@ const routes = [
   {
     path: '/TiendaFisica',
     name: 'TiendaFisica',
-    component: TiendaFisica
-
+    component: TiendaFisica,
+    props: true
   },
   {
     path: '/Pedidos',
@@ -196,7 +196,8 @@ const routes = [
   {
     path: '/RegistrarEvento/:id',
     name: 'RegistrarEvento',
-    component:RegistrarEvento
+    component:RegistrarEvento,
+    props: true
   },
   {
     path: '/ControlAccion',

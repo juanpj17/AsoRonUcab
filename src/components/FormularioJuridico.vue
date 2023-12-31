@@ -100,7 +100,8 @@
                         <b-container>
                           <b-row>
                             <b-col cols="6">
-                              <b-form-select v-model="parroquiaFisica"   class="custom-select mr-sm-2  form-control altura"  :options="parroquias"> </b-form-select>
+                              <b-form-select  class="custom-select mr-sm-2 form-control " v-model="parroquiaFisica" :options="parroquias.map(item => ({ text: item.nombre_parroquia, value: item.id }))"> </b-form-select>  
+                              <!-- <b-form-select v-model="parroquiaFisica"   class="custom-select mr-sm-2  form-control altura"  :options="parroquias"> </b-form-select> -->
                             </b-col>
                             <b-col cols="6">
                               <b-input  placeholder="Direccion fisica" v-model="direccionFisica"></b-input>
@@ -108,7 +109,8 @@
                           </b-row>
                           <b-row style="margin-top: 10px;">
                               <b-col cols="6">
-                                <b-form-select v-model="parroquiaFiscal"   class="custom-select mr-sm-2  form-control altura" :options="parroquias" > </b-form-select>
+                                <b-form-select   class="custom-select mr-sm-2  form-control " v-model="parroquiaFiscal" :options="parroquias.map(item => ({ text: item.nombre_parroquia, value: item.id }))"> </b-form-select>  
+                                <!-- <b-form-select v-model="parroquiaFiscal"   class="custom-select mr-sm-2  form-control altura" :options="parroquias" > </b-form-select> -->
                               </b-col>
                               <b-col cols="6">
                               <b-input  placeholder="Direccion fiscal" v-model="direccionFiscal" ></b-input>
@@ -123,7 +125,7 @@
                   
 
                         <div class="d-grid gap-2 mb-3" style="margin-top: 10px;">
-                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  @click="RegistroNatural()" >Registrar</button>
+                            <button type="button" class="btn btn-primary btn-lg border-0 rounded-3"  @click="registrarCliente()" >Registrar</button>
                         </div>
                       </form>
 
@@ -152,9 +154,9 @@ export default {
           telefonos:[],
           tipoRif:['J','G'],
           tipRif:'J',
-          parroquias:['parroquia1','parrquia2','parroquia3'],
-          parroquiaFiscal:'parroquia1',
-          parroquiaFisica:'parrquia2',
+          parroquias:[],
+          parroquiaFiscal:'',
+          parroquiaFisica:'',
           direccionFisica:'',
           direccionFiscal:'',
           Roles:['Administrador','vendedor','cajero','cliente'],
@@ -165,10 +167,15 @@ export default {
         }
       },
       created(){
-       this.RegistrarCorreo()
-       this.RegistrarTelefonos() 
+
+        this.obtenerParroquias()
+        
+         this.RegistrarCorreo()
+         this.RegistrarTelefonos() 
+     
       },
-    
+
+ 
     
      
         
@@ -201,8 +208,62 @@ export default {
           }
       })
 
-      }
-         
+      },
+
+      llenarParroquias(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_parroquia: data[i].lug_nombre,
+              id: data[i].lug_id
+            };
+            console.log(data[i].lug_nombre)            
+            this.parroquias.push(item)
+            console.log(item)
+          }
+      },
+
+    async obtenerParroquias() {
+            const url = 'http://localhost:3000/api/parroquia';
+            await this.axios.get(url).then(response => {
+              const parroquia = response.data;
+              
+              console.log(parroquia)
+              console.log(parroquia.length)
+              this.llenarParroquias(parroquia)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        registrarCliente(){
+              console.log(this.telefonos)
+              console.log(this.correos)
+             // Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
+              const num = this.telefonos.map(t => t.numero).slice();
+              console.log(num)
+
+              console.log(this.parroquia)
+                 const url = 'http://localhost:3000/api/cliente/juridico';
+               
+                 const datos = {
+                   rif: this.numDoc,
+                   denominacion_comer: this.denominacionCom,
+                   razon_soc: this.RazonSoc,
+                   pagina_web: this.PaginaW,
+                   direccion_fisica: this.parroquiaFisica,
+                   direccion_fiscal: this.parroquiaFiscal,
+                   capital: this.Capital   
+                 }
+             
+                 console.log(datos, typeof datos);
+                 this.axios.post(url, datos).then(response => {
+                     console.log(response.data);
+                     this.enviado=true;
+                  
+                 }).catch(error => {
+                     console.log(error.response.data);
+                 });
+             },
+     
                
     },
     

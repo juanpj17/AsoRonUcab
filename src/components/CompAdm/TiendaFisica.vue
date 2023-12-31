@@ -1,10 +1,15 @@
 <template>
   <b-container class="bv-example-row">
     <b-row style="margin-top: 20px;">
-      <b-input-group prepend="Cedula del Cliente" class="mt-3">
+      <b-input-group >
+        <b-form-select
+              id="per-page-select"
+              v-model="perPage"
+              :options="pageOptions"
+            >Na</b-form-select>
            <b-form-input  v-model="Cliente"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info">Buscar</b-button>
+                <b-button variant="info" @click="buscarCliente(Cliente)">Buscar</b-button>
             </b-input-group-append>
       </b-input-group>
     </b-row>
@@ -15,14 +20,14 @@
           <b-card-text >
             <h6>Nombre: {{Nombre }}</h6>
             <h6>Cedula: {{Cedula }}</h6>  
-           <h6>Telf: {{telf }}</h6> 
+           <!-- <h6>Telf: {{telf }}</h6>  -->
            <h6>Direccion: {{ Direccion }}</h6>
           </b-card-text>
         </b-card>
       </b-col>
       <b-col sm="6"><b-card bg-variant="light" text-variant="black"  class="text-center">
           <b-card-title>Puntos Cliente</b-card-title>
-          <b-card-text> {{ puntos }}</b-card-text>
+          <b-card-text> {{ Puntos }}</b-card-text>
           <b-card-title>Total</b-card-title>
           <b-card-text>{{ total }}</b-card-text>
           
@@ -31,20 +36,24 @@
     </b-row>
     <b-row style="margin-top:10px; m">
         <b-col cols="1" class="col form-group form-floating mb-2">
-           <b-form-select v-model="TipoDeVenta" :options="tipo"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
-           <label>Tipo de venta</label>
+           <b-form-select v-model="TipoDeVenta" :options="tipo" style="width: 195px" class="custom-select mr-sm-2  form-control "></b-form-select>
+           <label style="width: 195px">Tipo de venta</label>
         </b-col>
-        <b-col cols="2" class="col form-group form-floating mb-2" v-if="TipoDeVenta=='----Evento----'"> 
-           <b-form-select :options="Eventos"  v-model="EventoSeleccionado"  class="custom-select mr-sm-2  form-control altura"></b-form-select>
+      </b-row>
+      <b-row>
+        <!-- <b-col cols="2"></b-col> -->
+        <b-col cols="2" style="margin-top:25px" class="col form-group form-floating mb-2" v-if="TipoDeVenta=='----Evento----'"> 
+          <b-form-select  class="custom-select mr-sm-2  form-control " v-model="EventoSeleccionado" :options="Eventos.map(item => ({ text: item.nombre_evento, value: item.id }))"> </b-form-select>  
+          <!-- <b-form-select :options="Eventos"  v-model="EventoSeleccionado"  class="custom-select mr-sm-2  form-control altura"></b-form-select> -->
           <label>Evento</label>
-          </b-col>
-    </b-row>
+        </b-col>
+      </b-row>
     <b-row>
       <b-col >
          <b-input-group prepend="Codigo del producto" class="mt-3">
            <b-form-input v-model="CodigoProducto"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info" @click="CrearOrden()">Agregar</b-button>
+                <b-button variant="info" @click="cargarProducto(CodigoProducto)">Agregar</b-button>
             </b-input-group-append>
           </b-input-group>
       </b-col>
@@ -62,6 +71,13 @@
             <template #cell(name)="row">
               {{ row.value.first }} {{ row.value.last }}
             </template>
+            <template #cell(stock)="row">
+              <div class="d-flex justify-content-center">
+                <b-button @click="decreaseStock(row.item)" variant="danger" size="sm">-</b-button>
+                <span class="mx-2">{{ row.item.stock }}</span>
+                <b-button @click="increaseStock(row.item)" variant="success" size="sm">+</b-button>
+              </div>
+            </template>
             <template #row-details="row">
               <b-card>
                 <ul>
@@ -75,15 +91,15 @@
       <b-col></b-col>
       <b-col></b-col>
       
-      <b-col><b-button v-b-modal.modal-center>Canjear</b-button></b-col>
+      <b-col><b-button v-b-modal.modal-center @click="mostrarModal()">Canjear</b-button></b-col>
       <b-col ><b-button @click="Pagar()"> Pagar</b-button></b-col>
 
   
-    <b-modal id="modal-center" centered title="Canjear puntos">
+    <b-modal id="modal-center" centered title="Canjear puntos" v-if="modal">
       <b-input-group prepend="Cantidad" class="mt-3">
            <b-form-input v-model="canjear"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info">Aceptar</b-button>
+                <b-button variant="info" @click="mostrarModal()">Aceptar</b-button>
             </b-input-group-append>
           </b-input-group>
     </b-modal>
@@ -103,27 +119,35 @@
 
     data() {
       return {
+        modal: false,
+        pageOptions:['Natural', 'Juridico'],
+        perPage: 'Natural',
         Cliente:'',
         CodigoProducto:'',
-        Nombre:'Gabriela Martinez',
-        Cedula:29919287,
-        telf:'04145767916',
-        Direccion:'Caracas',
-        puntos:22,
+        Nombre:'',
+        Cedula:'',
+        // telf:'',
+        Direccion:'',
+        Puntos:'',
         total:'falta poner la api aqui',
         items: [],
+        colocados: [],
         fields: [
           { key: 'Nombre', label: 'Nombre', },
-          { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
+          { key: 'stock', label: 'Stock', class: 'text-center',sortable: true  },
+          // { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
           { key: 'Precio', label: 'Precio', class: 'text-center' },
         ],
-        canjear:'',
+        canjear:0,
         tipo:['----Tienda----','----Evento----'],
         TipoDeVenta:'Evento',
-        EventoSeleccionado:'',
-        Eventos:['1','2'],
+        EventoSeleccionado:-1,
+        Eventos:[],
       }
     },
+    created(){
+        this.obtenerEventos()
+      },
     methods: {
       CrearOrden(){
             let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
@@ -159,9 +183,169 @@
             }
       },
       Pagar(){
-        if (this.$route.path!='/PagarTiendaFisica')
-             this.$router.push('/PagarTiendaFisica');
+        console.log(this.items)
+        if (this.$route.path!='/PagarTiendaFisica'){
+          this.$router.push({
+            path: '/PagarTiendaFisica',
+            query: {
+              array: this.items,
+              doc: this.Cedula,
+              tipo: this.perPage,
+              evento: this.EventoSeleccionado,
+              punto: this.canjear,
+            }
+          });
+        }
+            
       },
+
+      mostrarModal(){
+        if(this.modal == false){
+          this.modal = true
+        }else{
+          this.modal=false
+        }
+      },
+
+      decreaseStock(item) {
+          if (item.stock > 0) {
+            item.stock--;
+          }
+        },
+        increaseStock(item) {
+          item.stock++;
+          
+        },
+
+      async buscarCliente(cliente){
+        console.log(cliente)
+        if(this.perPage == 'Natural'){
+          try {
+            console.log('aca')
+            const response = await this.axios.get('http://localhost:3000/api/cliente/natural', {
+              params: { cedula: cliente }
+            });
+            const clienteNatural = response.data;
+            console.log(clienteNatural);
+            
+
+            this.Nombre = clienteNatural[0].p_nombre;
+            this.Cedula = cliente;
+            this.Direccion = clienteNatural[0].direccion;
+            this.Puntos = clienteNatural[0].puntos_acumulados;
+          } catch (error) {
+            console.error('Error al obtener el cliente natural:', error);
+          }
+        }else{
+          try {
+            const response = await this.axios.get('http://localhost:3000/api/cliente/juridico', {
+              params: { rif: cliente }
+            });
+            const clienteJuridico = response.data;
+            console.log(clienteJuridico);
+            this.Nombre = clienteJuridico[0].denominacion_comercial;
+            this.Cedula = cliente;
+            this.Direccion = clienteJuridico[0].direccion_fisica
+
+          } catch (error) {
+            console.error('Error al obtener el cliente natural:', error);
+          }
+        }
+
+      },
+
+        llenarTabla(nombre, precio, cod){
+          console.log(nombre)
+          console.log(precio)
+          const item = {
+              Nombre: nombre,
+              stock: 1,
+              Precio: precio,
+              Codigo: cod,
+            };
+          this.items.push(item)
+          for (let i = 0; i < this.items.length; i++) {
+            console.log(this.items[i].stock)}
+          console.log(this.items)
+         
+        },
+      
+
+      traerNombre(data, precio){
+        const url = 'http://localhost:3000/api/tiendafisica/particular';
+        const datos = {
+            cod_pro: data,
+        };
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data[0].presentacion_particular);
+        this.llenarTabla(response.data[0].presentacion_particular, precio.verificar_presentacion,data)
+  
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+      cargarProducto(data){
+        console.log(data)
+        console.log(this.EventoSeleccionado )
+        if (this.EventoSeleccionado == -1){
+
+        }else{
+          const url = 'http://localhost:3000/api/tiendafisica';
+          const datos = {
+              cod_pro: data,
+              cod_eve: this.EventoSeleccionado,
+          };
+        
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data[0]);
+        if (this.verificarNumeroEnArray(data, this.colocados)) {
+          console.log(`${data} está en el array.`);
+        } else {
+          console.log(`${data} no está en el array.`);
+          this.colocados.push(data)
+          console.log(this.colocados)
+          this.traerNombre(data, response.data[0])
+        }
+        }).catch(error => {
+            console.log(error);
+        });
+      }
+
+      },
+
+      verificarNumeroEnArray(numero, array) {
+        return array.includes(numero);
+      },
+
+
+      llenarEventos(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              nombre_evento: data[i].nombre_evento,
+              id: data[i].evento_id
+            };
+            console.log(data[i].nombre_evento)            
+            this.Eventos.push(item)
+            console.log(item)
+          }
+        },
+
+    async obtenerEventos() {
+            const url = 'http://localhost:3000/api/evento/actual';
+            await this.axios.get(url).then(response => {
+              const evento = response.data;
+              
+            console.log(evento)
+             
+            this.llenarEventos(evento)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+
+
 
   
     }   

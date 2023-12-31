@@ -51,7 +51,7 @@
         
   
       </b-row>
-      <div style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
+      <div  style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
       <!-- Main table element -->
       <b-table
       id="table-transition-example"
@@ -148,7 +148,7 @@
           items: [
           ],
           fields: [
-            { key: 'id', label: 'Codigo del rol',sortable: true  },
+            { key: 'Codigo', label: 'Codigo del rol',sortable: true  },
             { key: 'Nombre', label: 'Nombre de rol',sortable: true  },
             { key: 'actions', label: 'Opciones', class: 'text-center' },
 
@@ -163,6 +163,7 @@
           // Transition name
           name: 'flip-list'
         },
+        roles: [],
         infoModal: [],
         mostrarModal:false,
 
@@ -170,7 +171,7 @@
         }
       },
       created(){
-       this.LlenarTabla();
+       this.obtenerRoles();
       },
      
       computed: {
@@ -194,10 +195,29 @@
           this.totalRows = filteredItems.length
           this.currentPage = 1
         },
-      LlenarTabla(){
-        this.items=[
-        {id:3,idCliente:1,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
-       ]
+        llenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              Codigo: data[i].codigo,
+              Nombre: data[i].nombre,
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+        },
+        async obtenerRoles() {
+
+            const url = 'http://localhost:3000/api/roles';
+            await this.axios.get(url).then(response => {
+              this.roles = response.data;
+              console.log(this.roles)
+              this.llenarTabla(this.roles)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+
       },
         info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
@@ -212,7 +232,7 @@
           
 
       }
-    }
+    
   </script>
   <style>
   table#table-transition-example .flip-list-move {
