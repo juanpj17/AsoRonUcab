@@ -134,9 +134,9 @@
         colocados: [],
         fields: [
           { key: 'Nombre', label: 'Nombre', class:'spann', sortable: true},
-          { key: 'stock', label: 'Stock', class: 'text-center spann',sortable: true  },
+          { key: 'stock', label: 'Stock', class: 'text-center ',sortable: true  },
           // { key: 'Cantidad', label: 'Cantidad', class: 'text-center' },
-          { key: 'Precio', label: 'Precio', class: 'text-center' },
+          { key: 'Precio', label: 'Precio', class: 'text-center spann' , sortable: true},
         ],
         canjear:0,
         tipo:['----Tienda----','----Evento----'],

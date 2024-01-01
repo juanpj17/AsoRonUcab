@@ -234,6 +234,7 @@ export default {
         this.verificarModificar(this.$route.query.id)
         console.log(this.$route.query.id)
         this.obtenerParroquias()
+        this.ultimoEvento()
         this.obtenerProveedores()
         this.RegistrarInventario()
         this.id=this.$route.params.id
@@ -332,7 +333,8 @@ export default {
         const url = 'http://localhost:3000/api/evento/ultimo'
         await this.axios.get(url).then(response => {
               const numE = response.data;
-             this.max_e = numE[0].codigo+1;
+              console.log(response.data)
+             this.max_e = numE[0].codigo +1;
             }).catch(error => {
               console.log(error);
           
@@ -341,7 +343,7 @@ export default {
       },
 
       regPresentacionEvento(data){
-        this.ultimoEvento()
+        // this.ultimoEvento()
         console.log(data.cantidad)
         console.log(data.productos[0].codigo)
         const url = 'http://localhost:3000/api/evento/actual';
