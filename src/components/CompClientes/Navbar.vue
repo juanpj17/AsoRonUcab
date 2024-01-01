@@ -29,6 +29,10 @@
 
    
    export default{
+    props:{
+      tipo_codigo_registro:''
+    },
+
           methods:{
            PrincipalProducto() {
              if (this.$route.path!='/PrincipalProductoC/$')
@@ -47,8 +51,8 @@
              this.$router.push('/AsignarRoles/');
            },
            PrincipalAfiliados() {
-             if (this.$route.path!='/PrincipalAfiliados/')
-             this.$router.push('/PrincipalAfiliados/');
+             if (this.$route.path!='/PrincipalAfiliados/'+this.tipo_codigo_registro)
+             this.$router.push('/PrincipalAfiliados/'+this.tipo_codigo_registro);
            },
            MiCuenta() {
              if (this.$route.path!='/MiCuenta/')

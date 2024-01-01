@@ -33,7 +33,7 @@
         </b-row>
         <b-row style="margin-top:30px;">
             <b-col></b-col>
-            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px; display: inline-block;" @click="VerificarUsuario()">Iniciar Sesión</b-button></b-col>
+            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px; display: inline-block;"  @click="VerificarUsuario()">Iniciar Sesión</b-button></b-col>
             <b-col></b-col>
         </b-row>
     </b-col>
@@ -58,6 +58,11 @@ export default {
     return{
         Correo:'',
         Password:'',
+        cod_1:'',
+        cod_2:'',
+        tipo_registro:'',
+        datos:''
+       
     }
    },
    methods:{
@@ -81,7 +86,48 @@ export default {
     }else
     this.InicioSesion('%')
     
-   }
+   },
+
+   
+
+buscarUsuario(){
+    const url = 'http://localhost:3000/api/usuario';
+    const  correo=this.Correo
+    const contrase=this.Password   
+       for (let i=0; i<2 ; i++){
+        this.axios.get(url+'/'+correo+'/'+contrase
+        ).then(response => {
+                     console.log(response.data);
+                     this.datos=response.data
+                     this.cod_1=this.datos[0].cod1
+                     this.cod_2=this.datos[0].cod2
+                     this.tipo_registro=this.datos[0].tipo
+
+                 }).catch(error => {
+                     console.log(error.response);
+                 });
+
+this.buscarRuta()}
+},
+buscarRuta(){
+    if (this.cod_1!='' && this.cod_1 != undefined){
+       
+        let parametro =this.cod_1+'_'+this.cod_2+'_'+this.tipo_registro
+        this.InicioSesion(parametro)
+
+
+    }
+   
+}
+
+
+
+
+
+
+
+
+
    }
    
 }

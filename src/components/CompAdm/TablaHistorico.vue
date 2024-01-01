@@ -59,6 +59,7 @@
       :per-page="perPage"
       :filter="filter"
       :filter-included-fields="filterOn"
+      
       hover
       outlined
       stacked="md"
@@ -102,9 +103,9 @@
         items: [
         ],
         fields: [
-          { key: 'valor', label: 'Equivalente en Bs', },
-          { key: 'fechaI', label: 'Fecha de Inicio', class: 'text-center' },
-          { key: 'fechaF', label: 'Fecha de Fin', class: 'text-center' },
+          { key: 'valor', label: 'Equivalente en Bs', sortable:true},
+          { key: 'fecha_i', label: 'Fecha de Inicio', class: 'text-center' },
+          { key: 'fecha_f', label: 'Fecha de Fin', class: 'text-center' },
         ],
         totalRows: 1,
         currentPage: 1,
@@ -112,11 +113,14 @@
         pageOptions: [5, 10, 15],
         filter: null,
         filterOn: [],
+        sortBy: 'valor',
+   
        
       }
     },
     created(){
-     this.LlenarTabla();
+    this.LlenarTabla();
+    
     },
    
     computed: {
@@ -142,19 +146,48 @@
       },
     LlenarTabla(){
       if(this.tipo_historico=='a'){
-        this.items=[
-        {  valor: 25, fechaI: '13/03/0000',fechaF: '13/03/0000'  },
-        ]
+        this.historicoTasa()
       }
       else{
-        this.items=[
-        {  valor: 24, fechaI: '13/03/0000',fechaF: '13/03/0000'  },
-        ]
+        this.historicoPunto()
+      }},
+      llenarHistoricoTasa(data){
+                   for (let i = 0; i < data.length; i++) {
+                     const item = {
+                       valor: data[i].valor,
+                       fecha_i: (data[i].fecha_i).substring(0,10),
+                       fecha_f:(data[i].fecha_f).substring(0,10)
+                     };
+                     console.log(data[i].fecha_i)            
+                     this.items.push(item)
+                     console.log(item)
+                   }
+                 },
+    async historicoTasa(){
+    const url = 'http://localhost:3000/api/tasa';
+    await this.axios.get(url).then(response => {
+      const tasa = response.data;
+      console.log(tasa)
+      console.log(tasa.length)
+      this.llenarHistoricoTasa(tasa)
+    }).catch(error => {
+      console.log(error);});
+    },
 
-      }
+    async historicoPunto(){
+    const url = 'http://localhost:3000/api/punto';
+    await this.axios.get(url).then(response => {
+      const punto = response.data;
+      console.log(punto)
+      console.log(punto.length)
+      this.llenarHistoricoTasa(punto)
+    }).catch(error => {
+      console.log(error);});
+    },
 
 
-    }
+    
+
     }
   }
 </script>

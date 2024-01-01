@@ -98,7 +98,7 @@
                             </b-row>
                         </b-container>
                     </div>
-                    <b-button v-if="pagar">Pagar</b-button>
+                    <b-button v-if="pagar" @click="vericarPago()">Pagar</b-button>
     
 </div>
 </template>
@@ -119,7 +119,9 @@
         btAgregar:false,
         Montos:[],
         total:'400',
-        pagar:false
+        pagar:false,
+        Montos_por_tarjeta:[],
+        id_tarjetas:[]
       }
     },
     methods: {
@@ -136,9 +138,16 @@
       },
       guardar(){
         this.Montos=[]
+        this.Tarjetas=[]
         this.selected.forEach((elemento) => this.Montos.push({idTarjeta:elemento.id,monto:''}))
         console.log(this.Montos)
         this.pagar=true
+      },
+      vericarPago(){
+        this.Montos.forEach((elemento) => this.id_tarjetas.push( elemento.idTarjeta))
+        this.Montos.forEach((elemento) => this.Montos_por_tarjeta.push( elemento.monto))
+        console.log(this.id_tarjetas)
+        console.log(this.Montos_por_tarjeta)
       }
       
     }
