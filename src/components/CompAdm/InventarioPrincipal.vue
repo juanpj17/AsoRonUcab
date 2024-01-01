@@ -121,7 +121,7 @@
             { key: 'nombre', label: 'Nombre', class: 'text-center',sortable: true  },
             { key: 'presentacion', label: 'Presentacion', class: 'text-center',sortable: true  },
             { key: 'stock', label: 'Stock', class: 'text-center',sortable: true  },
-            { key: 'tipo', label: 'Tipo de inventario', class: 'text-center',sortable: true  },
+            { key: 'tipo', label: 'Tipo de inventario', class: 'text-center'  },
 
           ],
           totalRows: 1,
@@ -189,4 +189,8 @@
   table#table-transition-example .flip-list-move {
   transition: transform 1s;
 }
+span{
+  display:grid !important;
+}
+
   </style>

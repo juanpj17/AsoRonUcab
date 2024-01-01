@@ -159,7 +159,8 @@ const routes = [
   {
     path: '/PrincipalRegistroNatural/:id/:tipoUsuario',
     name: 'PrincipalRegistroNatural',
-    component:PrincipalRegistroNatural
+    component:PrincipalRegistroNatural,
+    props: true
   },
   {
     path: '/PrincipalRegistroJuridico/:id/:tipoUsuario',

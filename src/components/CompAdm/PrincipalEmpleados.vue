@@ -151,7 +151,7 @@
           Detalles
         </b-button>
 
-        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado(row.item.Codigo)" class="mr-1">
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="RegistrarEmpleado(row.item.Cedula)" class="mr-1">
          Modifiar
 
         </b-button>
@@ -212,11 +212,11 @@ export default {
     return {
       items: [],
       fields: [
-        { key: 'Nombres', label: 'Nombres', sortable: true },
-        { key: 'Apellidos', label: 'Apellidos', class: 'text-center', sortable: true },
-        { key: 'Cedula', label: 'Cedula', class: 'text-center', sortable: true },
-        { key: 'Rol', label: 'Rol', class: 'text-center', sortable: true },
-        { key: 'actions', label: 'Opciones', class: 'text-center', sortable: true },
+        { key: 'Nombres', label: 'Nombres', class:'spann',sortable: true },
+        { key: 'Apellidos', label: 'Apellidos', class: 'text-center spann', sortable: true },
+        { key: 'Cedula', label: 'Cedula', class: 'text-center spann', sortable: true },
+        { key: 'Rol', label: 'Rol', class: 'text-center spann', sortable: true },
+        { key: 'actions', label: 'Opciones', class: 'text-center spann'},
       ],
       totalRows: 1,
       infoModal: [],
@@ -246,8 +246,16 @@ export default {
      
 
         RegistrarEmpleado(id){
-             if (this.$route.path!='/PrincipalRegistroNatural/'+id+'/%Empleado')
-             this.$router.push('/PrincipalRegistroNatural/'+id+'/%Empleado');
+          console.log(id)
+          if (this.$route.path!='/PrincipalRegistroNatural/'+id+'/%Empleado'){
+                this.$router.push({
+                  path: '/PrincipalRegistroNatural/'+id+'/%Empleado',
+                    query: {
+                      id: id,
+                      proviene: 'empleado',
+                    }
+                });
+            }
         },
 
  
@@ -311,5 +319,8 @@ export default {
 <style>
   table#table-transition-example .flip-list-move {
     transition: transform 1s;
+  }
+  .spann span{
+    display:none !important;
   }
 </style>

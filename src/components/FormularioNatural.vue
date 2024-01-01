@@ -152,19 +152,17 @@
                                 <b-col >
                                   <b-input v-model="sueldo"  placeholder="Sueldo" ></b-input>
                                 </b-col>
-                                <b-col >
-                                  <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control " ></b-form-select>
-                                </b-col>
+                                <!--  -->
                             </b-row>
 
 
                         </b-container>
                       
                         <div class="d-grid gap-2 mb-3" v-if="tipo=='%Empleado'">
-                            <b-button @click=" registrarEmpleado()" > Registrar</b-button>
+                            <b-button @click=" registrarEmpleado()" > RegistrarE</b-button>
                         </div>
                         <div class="d-grid gap-2 mb-3" v-if="tipo=='%Cliente'">
-                          <b-button @click=" registrarCliente()" > Registrar</b-button>
+                          <b-button @click=" registrarCliente()" > RegistrarC</b-button>
                       </div>
                       </form>
                   
@@ -238,15 +236,22 @@ export default {
         parroquia:'',
         parroquias:[],
         numeros:[],
-
-        sueldo:''
+        rolBuscado:'',
+        passwordBuscado: '',
+        sueldo:'',
+        isModify: false
 
 
         }
       },
+      mounted() {
+        const cod = this.$route.query.id;
+        const page = this.$route.query.proviene;
+      },
       created(){
         this.obtenerParroquias()
         this.obtenerRoles()
+        this.verificarModificar(this.$route.query.id)
         this.RegistrarTelefonos()
     
         console.log(this.tipo +'johohoho')
@@ -254,6 +259,86 @@ export default {
       },
      
     methods: {
+      verificarModificar(data){
+        console.log(typeof data)
+        if (typeof data !== 'object') {
+          console.log('modificar');
+          this.isModify= true;
+          this.llenarCampos(data)
+        } else {
+          this.isModify= false;
+          console.log('agregar');
+        }
+     
+      },
+      
+      buscarRol(data){
+        const url = 'http://localhost:3000/api/empleado/usuario';
+        const datos = {
+            codigo: data
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.rol = response.data.rol
+            console.log(this.rol)
+            this.password = response.data.contrasena
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+      buscarTelefono(data){
+        console.log(data)
+        const url = 'http://localhost:3000/api/empleado/consultartelefono';
+        const datos = {
+            codigo: data
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            console.log(response.data.length)
+            this.telefonos = []
+            for (let i = 0; i < data.length; i++) {
+            const item = {
+              numero: response.data[i].telefono,
+              id: response.data[i].telf_id
+            };
+            this.telefonos.push(item)
+            console.log(this.telefonos)
+          }
+          }).catch(error => {
+            console.log(error);
+        });
+      },
+      
+      llenarCampos(data){
+        this.buscarRol(data)
+        this.buscarTelefono(data)
+        console.log(data)
+        const url = 'http://localhost:3000/api/empleado/consultar';
+        const datos = {
+            codigo: data
+        };
+        console.log(datos);
+        this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.ci = response.data.cedula,
+            this.rif = response.data.rif,
+            this.pnombre = response.data.p_nombre,
+            this.snombre = response.data.s_nombre,
+            this.papellido = response.data.p_apellido,
+            this.sapellido = response.data.s_apellido,
+            this.direccion = response.data.direccion,
+            this.sueldo = response.data.sueldo,
+            this.parroquia = response.data.parroquia
+
+        }).catch(error => {
+            console.log(error);
+        });
+      },
+
+
          
       RegistrarTelefonos(){
       this.telefonos.push({ numero: ''});
@@ -315,41 +400,110 @@ export default {
               console.log(error);
             });
         },
-             
+            modificarUsuario(){
+              console.log('paso por aca')
+
+              const url = 'http://localhost:3000/api/empleado/modificarUsuario';
+              const datos = {
+                clave: this.password,
+                cliente1: 0,
+                cliente2: '',
+                codigo: this.$route.query.id,
+                juridico: '',
+                rol: this.rol
+              };
+   
+                console.log(datos);
+                this.axios.put(url, datos).then(response => {
+                console.log(response.data);
+              }).catch(error => {
+            console.log(error);
+              }   );
+          },
+
+          regTelefonos(data){
+
+            console.log(data)
+            const url = 'http://localhost:3000/api/empleado/telefono';
+            const datos = {
+              numero: data,
+              codigo1: this.$route.query.id
+            }
+
+            console.log(datos);
+            this.axios.post(url, datos).then(response => {
+                console.log(response.data);
+          
+            }).catch(error => {
+                console.log(error.response.data);
+            });
+          },
          
              registrarEmpleado(){
-              console.log(this.telefonos)
-             // Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
-              const num = this.telefonos.map(t => t.numero).slice();
-              console.log(num)
+              
+              if(this.isModify){
+                this.modificarUsuario()
+                const url = 'http://localhost:3000/api/empleado/modificar';
+                   const datos = {
+                     cedula: this.ci,
+                     rif: this.rif,
+                     p_nombre: this.pnombre,
+                     s_nombre: this.snombre,
+                     p_apellido: this.papellido,
+                     s_apellido: this.sapellido,
+                     direccion: this.direccion,
+                     sueldo: this.sueldo,
+                     parroquia: this.parroquia,
+                      
+                   }
+               
+                   console.log(datos, typeof datos);
+                   this.axios.put(url, datos).then(response => {
+                       console.log(response.data);
+                       this.enviado=true;
+                       this.$router.push('/PrincipalRegistroNatural/*/%');
+                   }).catch(error => {
+                       console.log(error.response.data);
+                   });
+              }else{
 
-              console.log(this.parroquia)
-                 const url = 'http://localhost:3000/api/empleado';
-                 const datos = {
-                   cedula: this.ci,
-                   rif: this.rif,
-                   p_nombre: this.pnombre,
-                   s_nombre: this.snombre,
-                   p_apellido: this.papellido,
-                   s_apellido: this.sapellido,
-                   direccion: this.direccion,
-                   sueldo: this.sueldo,
-                   parroquia: this.parroquia,
-                   contraseña: this.password,
-                   rol: this.rol,
-                   correo: this.email,
-                   telefonos: num,
-                    
-                 }
-             
-                 console.log(datos, typeof datos);
-                 this.axios.post(url, datos).then(response => {
-                     console.log(response.data);
-                     this.enviado=true;
-                     this.$router.push('/PrincipalRegistroNatural/*/%');
-                 }).catch(error => {
-                     console.log(error.response.data);
-                 });
+               // Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
+                const num = this.telefonos.map(t => t.numero).slice();
+                console.log(num)
+                if(this.telefonos.length>= 1 && num[0] !=''){
+                  for (let i = 0; i < this.telefonos.length; i++) {
+                    console.log(num[i])
+                    this.regTelefonos(num[i])
+                  }
+                }
+                   const url = 'http://localhost:3000/api/empleado';
+                   const datos = {
+                     cedula: this.ci,
+                     rif: this.rif,
+                     p_nombre: this.pnombre,
+                     s_nombre: this.snombre,
+                     p_apellido: this.papellido,
+                     s_apellido: this.sapellido,
+                     direccion: this.direccion,
+                     sueldo: this.sueldo,
+                     parroquia: this.parroquia,
+                     contraseña: this.password,
+                     rol: this.rol,
+                     correo: this.email,
+                     telefonos: num,
+                      
+                   }
+               
+                   console.log(datos, typeof datos);
+                   this.axios.post(url, datos).then(response => {
+                       console.log(response.data);
+                       this.enviado=true;
+                       this.$router.push('/PrincipalRegistroNatural/*/%');
+                   }).catch(error => {
+                       console.log(error.response.data);
+                   });
+
+              }
              },
 
              registrarCliente(){

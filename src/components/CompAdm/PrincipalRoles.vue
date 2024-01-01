@@ -148,9 +148,9 @@
           items: [
           ],
           fields: [
-            { key: 'Codigo', label: 'Codigo del rol',sortable: true  },
-            { key: 'Nombre', label: 'Nombre de rol',sortable: true  },
-            { key: 'actions', label: 'Opciones', class: 'text-center' },
+            { key: 'Codigo', label: 'Codigo del rol', class: ' spann', sortable: true  },
+            { key: 'Nombre', label: 'Nombre de rol', class: ' spann', sortable: true  },
+            { key: 'actions', label: 'Opciones', class: 'text-center spann' },
 
           ],
           totalRows: 1,

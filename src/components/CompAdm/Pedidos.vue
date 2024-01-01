@@ -153,11 +153,11 @@
           items: [
           ],
           fields: [
-            { key: 'id', label: 'Codigo del pedido',sortable: true  },
-            { key: 'idCliente', label: 'Codigo del cliente',sortable: true  },
-            { key: 'Fecha', label: 'Fecha de compra', class: 'text-center',sortable: true  },
-            { key: 'Total', label: 'Total', class: 'text-center',sortable: true  },
-            { key: 'Estatus', label: 'Estatus', class: 'text-center',sortable: true  },
+            { key: 'id', label: 'Codigo del pedido', class:'spann', sortable: true  },
+            { key: 'idCliente', label: 'Codigo del cliente ', class:'spann',sortable: true  },
+            { key: 'Fecha', label: 'Fecha de compra', class: 'text-center spann',sortable: true  },
+            { key: 'Total', label: 'Total', class: 'text-center spann',sortable: true  },
+            { key: 'Estatus', label: 'Estatus', class: 'text-center spann',sortable: true  },
             { key: 'actions', label: 'Detalles', class: 'text-center' },
 
           ],

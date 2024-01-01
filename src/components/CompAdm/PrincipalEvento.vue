@@ -210,11 +210,11 @@
           ],
          
           fields: [
-            { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center',sortable: true},
-            { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center',sortable: true },
-            { key: 'Fecha_f', label: 'Fecha de fin', class: 'text-center',sortable: true },
-            { key: 'Direccion', label: 'Direccion', sortable: true },
-              { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
+            { key: 'Nombre_Evento', label: 'Nombre del evento', class: 'text-center spann',sortable: true},
+            { key: 'Fecha_i', label: 'Fecha de inicio', class: 'text-center spann',sortable: true },
+            { key: 'Fecha_f', label: 'Fecha de fin', class: 'text-center spann',sortable: true },
+            { key: 'Direccion', label: 'Direccion', class: ' spann',sortable: true },
+            { key: 'actions', label: 'Opciones', class: 'text-center spann' },
              
           ],
           currentPage: 1,
@@ -355,5 +355,7 @@
 table#table-transition-example .flip-list-move {
 transition: transform 1s;
 }
-
+.spann span{
+  display:none !important;
+}
 </style>

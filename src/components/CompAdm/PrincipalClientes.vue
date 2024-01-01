@@ -195,11 +195,11 @@
         items: [
         ],
         fields: [
-            { key: 'Nombres', label: 'Nombre',sortable: true },
-            { key: 'Apellidos', label: 'Apellidos o Razon Social', class: 'text-center',sortable: true },
-            { key: 'Cedula', label: 'Documento', class: 'text-center',sortable: true },
-            { key: 'Puntos_Acumulados', label: 'Puntos acumulados', class: 'text-center',sortable: true },
-            { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
+            { key: 'Documento', label: 'Documento',class: 'text-center spann',sortable: true },
+            { key: 'Nombre', label: 'Nombre', class: 'text-center spann',sortable: true },
+            { key: 'Apellido', label: 'Apellido o Razon Social ', class: 'text-center spann',sortable: true },
+            { key: 'Puntos_Acumulados', label: 'Puntos acumulados ', class: 'text-center spann',sortable: true },
+            { key: 'actions', label: 'Opciones', class: 'text-center spann' },
         ],
         totalRows: 1,
         infoModal: [],
@@ -255,13 +255,12 @@
       },
       LlenarTabla(data){
           for (let i = 0; i < data.length; i++) {
-            const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
-            const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
+            // const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
+            // const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
             const item = {
-              Codigo: data[i].codigo,
-              Nombres: nombreCompleto,
-              Apellidos: apellidosCompleto,
-              Cedula: data[i].cedula,
+              Documento: data[i].doc,
+              Nombre: data[i].nombre,
+              Apellido: data[i].apellido,
               Puntos_Acumulados: data[i].puntos_acumulados
             };
             
@@ -334,5 +333,9 @@
 <style>
 table#table-transition-example .flip-list-move {
 transition: transform 1s;
+}
+
+.spann span{
+  display:none !important;
 }
 </style>
