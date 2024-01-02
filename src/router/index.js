@@ -68,7 +68,7 @@ const routes = [
     component: RegistrarPremio 
   },
   {
-    path: '/NotaCata',
+    path: '/NotaCata/:id',
     name: 'NotaCata',
     component: NotaCata 
   },
