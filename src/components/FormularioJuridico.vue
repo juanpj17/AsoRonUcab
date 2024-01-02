@@ -62,7 +62,7 @@
                                     <label>Ingrese el número</label>
                                   </div>
                               </b-col>
-                              <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
+                              <!-- <b-col cols="1" ><b-button @click=" EliminarTelefonoSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col> -->
                             </b-row>
                             </b-container>
                             </div>
@@ -116,11 +116,11 @@
                               <b-input  placeholder="Direccion fiscal" v-model="direccionFiscal" ></b-input>
                             </b-col>
                           </b-row>
-                          <b-row style="margin-top: 10px;">
+                          <!-- <b-row style="margin-top: 10px;">
                               <b-col v-if="tipoUsuario=='%ClienteJ'">
                                 <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control altura" ></b-form-select>
                               </b-col>
-                          </b-row>
+                          </b-row> -->
                         </b-container>
                   
 
@@ -160,8 +160,8 @@ export default {
           direccionFisica:'',
           direccionFiscal:'',
           Roles:['Administrador','vendedor','cajero','cliente'],
-          rol:'cliente'
-
+          rol:'cliente',
+          numAntiguos: []
 
 
         }
@@ -199,9 +199,45 @@ export default {
      
       },
 
+      obtenerClave(id){
+        const url = 'http://localhost:3000/api/cliente/consultarUsuarioJ'; 
+          const datos = {
+            rif: id
+          };
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.password = response.data.clave
+         
+          }).catch(error => {
+            console.log(error);
+          });
+      },
+
+      buscarTelefono(id){
+        const url = 'http://localhost:3000/api/cliente/consultarTelefonoJ'; 
+          const datos = {
+            codigo: id
+          };
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            for (let i = 0; i < response.data.length; i++) {
+              this.telefonos.push({ numero: response.data[i].telefono})
+            }
+            this.numAntiguos = this.this.telefonos.map(t => t.numero).slice();
+            console.log(this.numAntiguos)
+          }).catch(error => {
+            console.log(error);
+          });
+      },
+
 
       llenarCampos(data){
-          // this.buscarTelefono(data)
+        this.lugarPersona(data.Documento, 'Fisica')
+        this.lugarPersona(data.Documento, 'Fiscal')
+        this.obtenerClave(data.Documento)
+        this.buscarTelefono(data.Documento)
           console.log(data)
           const url = 'http://localhost:3000/api/cliente/consultarJ'; 
           const datos = {
@@ -215,8 +251,8 @@ export default {
             this.denominacionCom = response.data.denominacion_comercial,
             this.RazonSoc = response.data.razon_social,
             this.PaginaW= response.data.pagina_web,
-            this.direccionFiscaal = response.data.direccion_fiscal,
-            this.direccionFisca = response.data.direccion_fisica,
+            this.direccionFiscal = response.data.direccion_fiscal,
+            this.direccionFisica = response.data.direccion_fisica,
             this.Capital  = response.data.capital
 
           }).catch(error => {
@@ -256,6 +292,59 @@ export default {
 
       },
 
+
+      regTelefonos(data){
+            console.log(data)
+            const num = this.numAntiguos.map(t => t.numero).slice();
+            console.log(num[1])
+            console.log(this.$route.query.id)
+            const num1 = this.telefonos.map(t => t.numero).slice();
+            console.log(num1)
+            for (let i = 0; i < num1.length; i++) {
+              const url = 'http://localhost:3000/api/cliente/insertarTelefonoJ';
+              if(num[i] == undefined){
+                num[i] = ''
+              }
+              console.log(num[i])
+              const datos = {
+                num1: num[i],
+                num2: num1[i],
+                codigo: this.$route.query.id.Documento
+              }
+
+            console.log(datos);
+            this.axios.post(url, datos).then(response => {
+                console.log(response.data);
+          
+            }).catch(error => {
+                console.log(error.response.data);
+            });
+            };
+            
+        },
+
+
+      lugarPersona(id, direc){
+        const url = 'http://localhost:3000/api/cliente/lugarPersona'; 
+          const datos = {
+            tipo: direc,
+            rif: id
+          };
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            if(direc == 'Fisica'){
+              this.parroquiaFisica = response.data.lugar
+            }else{
+              this.parroquiaFiscal = response.data.lugar
+            }
+
+          
+          }).catch(error => {
+            console.log(error);
+          });
+      },
+
       llenarParroquias(data){
           for (let i = 0; i < data.length; i++) {
             const item = {
@@ -281,38 +370,69 @@ export default {
             });
         },
         registrarCliente(){
-              console.log(this.telefonos)
-              console.log(this.correos)
-             // Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
-              const num = this.telefonos.map(t => t.numero).slice();
-              console.log(num)
-
-              console.log(this.parroquia)
-                 const url = 'http://localhost:3000/api/cliente/juridico';
-               
-                 const datos = {
-                   denominacion_comercial: this.denominacionCom,
-                   razon_social: this.RazonSoc,
-                   pagina_web: this.PaginaW,
-                   capital_disponible: this.Capital,   
-                   rif: this.numDoc,
-                   clave: this.password,
-                   parroquia_fisica: this.parroquiaFisica,
-                   direccion_fisica: this.direccionFisica,
-                   parroquia_fiscal: this.parroquiaFiscal,
-                   direccion_fiscal: this.direccionFiscal,
-                   tipo_fisica: 'Fisica',
-                   tipo_fiscal: 'Fiscal'
-                 }
+          if(this.isModify){
+            console.log(this.telefonos)
+            console.log(this.correos)
+          //  Esto es para que el array deje de ser reactivo, puesto que me mandan el objeto Observer
+            const num = this.telefonos.map(t => t.numero).slice();
+            console.log(num)
+            const correo = this.correos.map(c => c.direccion).slice();
+            console.log(correo)
+            // this.regTelefonos(this.$route.query.id)
+            const url = 'http://localhost:3000/api/cliente/modificarPostJ';
+               const datos = {
+                 denominacion_comercial: this.denominacionCom,
+                 razon_social: this.RazonSoc,
+                 pagina_web: this.PaginaW,
+                 capital_disponible: this.Capital,   
+                 rif: this.numDoc,
+                 clave: this.password,
+                 parroquia_fisica: this.parroquiaFisica,
+                 direccion_fisica: this.direccionFisica,
+                 parroquia_fiscal: this.parroquiaFiscal,
+                 direccion_fiscal: this.direccionFiscal,
+                 paraNull: null,
+                 tipoFa : 'Fisica',
+                 tipoFl: 'Fiscal'
+               }
+               console.log(datos, typeof datos);
+               this.axios.post(url, datos).then(response => {
+                   console.log(response.data);
+                   this.enviado=true;
+                
+               }).catch(error => {
+                   console.log(error.response.data);
+               });
+          }else{
+        
+            console.log(this.parroquia)
+               const url = 'http://localhost:3000/api/cliente/juridico';
              
-                 console.log(datos, typeof datos);
-                 this.axios.post(url, datos).then(response => {
-                     console.log(response.data);
-                     this.enviado=true;
-                  
-                 }).catch(error => {
-                     console.log(error.response.data);
-                 });
+               const datos = {
+                 denominacion_comercial: this.denominacionCom,
+                 razon_social: this.RazonSoc,
+                 pagina_web: this.PaginaW,
+                 capital_disponible: this.Capital,   
+                 rif: this.numDoc,
+                 clave: this.password,
+                 parroquia_fisica: this.parroquiaFisica,
+                 direccion_fisica: this.direccionFisica,
+                 parroquia_fiscal: this.parroquiaFiscal,
+                 direccion_fiscal: this.direccionFiscal,
+                 tipo_fisica: 'Fisica',
+                 tipo_fiscal: 'Fiscal'
+               }
+           
+               console.log(datos, typeof datos);
+               this.axios.post(url, datos).then(response => {
+                   console.log(response.data);
+                   this.enviado=true;
+                
+               }).catch(error => {
+                   console.log(error.response.data);
+               });
+
+          }
              },
      
                
