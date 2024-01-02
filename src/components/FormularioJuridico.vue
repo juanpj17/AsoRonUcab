@@ -45,7 +45,7 @@
                           </b-col>
                         </b-row>
                       </b-container>
-
+                      <div v-if="isModify">
                         <b-container>
                             <b-row>
                                 
@@ -69,13 +69,14 @@
 
 
   
+                          </div>
                           <b-container>
                             <b-row>
                                 
                                 <b-col cols="11"><p style="text-align: left;">Registrar correos</p></b-col>
                                 <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click=" RegistrarCorreo()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
                               </b-row>
-                        </b-container> 
+                            </b-container> 
                         <div v-for="(elemento, index) in correos" :key="index">
                           <b-container style="margin-bottom: 10px;">
                             <b-row>
@@ -89,7 +90,6 @@
                             </b-row>
                             </b-container>
                             </div>
-
                         <label>Debe estar en el rango de 6-15 caracteres</label>
                         <div class="form-floating mb-3">
                            <input type="password" class="form-control rounded-2 altura"   placeholder="password" v-model="password">
@@ -166,10 +166,14 @@ export default {
 
         }
       },
+      mounted() {
+        const cod = this.$route.query.id;
+        const page = this.$route.query.proviene;
+      },
       created(){
 
         this.obtenerParroquias()
-        
+        this.verificarModificar(this.$route.query.id)
          this.RegistrarCorreo()
          this.RegistrarTelefonos() 
      
@@ -180,6 +184,48 @@ export default {
      
         
     methods: {
+//---------------AQUI ES AL REVES LA CONDICION QUE EN EL NATURAL AQUI SI ES UN OBJECT ES MODIFICAR-----------------
+      verificarModificar(data){
+        console.log(data)
+        console.log(typeof data)
+        if (typeof data == 'object') {
+          console.log('modificar');
+          this.isModify= true;
+          this.llenarCampos(data)
+        } else {
+          this.isModify= false;
+          console.log('agregar');
+        }
+     
+      },
+
+
+      llenarCampos(data){
+          // this.buscarTelefono(data)
+          console.log(data)
+          const url = 'http://localhost:3000/api/cliente/consultarJ'; 
+          const datos = {
+            rif: data.Documento
+          };
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+ 
+            this.numDoc = data.Documento,
+            this.denominacionCom = response.data.denominacion_comercial,
+            this.RazonSoc = response.data.razon_social,
+            this.PaginaW= response.data.pagina_web,
+            this.direccionFiscaal = response.data.direccion_fiscal,
+            this.direccionFisca = response.data.direccion_fisica,
+            this.Capital  = response.data.capital
+
+          }).catch(error => {
+            console.log(error);
+          });
+
+      },
+
+
        RegistroNatural(){
         if (this.$route.path!='/PrincipalRegistroNatural/*/NuevoPersonaC')
            this.$router.push('/PrincipalRegistroNatural/*/NuevoPersonaC');
@@ -245,13 +291,18 @@ export default {
                  const url = 'http://localhost:3000/api/cliente/juridico';
                
                  const datos = {
-                   rif: this.numDoc,
-                   denominacion_comer: this.denominacionCom,
-                   razon_soc: this.RazonSoc,
+                   denominacion_comercial: this.denominacionCom,
+                   razon_social: this.RazonSoc,
                    pagina_web: this.PaginaW,
-                   direccion_fisica: this.parroquiaFisica,
-                   direccion_fiscal: this.parroquiaFiscal,
-                   capital: this.Capital   
+                   capital_disponible: this.Capital,   
+                   rif: this.numDoc,
+                   clave: this.password,
+                   parroquia_fisica: this.parroquiaFisica,
+                   direccion_fisica: this.direccionFisica,
+                   parroquia_fiscal: this.parroquiaFiscal,
+                   direccion_fiscal: this.direccionFiscal,
+                   tipo_fisica: 'Fisica',
+                   tipo_fiscal: 'Fiscal'
                  }
              
                  console.log(datos, typeof datos);
