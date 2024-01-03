@@ -142,6 +142,9 @@
 </template>
 <script>
   export default {
+    props:{
+      tipo_codigo_afiliado:''
+    },
     data() {
       return {
         items:[
@@ -172,6 +175,9 @@
         infoModal: [],
         mostrarModal:false,
         sortBy: 'Codigo',
+        codigo_identificador_afiliado:'',
+        ci:'',
+        rif:'',
 
         
       }
@@ -190,6 +196,9 @@
       // Set the initial number of items
       this.totalRows = this.items.length
     },
+    created(){
+      this.buscarDatosUsuario()
+    },
     methods: {
       onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
@@ -203,8 +212,32 @@
               this.modficarN=item
           },
       MetodosPago(){
-        this.$router.push('/PrincipalPago')
-      }
+        this.$router.push('/PrincipalPago'+'/'+  this.codigo_identificador_afiliado+'/Afiliados')
+      },
+      buscarDatosUsuario(){
+    const url = 'http://localhost:3000/api/afiliado';
+    const datos=this.tipo_codigo_afiliado
+    console.log(datos)
+    this.axios.get(url+'/'+datos).then(response => {
+                     console.log(response.data);
+                     this.ci=response.data[0].cedula
+                     this.rif=response.data[0].rif
+                     this.buscarCodigoIdentificadorAfiliado()
+                     
+                 }).catch(error => {
+                     console.log(error.response.data);
+                 });},
+
+    buscarCodigoIdentificadorAfiliado(){
+        const url = 'http://localhost:3000/api/afiliarse';
+        const datos ={ cedula:this.ci,rif:this.rif}
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data);
+                     this.codigo_identificador_afiliado=response.data.codigo
+                     console.log(this.codigo_identificador_afiliado)
+                     }).catch(error => {
+                     console.log(error.response.data);
+                 });},
 
       
     },

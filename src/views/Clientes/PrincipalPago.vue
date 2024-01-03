@@ -2,7 +2,7 @@
     <div>
         <NavbarVue></NavbarVue>
         
-        <PagarCompraOnlineVue ></PagarCompraOnlineVue>
+        <PagarCompraOnlineVue :id="this.$route.params.id" :tipo_usuario="this.$route.params.tipo_pago"></PagarCompraOnlineVue>
         
     </div>
 </template>
@@ -15,7 +15,6 @@ import PagarCompraOnlineVue from '@/components/CompClientes/PagarCompraOnline.vu
 
 export default{
     
-
     components:{
   
    NavbarVue,PagarCompraOnlineVue,

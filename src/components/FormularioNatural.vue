@@ -152,9 +152,7 @@
                                 <b-col >
                                   <b-input v-model="sueldo"  placeholder="Sueldo" ></b-input>
                                 </b-col>
-                                <b-col >
-                                  <b-form-select :options="Roles" v-model="rol" class="custom-select mr-sm-2  form-control " ></b-form-select>
-                                </b-col>
+                                
                             </b-row>
 
 

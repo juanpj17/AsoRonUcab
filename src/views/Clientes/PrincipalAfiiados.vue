@@ -4,7 +4,7 @@
        <br>
         <CarnetVue style="display:flex;justify-content:center;align-items:center" :tipo_codigo_afiliado="this.$route.params.tipo_codigo_usuario"></CarnetVue>
         <br>
-        <TablaPagosAfiliadosVue></TablaPagosAfiliadosVue>
+        <TablaPagosAfiliadosVue :tipo_codigo_afiliado="this.$route.params.tipo_codigo_usuario"></TablaPagosAfiliadosVue>
     </div>
 </template>
 

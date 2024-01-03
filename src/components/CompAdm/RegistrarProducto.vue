@@ -26,22 +26,65 @@
                         <b-form-text  v-if="!$v.precio.numeric" class="form-floating mb-3" text-variant="danger">Formato invalido, solo se aceptan numeros positivos</b-form-text > 
                         <b-form-text  v-if="!$v.precio.between&&this.precio=='0'" class="form-floating mb-3" text-variant="danger">El precio debe ser mayor que 0 bs </b-form-text > 
                     </div>
-                    <div class=" col form-group form-floating mb-3">
-                        <input type="text" id="stock"   class="form-control rounded-2 altura" placeholder="stock"  v-model="stock" />
-                        <label for="stock">Código del proveedor</label>
-                        <b-form-text  v-if="!$v.stock.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
-                        <b-form-text  v-if="!$v.stock.numeric" class="form-floating mb-3" text-variant="danger">Formato invalido, solo se aceptan numeros positivos</b-form-text > 
-                        <b-form-text  v-if="!$v.stock.between&&this.stock=='0'" class="form-floating mb-3" text-variant="danger">El stock debe ser mayor que 0 </b-form-text > 
-                    </div>
+                    <b-container style="margin-bottom: 15px;">
+                      <b-row>
+                        <b-col cols="6">
+                          <label>Proveedor</label>
+                        </b-col>
+                        <b-col cols="6">
+                          <label>Tipo de ron</label>
+                        </b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  placeholder="Proveedor"  v-model="proveedor" :options="cod_proveedor"></b-form-select>
+                        </b-col>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  placeholder="Tipo"  v-model="tipo" :options="cod_tipo"></b-form-select>
+                        </b-col>
+                      </b-row>
+                    </b-container>
+                     
                   </div>
-                  <div class=" col form-group form-floating mb-3">
-                      <input type="text" id="añejamiento"   class="form-control rounded-2 altura" placeholder="añejamiento"  v-model=" añejamiento" />
-                      <label for="añejamiento">Código del añejamiento</label>
-                      <b-form-text  v-if="!$v.añejamiento.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
-                  </div>
+                    <b-container>
+                      <b-row>
+                        <b-col cols="6">
+                          <label>Añejamiento</label>
+                        </b-col>
+                        <b-col cols="6">
+                          <label>Parroquia</label>
+                        </b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select" v-model="añejamiento" :options="cod_añejamiento"></b-form-select>
+                        </b-col>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select" v-model="parroquia" :options="parroquias"></b-form-select>
+                        </b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col cols="6">
+                          <label>Categoria</label>
+                        </b-col>
+                        <b-col cols="6">
+                          <label>Variedad</label>
+                        </b-col>
+                      </b-row>
+                      <b-row>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select" v-model="categoria" :options="cod_categorias"></b-form-select>
+                        </b-col>
+                        <b-col cols="6">
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select" v-model="variedad" :options="cod_variedad"></b-form-select>
+                        </b-col>
+                      </b-row>
+                    </b-container>
+
+                     
+                
                   <b-container>
                     <b-row>
-                        
                         <b-col cols="11"><p style="text-align: left;">Selecciona los sabores</p></b-col>
                         <b-col cols="1" style="margin-bottom: 25px;">   <b-button @click="registrarSabor()" style="border-radius: 110%;"  variant="light">  <b-icon icon="plus-circle" scale="2" style="height: 20px !important; color: var(--verde) "></b-icon></b-button></b-col>
                       </b-row>
@@ -50,9 +93,7 @@
                     <b-container style="margin-bottom: 10px;">
                       <b-row>
                         <b-col cols="11">
-                          <div class="col form-group form-floating mb-2">
-                           <b-input v-model="elemento.valor" class="altura"></b-input>
-                          </div>
+                            <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  v-model="elemento.valor" :options="cod_sabores"></b-form-select>
                         </b-col>
                         <b-col cols="1" ><b-button @click="eliminarSaborSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                       </b-row>
@@ -70,9 +111,7 @@
                     <b-container style="margin-bottom: 10px;">
                       <b-row>
                         <b-col cols="11">
-                          <div class="col form-group form-floating mb-2">
-                           <b-input v-model="elemento.valor" class="altura"></b-input>
-                          </div>
+                            <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  v-model="elemento.valor" :options="cod_colores"></b-form-select>
                         </b-col>
                         <b-col cols="1" ><b-button @click="eliminarColorSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                       </b-row>
@@ -90,9 +129,7 @@
                     <b-container style="margin-bottom: 10px;">
                       <b-row>
                         <b-col cols="11">
-                          <div class="col form-group form-floating mb-2">
-                           <b-input v-model="elemento.valor" class="altura"></b-input>
-                          </div>
+                           <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  v-model="elemento.valor" :options="cod_materia"></b-form-select>
                         </b-col>
                         <b-col cols="1" ><b-button @click="eliminarmateriaPrimaSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                       </b-row>
@@ -110,9 +147,7 @@
                     <b-container style="margin-bottom: 10px;">
                       <b-row>
                         <b-col cols="11">
-                          <div class="col form-group form-floating mb-2">
-                           <b-input v-model="elemento.valor" class="altura"></b-input>
-                          </div>
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  v-model="elemento.valor" :options="cod_imagenes"></b-form-select>
                         </b-col>
                         <b-col cols="1" ><b-button @click="eliminarImagenesSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                       </b-row>
@@ -131,9 +166,7 @@
                     <b-container style="margin-bottom: 10px;">
                       <b-row>
                         <b-col cols="11">
-                          <div class="col form-group form-floating mb-2">
-                           <b-input v-model="elemento.valor" class="altura"></b-input>
-                          </div>
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  v-model="elemento.valor" :options="cod_presesentaciones"></b-form-select>
                         </b-col>
                         <b-col cols="1" ><b-button @click="eliminarPresentacionesSeleccionado(index)"  variant="light"><b-icon icon="trash" style="color: #df5b5b"></b-icon></b-button></b-col>
                       </b-row>
@@ -176,11 +209,13 @@ font-size: 40px;
     },
       data(){
           return{
-              añejamiento:'',
+              añejamiento:'cod1',
               nombre:'',
               descripcion:'',
               precio:'',
-              stock:'',
+              proveedor:'',
+              categoria:'',
+              variedad:'',
               imagenes:[],
               Productos: '',
               options: ['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
@@ -188,6 +223,17 @@ font-size: 40px;
               color:[],
               materiaPrima:[],
               presentaciones:[],
+              cod_añejamiento:['cod1','cod2'],
+              parroquias:['pa1','pa2'],
+              cod_sabores:['sab1','sab_2'],
+              cod_colores:['col1','COL2'],
+              cod_materia:['mat1','mat2'],
+              cod_presesentaciones:['p1','p2'],
+              cod_imagenes:['im1','im2'],
+              cod_tipo:['Agricola','Industrial'],
+              cod_proveedor:['p1','p2'],
+              cod_categorias:['cat','cat2'],
+              cod_variedad:['var1','var2']
           }
       },
       created(){               

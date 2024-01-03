@@ -77,7 +77,16 @@
             <b-button @click="decreaseStock(row.item)" variant="danger" size="sm">-</b-button>
             <span class="mx-2">{{ row.item.stock }}</span>
             <b-button @click="increaseStock(row.item)" variant="success" size="sm">+</b-button>
+            
           </div>
+         
+        </template>
+        <template #cell(precio)="row">
+          <div class="d-flex justify-content-center">
+          <span class="mx-2">.</span>
+          <b-input v-model="row.item.precio" ></b-input>
+          </div>
+         
         </template>
   
 
@@ -121,6 +130,7 @@
             { key: 'nombre', label: 'Nombre', class: 'text-center',sortable: true  },
             { key: 'presentacion', label: 'Presentacion', class: 'text-center',sortable: true  },
             { key: 'stock', label: 'Stock', class: 'text-center',sortable: true  },
+            { key: 'precio', label: 'Precio', class: 'text-center',sortable: true  },
             { key: 'tipo', label: 'Tipo de inventario', class: 'text-center',sortable: true  },
 
           ],
@@ -165,16 +175,17 @@
         },
       LlenarTabla(){
         this.items=[{id:1,nombre:'Ron Santa teresa',presentacion:'0,75l',stock:'9',tipo:'Virtual'},
-        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80l',stock:'9',tipo:'Fisico'},
-        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90l',stock:'9',tipo:'Virtual'},
-        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95l',stock:'9',tipo:'Fisico'},
-        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66l',stock:'9',tipo:'Virtual'},
-        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94l',stock:'9',tipo:'Fisico'},
-        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68l',stock:'9',tipo:'Fisico'}]
+        {id:3,nombre:'Ron Santa teresa 2',presentacion:'0,80l',stock:'9',tipo:'Fisico',precio:'0'},
+        {id:2,nombre:'Ron Santa teresa 3',presentacion:'0,90l',stock:'9',tipo:'Virtual',precio:'0'},
+        {id:4,nombre:'Ron Santa teresa4',presentacion:'0,95l',stock:'9',tipo:'Fisico',precio:'0'},
+        {id:5,nombre:'Ron Santa teresa5',presentacion:'0,66l',stock:'9',tipo:'Virtual',precio:'0'},
+        {id:6,nombre:'Ron Santa teresa6',presentacion:'0,94l',stock:'9',tipo:'Fisico',precio:'0'},
+        {id:7,nombre:'Ron Santa teresa7',presentacion:'0,68l',stock:'9',tipo:'Fisico',precio:'0'}]
       },
       decreaseStock(item) {
           if (item.stock > 0) {
             item.stock--;
+           
           }
         },
         increaseStock(item) {
