@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: var(--fondo)">
         <Navbar></Navbar>
         <TiendaFisicaVue></TiendaFisicaVue>
     

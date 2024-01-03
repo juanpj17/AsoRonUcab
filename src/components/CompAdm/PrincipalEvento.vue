@@ -282,12 +282,13 @@
         console.log(resultado)
         resultado.Descripcion=this.texto;
       },
-      RegistrarEvento(id){
+      RegistrarEvento(codigo){
+        console.log(codigo)
         if (this.$route.path!='/RegistrarEvento/'){
           this.$router.push({
-            path: '/RegistrarEvento/'+id,
+            path: '/RegistrarEvento/'+codigo,
             query: {
-              id: id,
+              codigo: codigo,
             }
           });
         }

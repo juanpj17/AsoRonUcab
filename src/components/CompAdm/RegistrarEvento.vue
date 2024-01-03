@@ -35,6 +35,10 @@
                                  <input type="text" class="form-control rounded-2 altura" v-model="numEnt">
                                  <label>Cantidad de entradas disponibles</label>
                             </div>
+                            <div class="col form-group form-floating mb-3 ">
+                              <input type="text" class="form-control rounded-2 altura" v-model="precioXEntrada">
+                              <label>Precio por entrada</label>
+                         </div>
                         </div>
                         
                         <div class="row"  style="margin-top: 10px;">
@@ -197,9 +201,9 @@
 <script>
 
 export default {
-  props:{
-    id:'',
-  },
+  // props:{
+  //   id:'',
+  // },
     data() {
       return {
         inventario:[
@@ -223,16 +227,18 @@ export default {
         inventario:[],
         proveedores:[],
         productosFiltrados:[],
-        isModify: true
+        isModify: true,
+        precioXEntrada: 0,
+        calcularDias: 0
         }
       
       },
       mounted() {
-        const cod = this.$route.query.id;
+        const cod = this.$route.query.codigo;
       },
       created(){
-        this.verificarModificar(this.$route.query.id)
-        console.log(this.$route.query.id)
+        this.verificarModificar(this.$route.query.codigo)
+        console.log(this.$route.query.codigo)
         this.obtenerParroquias()
         this.ultimoEvento()
         this.obtenerProveedores()
@@ -253,11 +259,27 @@ export default {
           this.isModify= true;
         }
       },
+      obtenerPrecioxentrada(id){
+          console.log(id)
+          const url = 'http://localhost:3000/api/entrada/entradaPrecio';
+          const datos = {
+            cod: id,
+          };
+   
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.precioXEntrada = response.data[0].obtener_cantidad_entrada
+          }).catch(error => {
+            console.log(error);
+          });
+      }, 
 
       
 
 
       llenarCampos(data){
+        this.obtenerPrecioxentrada(data)
         console.log(data)
         const url = 'http://localhost:3000/api/evento/consultar';
         const datos = {
@@ -335,6 +357,7 @@ export default {
               const numE = response.data;
               console.log(response.data)
              this.max_e = numE[0].codigo +1;
+             console.log(this.max_e)
             }).catch(error => {
               console.log(error);
           
@@ -363,11 +386,70 @@ export default {
             console.log(error);
         });
       },
+      regEntrada(){
+          console.log('por aca')
+          const url = 'http://localhost:3000/api/entrada';
+          const datos = {
+            codigo: this.max_e,
+            fecha_inicial: this.fecha_inicio, 
+            fecha_final: this.fecha_fin, 
+            precio: this.precioXEntrada 
+          };
+   
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+          }).catch(error => {
+            console.log(error);
+          });
+
+      },
+
+      calcularDias(){
+          console.log('por aca')
+          const url = 'http://localhost:3000/api/entrada/calculo';
+          const datos = {
+            fecha_i: this.fecha_inicio, 
+            fecha_f: this.fecha_fin, 
+          };
+   
+          console.log(datos);
+          this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+            this.calcularDias = response.data.calcular_dias_entre_fechas
+            console.log(this.calcularDias)
+          }).catch(error => {
+            console.log(error);
+          });
+
+      },
+
+      modificarPrecioEntrada(){
+    
+          const url = 'http://localhost:3000/api/entrada';
+          const datos = {
+            codigo: this.$route.query.codigo, 
+            precio: this.precioXEntrada, 
+          };
+   
+          console.log(datos);
+          this.axios.put(url, datos).then(response => {
+            console.log(response.data);
+          
+          }).catch(error => {
+            console.log(error);
+          });
+
+      },
+      
 
 
       registrarEvento(){
     
         if(this.isModify){
+          // this.calcularDias()
+          console.log('aca?')
+          
           console.log(this.parroquia)
           const url = 'http://localhost:3000/api/evento';
           const datos = {
@@ -384,6 +466,9 @@ export default {
           this.axios.post(url, datos).then(response => {
             console.log(response.data);
             const num = this.inventario.map(t => t.numero).slice();
+            if(this.numEnt > 0){
+              this.regEntrada()
+            }
             for (let i = 0; i < this.inventario.length; i++) {
               console.log(this.inventario[i])
               this.regPresentacionEvento(this.inventario[i])
@@ -395,7 +480,7 @@ export default {
           console.log('paso por aca')
           const url = 'http://localhost:3000/api/evento';
           const datos = {
-            codigo: this.$route.query.id,
+            codigo: this.$route.query.codigo,
             nombre: this.nombre,
             descripcion: this.descripcion, 
             num_entradas: this.numEnt, 
@@ -404,7 +489,7 @@ export default {
             direccion: this.direccion,
             parroquia: this.parroquia
           };
-   
+          this.modificarPrecioEntrada()
           console.log(datos);
           this.axios.put(url, datos).then(response => {
             console.log(response.data);

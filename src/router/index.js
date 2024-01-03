@@ -95,7 +95,8 @@ const routes = [
   {
     path: '/PrincipalEventos/',
     name: 'PrincipalEventos',
-    component: PrincipalEventos
+    component: PrincipalEventos,
+    props: true
   },
   {
     path: '/PrincipalEventosC/:tipoUsuario',

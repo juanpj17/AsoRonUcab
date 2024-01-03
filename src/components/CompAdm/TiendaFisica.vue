@@ -1,13 +1,16 @@
 <template>
-  <b-container class="bv-example-row">
+  <b-container class="bv-example-row" style="background-color: var(--fondo)">
     <b-row style="margin-top: 20px;">
       <b-input-group >
         <b-form-select
               id="per-page-select"
               v-model="perPage"
               :options="pageOptions"
-            >Na</b-form-select>
-           <b-form-input  v-model="Cliente"></b-form-input>
+            ></b-form-select>
+           <b-form-input 
+               v-model="Cliente"
+               :disabled="!habilitado"
+            ></b-form-input>
              <b-input-group-append>
                 <b-button variant="info" @click="buscarCliente(Cliente)">Buscar</b-button>
             </b-input-group-append>
@@ -28,22 +31,37 @@
       <b-col sm="6"><b-card bg-variant="light" text-variant="black"  class="text-center">
           <b-card-title>Puntos Cliente</b-card-title>
           <b-card-text> {{ Puntos }}</b-card-text>
+          <b-card-title>Precio Actual del $</b-card-title>
+          <b-card-text>{{ monitorData }}</b-card-text>
           <b-card-title>Total</b-card-title>
-          <b-card-text>{{ total }}</b-card-text>
+          <b-card-text>{{ totalbs }}Bs.s || {{ totaldi }}$ </b-card-text>
           
         </b-card>
       </b-col>
     </b-row>
     <b-row style="margin-top:10px; m">
         <b-col cols="1" class="col form-group form-floating mb-2">
-           <b-form-select v-model="TipoDeVenta" :options="tipo" style="width: 195px" class="custom-select mr-sm-2  form-control "></b-form-select>
+           <b-form-select
+              v-model="TipoDeVenta" 
+              :options="tipo" 
+              style="width: 195px" 
+              class="custom-select mr-sm-2  form-control "
+              @change="tipoDeVentaSeleccionado"
+              :disabled="!tipoDeVenta"
+              ></b-form-select>
            <label style="width: 195px">Tipo de venta</label>
         </b-col>
       </b-row>
       <b-row>
         <!-- <b-col cols="2"></b-col> -->
         <b-col cols="2" style="margin-top:25px" class="col form-group form-floating mb-2" v-if="TipoDeVenta=='----Evento----'"> 
-          <b-form-select  class="custom-select mr-sm-2  form-control " v-model="EventoSeleccionado" :options="Eventos.map(item => ({ text: item.nombre_evento, value: item.id }))"> </b-form-select>  
+          <b-form-select  
+            class="custom-select mr-sm-2  form-control " 
+            v-model="EventoSeleccionado" 
+            :options="Eventos.map(item => ({ text: item.nombre_evento, value: item.id }))"
+            @change="habilitarAgregar"
+            :disabled="!fueSeleccionado"
+            > </b-form-select>  
           <!-- <b-form-select :options="Eventos"  v-model="EventoSeleccionado"  class="custom-select mr-sm-2  form-control altura"></b-form-select> -->
           <label>Evento</label>
         </b-col>
@@ -53,7 +71,10 @@
          <b-input-group prepend="Codigo del producto" class="mt-3">
            <b-form-input v-model="CodigoProducto"></b-form-input>
              <b-input-group-append>
-                <b-button variant="info" @click="cargarProducto(CodigoProducto)">Agregar</b-button>
+                <b-button variant="info" 
+                  @click="cargarProducto(CodigoProducto)"
+                  :disabled="!aggProducto"
+                  >Agregar</b-button>
             </b-input-group-append>
           </b-input-group>
       </b-col>
@@ -129,7 +150,8 @@
         // telf:'',
         Direccion:'',
         Puntos:'',
-        total:'falta poner la api aqui',
+        totaldi:0,
+        totalbs:0,
         items: [],
         colocados: [],
         fields: [
@@ -140,13 +162,19 @@
         ],
         canjear:0,
         tipo:['----Tienda----','----Evento----'],
-        TipoDeVenta:'Evento',
+        TipoDeVenta:'',
         EventoSeleccionado:-1,
         Eventos:[],
+        habilitado: true,
+        tipoDeVenta: true,
+        aggProducto: false,
+        fueSeleccionado: true,
+        monitorData: 0
       }
     },
     created(){
         this.obtenerEventos()
+        this.getMonitor()
       },
     methods: {
       CrearOrden(){
@@ -155,7 +183,24 @@
             this.items.push(producto);
            
         },
+
+        async getContentPage(url) {
+          try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          } catch (error) {
+            console.error(`Error fetching data: ${error.message}`);
+            throw error;
+          }
+        },
+
+
         async getMonitor() {
+          console.log('llamando')
          // https://bcv-api.deno.dev/v1/exchange
             const api = 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/';
             try {
@@ -163,9 +208,8 @@
                 const allMonitors = response['monitors'];
                 console.log(allMonitors)
                 const monitorData = allMonitors['bcv'];
-                console.log(monitorData.price);
-                this.orden=[];
-                console.log(this.orden);
+                this.monitorData = monitorData.price
+                console.log(this.monitorData);
                 this.orden.push({
                       idProducto: 0,
                       idCliente: 1,
@@ -182,19 +226,41 @@
                 console.error(`KeyError: ${error.message}`);
             }
       },
+      tipoDeVentaSeleccionado(){
+        if(this.TipoDeVenta !==''){
+          this.tipoDeVenta = false;
+        }
+        console.log(this.habilitado)
+        if(this.TipoDeVenta == '----Tienda----' && this.habilitado == false){
+          this.aggProducto = true;
+        }
+      },
+      
+      habilitarAgregar(){
+        console.log(this.TipoDeVenta)
+        if(this.EventoSeleccionado !==-1 && this.habilitado == false){
+          this.aggProducto = true;
+          this.fueSeleccionado= false
+        }
+      },
+
       Pagar(){
         console.log(this.items)
-        if (this.$route.path!='/PagarTiendaFisica'){
-          this.$router.push({
-            path: '/PagarTiendaFisica',
-            query: {
-              array: this.items,
-              doc: this.Cedula,
-              tipo: this.perPage,
-              evento: this.EventoSeleccionado,
-              punto: this.canjear,
-            }
-          });
+        if(this.totaldi > 0 || this.totalbs >0){
+          if (this.$route.path!='/PagarTiendaFisica'){
+            this.$router.push({
+              path: '/PagarTiendaFisica',
+              query: {
+                array: this.items,
+                doc: this.Cedula,
+                tipo: this.perPage,
+                evento: this.EventoSeleccionado,
+                punto: this.canjear,
+                totaldi: this.totaldi,
+                totalbs: this.totalbs
+              }
+            });
+          }
         }
             
       },
@@ -205,34 +271,48 @@
         }else{
           this.modal=false
         }
+        const puntosDecimal = parseFloat(this.Puntos);
+        if(puntosDecimal < this.canjear){
+          this.canjear = puntosDecimal
+        }
+        console.log(this.canjear)
       },
 
       decreaseStock(item) {
           if (item.stock > 0) {
             item.stock--;
+            this.calcularTotal()
           }
         },
         increaseStock(item) {
-          item.stock++;
-          
+          if(item.stock <= item.StockMax){
+            item.stock++;
+            this.calcularTotal()
+          }
         },
 
       async buscarCliente(cliente){
+        console.log(this.TipoDeVenta)
+        if(cliente !== ''){
+          this.habilitado = false;
+        }
+        if(this.TipoDeVenta !==''){
+          this.tipoDeVentaSeleccionado()
+          this.habilitarAgregar()
+        }
         console.log(cliente)
         if(this.perPage == 'Natural'){
           try {
             console.log('aca')
-            const response = await this.axios.get('http://localhost:3000/api/cliente/natural', {
-              params: { cedula: cliente }
+            const response = await this.axios.post('http://localhost:3000/api/cliente/naturalUno', {
+               cedula: cliente 
             });
             const clienteNatural = response.data;
             console.log(clienteNatural);
-            
-
-            this.Nombre = clienteNatural[0].p_nombre;
+            this.Nombre = clienteNatural.p_nombre;
             this.Cedula = cliente;
-            this.Direccion = clienteNatural[0].direccion;
-            this.Puntos = clienteNatural[0].puntos_acumulados;
+            this.Direccion = clienteNatural.direccion;
+            this.Puntos = clienteNatural.puntos_acumulados;
           } catch (error) {
             console.error('Error al obtener el cliente natural:', error);
           }
@@ -254,16 +334,22 @@
 
       },
 
-        llenarTabla(nombre, precio, cod){
+        llenarTabla(nombre, precio, cod, cant){
           console.log(nombre)
           console.log(precio)
+          const numeroDecimal = parseFloat(cant);
+          console.log(typeof numeroDecimal)
+          const precioDecimal = parseFloat(precio);
+          console.log(typeof precioDecimal)
           const item = {
               Nombre: nombre,
               stock: 1,
-              Precio: precio,
+              Precio: precioDecimal,
               Codigo: cod,
+              StockMax: numeroDecimal
             };
           this.items.push(item)
+          this.calcularTotal()
           for (let i = 0; i < this.items.length; i++) {
             console.log(this.items[i].stock)}
           console.log(this.items)
@@ -271,14 +357,14 @@
         },
       
 
-      traerNombre(data, precio){
+      traerNombre(data, precio, cantidad){
         const url = 'http://localhost:3000/api/tiendafisica/particular';
         const datos = {
             cod_pro: data,
         };
         this.axios.post(url, datos).then(response => {
         console.log(response.data[0].presentacion_particular);
-        this.llenarTabla(response.data[0].presentacion_particular, precio.verificar_presentacion,data)
+        this.llenarTabla(response.data[0].presentacion_particular, precio,data, cantidad)
   
         }).catch(error => {
             console.log(error);
@@ -306,13 +392,25 @@
           console.log(`${data} no está en el array.`);
           this.colocados.push(data)
           console.log(this.colocados)
-          this.traerNombre(data, response.data[0])
+          this.traerNombre(data, response.data[0].precio, response.data[0].cantidad)
+          // this.calcularTotal()
         }
         }).catch(error => {
             console.log(error);
         });
       }
 
+      },
+
+      calcularTotal(){
+        this.totaldi = 0
+        this.totalbs = 0
+        for (let i = 0; i < this.items.length; i++) {
+            this.totaldi = this.totaldi + (this.items[i].stock*this.items[i].Precio)
+            this.totalbs = (this.totaldi * this.monitorData).toFixed(2)
+            console.log(this.items[i].stock)
+          }
+          console.log(this.items)
       },
 
       verificarNumeroEnArray(numero, array) {
