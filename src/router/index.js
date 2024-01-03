@@ -105,7 +105,7 @@ const routes = [
   },
   
   {
-    path: '/PrincipalPago',
+    path: '/PrincipalPago/:id/:tipo_pago',
     name: 'PrincipalPago',
     component: PrincipalPago
   },
@@ -216,6 +216,11 @@ const routes = [
     path: '/PersonasContacto',
     name: 'PersonasContacto',
     component:PersonasContacto
+  },
+  {
+    path: '/AsignarRoles/:id',
+    name: 'AsignarRoles',
+    component:AsignarRoles
   },
   
   

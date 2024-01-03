@@ -33,7 +33,7 @@
         </b-row>
         <b-row style="margin-top:30px;">
             <b-col></b-col>
-            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px; display: inline-block;"  @click="VerificarUsuario()">Iniciar Sesión</b-button></b-col>
+            <b-col cols="5"><b-button variant="dark" pill style="margin-bottom: 20px; display: inline-block;"  @click="buscarUsuario()">Iniciar Sesión</b-button></b-col>
             <b-col></b-col>
         </b-row>
     </b-col>
@@ -113,7 +113,7 @@ buscarRuta(){
     if (this.cod_1!='' && this.cod_1 != undefined){
        
         let parametro =this.cod_1+'_'+this.cod_2+'_'+this.tipo_registro
-        this.InicioSesion(parametro)
+        this.InicioSesion('%')
 
 
     }

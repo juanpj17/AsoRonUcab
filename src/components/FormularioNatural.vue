@@ -153,7 +153,7 @@
                                 <b-col >
                                   <b-input v-model="sueldo"  placeholder="Sueldo" ></b-input>
                                 </b-col>
-                                <!--  -->
+                                
                             </b-row>
 
 
