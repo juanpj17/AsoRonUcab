@@ -200,4 +200,8 @@
   table#table-transition-example .flip-list-move {
   transition: transform 1s;
 }
+span{
+  display:grid !important;
+}
+
   </style>

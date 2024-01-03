@@ -82,13 +82,13 @@
       >
 <!------------------------------- Columna de acciones con botón de eliminar y modificar ------------------------->
         <template #cell(actions)="row">
-          <b-button icon="delete" variant="danger" size="sm" @click="eliminarClienteN(row.item)">
+          <b-button icon="delete" variant="danger" size="sm" @click="eliminarCliente(row.item)">
             <i class="bi bi-trash-fill"></i> Eliminar
           </b-button>
           <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
             Detalles
           </b-button>
-          <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="Modificar(row.item.Codigo)" class="mr-1">
+          <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="Modificar(row.item)" class="mr-1">
             Modifiar
           </b-button>
         </template>
@@ -195,11 +195,11 @@
         items: [
         ],
         fields: [
-            { key: 'Nombres', label: 'Nombre',sortable: true },
-            { key: 'Apellidos', label: 'Apellidos o Razon Social', class: 'text-center',sortable: true },
-            { key: 'Cedula', label: 'Documento', class: 'text-center',sortable: true },
-            { key: 'Puntos_Acumulados', label: 'Puntos acumulados', class: 'text-center',sortable: true },
-            { key: 'actions', label: 'Opciones', class: 'text-center',sortable: true },
+            { key: 'Documento', label: 'Documento',class: 'text-center spann',sortable: true },
+            { key: 'Nombre', label: 'Nombre', class: 'text-center spann',sortable: true },
+            { key: 'Apellido', label: 'Apellido o Razon Social ', class: 'text-center spann',sortable: true },
+            { key: 'Puntos_Acumulados', label: 'Puntos acumulados ', class: 'text-center spann',sortable: true },
+            { key: 'actions', label: 'Opciones', class: 'text-center spann' },
         ],
         totalRows: 1,
         infoModal: [],
@@ -255,14 +255,14 @@
       },
       LlenarTabla(data){
           for (let i = 0; i < data.length; i++) {
-            const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
-            const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
+            // const nombreCompleto = `${data[i].p_nombre} ${data[i].s_nombre}`;
+            // const apellidosCompleto =  `${data[i].p_apellido} ${data[i].s_apellido}`;
             const item = {
-              Codigo: data[i].codigo,
-              Nombres: nombreCompleto,
-              Apellidos: apellidosCompleto,
-              Cedula: data[i].cedula,
-              Puntos_Acumulados: data[i].puntos_acumulados
+              Documento: data[i].doc,
+              Nombre: data[i].nombre,
+              Apellido: data[i].apellido,
+              Puntos_Acumulados: data[i].puntos_acumulados,
+              Tipo: data[i].tipo
             };
             
             this.items.push(item)
@@ -281,58 +281,80 @@
             });
         },
 
-        async eliminarClienteN(data) {
-          console.log(data)
-          const url = 'http://localhost:3000/api/cliente/natural'
-          try {
-            const response = await this.axios.delete(url, { params: { codigo: data.Codigo , cedula: data.Cedula} });
-            const evento = response.data;
-            console.log(evento);
-    
-          } catch (error) {
-            console.log('Error al eliminar el evento:', error);
+        async eliminarCliente(data) {
+          if(data.Tipo == 'juridico' ){
+            console.log('es juridico')
+            const url = 'http://localhost:3000/api/cliente/juridico'
+            try {
+              const response = await this.axios.delete(url, { params: { doc: data.Documento} });
+              const cliente = response.data;
+              console.log(cliente);
+      
+            } catch (error) {
+              console.log('Error al eliminar el cliente:', error);
+            }
+  
+            this.ObtenerClientes()
+          }else{
+            console.log('es natural')
+            const url = 'http://localhost:3000/api/cliente/natural'
+            try {
+              const response = await this.axios.delete(url, { params: { cedula: data.Documento} });
+              const cliente = response.data;
+              console.log(cliente);
+      
+            } catch (error) {
+              console.log('Error al eliminar el cliente:', error);
+            }
+  
+            this.ObtenerClientes()
           }
-
-          console.log('pasa')
-          this.ObtenerClientes()
-          // this.axios.delete(`http://localhost:3000/api/empleado/` + cedula)
-          // .then((response) => {
-          //   console.log(response);
-          // })
-          // .catch((error) => {
-          //   console.log(error);
-          // });
-          // console.log('Eliminar empleado con cédula:', cedula);
-
-         
-         
           
-        
-
-
+          console.log(data)
         },
 
         RegistroNatural(id){
-          if (this.$route.path!='/PrincipalRegistroNatural/')
-           this.$router.push('/PrincipalRegistroNatural/'+id+'/%Cliente');
+          if (this.$route.path!='/PrincipalRegistroNatural/'){
+                this.$router.push({
+                  path: '/PrincipalRegistroNatural/'+id+'/%Cliente',
+                    query: {
+                      id: id,
+                      proviene: 'cliente',
+                    }
+                });
+            }
         },
         RegistroJuridico(id){
-          if (this.$route.path!='/PrincipalRegistroJuridico/')
-           this.$router.push('/PrincipalRegistroJuridico/'+id+'/%ClienteJ');
+          if (this.$route.path!='/PrincipalRegistroJuridico/'){
+                this.$router.push({
+                  path: '/PrincipalRegistroJuridico/'+id+'/%ClienteJ',
+                    query: {
+                      id: id,
+                      proviene: 'cliente',
+                    }
+                });
+            }
         },
-        Modificar(id){
-          if (this.tipoRegistro=='J'){
-            this.RegistroJuridico(id)
+        Modificar(data){
+          console.log(data.Documento)
+          if(data.Tipo == 'juridico' ){
+            console.log(data)
+            this.RegistroJuridico(data)
           }
-          else
-            this.RegistroNatural(id)
+          else{
+            
+            this.RegistroNatural(data.Documento)
           }
-
+        } 
     }
   }
 </script>
 <style>
 table#table-transition-example .flip-list-move {
 transition: transform 1s;
+}
+
+.spann span{
+  display:none !important;
 }
 </style>

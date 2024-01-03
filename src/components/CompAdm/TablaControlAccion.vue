@@ -106,11 +106,11 @@
         items: [
         ],
         fields: [
-        { key: 'Codigo', label: 'Codigo',sortable: true },
-            { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center',sortable: true },
-            { key: 'Accion', label: 'Accion', class: 'text-center',sortable: true },
-            { key: 'Tabla', label: 'Tabla', class: 'text-center',sortable: true },
-            { key: 'Fecha_hora', label: 'Fecha y hora de la accion', class: 'text-center',sortable: true },
+        { key: 'Codigo', label: 'Codigo', class:'spann', sortable: true },
+            { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center spann',sortable: true },
+            { key: 'Accion', label: 'Accion', class: 'text-center spann',sortable: true },
+            { key: 'Tabla', label: 'Tabla', class: 'text-center spann',sortable: true },
+            { key: 'Fecha_hora', label: 'Fecha y hora de la accion', class: 'text-center spann',sortable: true },
         ],
         totalRows: 1,
         infoModal: [],

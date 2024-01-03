@@ -68,7 +68,7 @@ const routes = [
     component: RegistrarPremio 
   },
   {
-    path: '/NotaCata',
+    path: '/NotaCata/:id',
     name: 'NotaCata',
     component: NotaCata 
   },
@@ -159,12 +159,14 @@ const routes = [
   {
     path: '/PrincipalRegistroNatural/:id/:tipoUsuario',
     name: 'PrincipalRegistroNatural',
-    component:PrincipalRegistroNatural
+    component:PrincipalRegistroNatural,
+    props: true
   },
   {
     path: '/PrincipalRegistroJuridico/:id/:tipoUsuario',
     name: 'PrincipalRegistroJuridico',
-    component:PrincipalRegistroJuridico
+    component:PrincipalRegistroJuridico,
+    props: true
   },
   {
     path: '/PrincipalClientes',
