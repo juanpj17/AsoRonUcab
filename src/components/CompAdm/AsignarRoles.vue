@@ -9,7 +9,7 @@
          </b-row>
       </b-container>  
       <div class="container">
-         <div class="row">
+         <div class="row" v-if="id!=='*'">
             <div class="col-md-12 text-center mt-3">
                 <h3>Permisos asociados</h3>
             </div>
@@ -20,12 +20,13 @@
         </div>
       </div>
       <b-row>
-          <b-col>   <button class="btn btn-primary "   @click="obtenerEstadoCasillas()">Registrar</button></b-col>
+          <b-col>   <button class="btn btn-primary "   @click="Registrar()">Registrar</button></b-col>
       </b-row>
     </div>
   </template>
   
   <script>
+import RegistrarEventoVue from './RegistrarEvento.vue';
   
     export default {
       props:{
@@ -59,26 +60,134 @@
           {value: 'Registrar_rol', text: 'Registrar rol', selected: false},
           {value: 'Editar_rol', text: 'Editar rol', selected: false},
           {value: 'Eliminar_rol', text: 'Eliminar rol', selected: false},
-        ]
+        ],
+        permisos:[],
+        permisos_asignados:[],
+        permisos_rol:[]
+       
       };
     },
+  created(){
+this.buscarRolId();
+this.buscarPermisosRol();
+this.obtenerPermisos();
+
+
+  },
   
   
   
     methods: {
       obtenerEstadoCasillas() {
-      const a = []
-      this.arrayCheckBox.forEach((item, index) => {
-        a.push(this.arrayCheckBox[index].selected)
+       this.permisos_asignados = []
+       this.arrayCheckBox.forEach((item, index) => {
+       this.permisos_asignados.push({valor:this.arrayCheckBox[index].selected,codigo:item.Value})
       });
-      console.log(a);
-      setTimeout(() => {
-        this.arrayCheckBox.forEach((item, index) => {
-        this.arrayCheckBox[index].selected = false;
+      this.registrarPermisos()
+      this.arrayCheckBox.forEach((item, index) => {
+      this.arrayCheckBox[index].selected = false;
         });
-      }, 2000);
       },
+      async RegistrarRol() {
+        const datos={nombre:this.nombreDelRol,descripcion:this.text}
+        const url = 'http://localhost:3000/api/roles';
+        await this.axios.post(url,datos).then(response => {
+          this.roles = response.data;
+          console.log(this.roles)
+         
+        }).catch(error => {
+          console.log(error);
+        });
+        },
+      async  buscarRolId(){
+          if (this.id!=='*'){
+            const datos={id:this.id}
+            const url = 'http://localhost:3000/api/roles/id';
+            await this.axios.post(url,datos).then(response => {
+              console.log(response.data)
+          this.nombreDelRol= response.data.nombre
+          this.text=response.data.descripcion
+          
+         
+        }).catch(error => {
+          console.log(error);
+        });}
+        },
+   async modificarRol(){
+          const datos={
+            id:this.id,
+            nombre:this.nombreDelRol,
+            descripcion:this.text}
+           const url = 'http://localhost:3000/api/roles/modificar'; 
+           await this.axios.post(url,datos).then(response => {
+              console.log(response.data)
+              Swal.fire(response.data.modificar_rol);
+              this.obtenerEstadoCasillas()
+        }).catch(error => {
+          console.log(error);
+        })
+        
+        },
 
+        Registrar(){
+          if (this.id=='*')
+          {this.RegistrarRol()}
+          else
+          {this.modificarRol()}
+        },
+
+      async obtenerPermisos() {
+      const url = 'http://localhost:3000/api/roles/permisos';
+      await this.axios.get(url).then(response => {
+        this.permisos = response.data;
+        this.llenarCheck(this.permisos)
+        console.log(this.permisos)
+      }).catch(error => {
+        console.log(error);
+      });
+},
+llenarCheck(data){
+  this.arrayCheckBox =[]
+    for (let i = 0; i < data.length; i++) {
+      const item = {Value: data[i].codigo,text: data[i].nombre, selected: false };
+      if(this.permisos_rol.includes(item.Value))
+      { item.selected=true}
+      this.arrayCheckBox.push(item)}
+    },
+
+registrarPermisos(){
+  this.eliminarPermisosRol()
+  this.permisos_asignados.forEach((item, index) => {
+      if (item.valor==true)
+      { this.insertarPermisos( item.codigo)}
+      });},
+
+async insertarPermisos(codigo) {
+  const dato={codigo_permiso:codigo,codigo_rol:this.id}
+  const url = 'http://localhost:3000/api/roles/asignarPermisos';
+  await this.axios.post(url,dato).then(response => {this.permisos = response.data;}).catch(error => { console.log(error); });
+},
+
+ async buscarPermisosRol(){
+    const dato={codigo_rol:this.id}
+    const url = 'http://localhost:3000/api/roles/rolPermisos';
+    await this.axios.post(url,dato).then(response => {
+    this.permisos = response.data;
+    this.llenarArrayPermisoRol(response.data)
+  }).catch(error => {console.log(error);});
+    },
+  llenarArrayPermisoRol(data){
+    for (let i = 0; i < data.length; i++) {
+      this.permisos_rol.push(data[i].seleccionar_codigos_permisos_rol)}
+      console.log('*'+this.permisos_rol)
+},
+async eliminarPermisosRol(){
+    const dato={codigo_rol:this.id}
+    const url = 'http://localhost:3000/api/roles/eliminarRolPermisos';
+    await this.axios.post(url,dato).then(response => {
+    this.permisos = response.data;
+  }).catch(error => {console.log(error);});
+    },
       
 
 

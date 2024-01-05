@@ -89,19 +89,15 @@
                      console.log(error.response.data);
                  });},
 
-                 afiliarse(){
-    const url = 'http://localhost:3000/api/afiliarse';
-   const datos ={
-    cedula:this.ci,
-    rif:this.rif
-   }
-    this.axios.post(url,datos).then(response => {
+    afiliarse(){
+        const url = 'http://localhost:3000/api/afiliarse';
+        const datos ={ cedula:this.ci,rif:this.rif}
+        this.axios.post(url,datos).then(response => {
                      console.log(response.data);
                      this.texto_qr=response.data.qr
                      this.codigo=response.data.codigo
                      this.generateQRCode()
-                     
-                 }).catch(error => {
+                     }).catch(error => {
                      console.log(error.response.data);
                  });},
 

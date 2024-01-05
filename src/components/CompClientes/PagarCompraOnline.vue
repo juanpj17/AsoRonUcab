@@ -87,6 +87,7 @@
             </div>
        </div>
    </section>
+  
 </div>   
     <h3>Ingrese los montos para cada tarjeta</h3>
 <!--Monto por tarjeta selecionada-->
@@ -98,21 +99,37 @@
                             </b-row>
                         </b-container>
                     </div>
-                    <b-button v-if="pagar" @click="vericarPago()">Pagar</b-button>
+                    <b-button v-if="pagar" @click="generarCadenas()">Pagar</b-button>
+                    <div>
+                      <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button>
+
+  <b-modal id="modal-xl" size="xl"  scrollable>
+    <FacturaAfiliacion :codigo_afiliado="this.id"></FacturaAfiliacion>
+  </b-modal>
+  
+</div>
     
 </div>
+
 </template>
 
 <script>
+import FacturaAfiliacion from './FacturaAfiliacion.vue';
+
   export default {
+  components: { FacturaAfiliacion },
+    props:{
+      id:'',
+      tipo_usuario:''
+    },
     data() {
       return {
      
         fields: ['selected', 'Mis_tarjetas', 'nombre_tarjeta', 'fecha_vencimiento'],
         items: [
-          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:1 },
-          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'G Martinez', fecha_vencimiento: '03/15',id:2 },
-          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela Josefina', fecha_vencimiento: '03/15',id:3 },
+          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:'1' },
+          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'G Martinez', fecha_vencimiento: '03/15',id:'2' },
+          { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela Josefina', fecha_vencimiento: '03/15',id:'3 '},
         ],
         selectMode: 'multi',
         selected: [],
@@ -120,8 +137,11 @@
         Montos:[],
         total:'400',
         pagar:false,
-        Montos_por_tarjeta:[],
-        id_tarjetas:[]
+        Montos_por_tarjeta:'',
+        id_tarjetas:'',
+        cant_elementos:'',
+        mensaje:''
+        
       }
     },
     methods: {
@@ -140,7 +160,7 @@
         this.Montos=[]
         this.Tarjetas=[]
         this.selected.forEach((elemento) => this.Montos.push({idTarjeta:elemento.id,monto:''}))
-        console.log(this.Montos)
+       // console.log(this.Montos)
         this.pagar=true
       },
       vericarPago(){
@@ -148,7 +168,37 @@
         this.Montos.forEach((elemento) => this.Montos_por_tarjeta.push( elemento.monto))
         console.log(this.id_tarjetas)
         console.log(this.Montos_por_tarjeta)
-      }
+        this.generarCadenas()
+      },
+      generarCadenas(){
+        this.Montos.forEach((elemento,index) => 
+        { if( index==0){
+          this.cant_elementos='1'
+          this.Montos_por_tarjeta=elemento.monto
+          this.id_tarjetas=elemento.idTarjeta}
+        else
+        {  this.cant_elementos=this.cant_elementos+'1'
+           this.Montos_por_tarjeta=this.Montos_por_tarjeta+'$'+elemento.monto
+            this.id_tarjetas=this.id_tarjetas+'$'+elemento.idTarjeta}
+        })
+        this.pagarCuota();
+      },
+      pagarCuota(){
+        const url = 'http://localhost:3000/api/afiliado';
+        const datos ={codigo_identificador:this.id ,
+                       montos:this.Montos_por_tarjeta, 
+                       tarjetas:this.id_tarjetas,
+                       cuota:'9' ,
+                       cant_elementos:this.cant_elementos}
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data);
+                     Swal.fire(response.data.pagar);
+
+                     
+                     }).catch(error => {
+                     console.log(error.response.data);
+                 });},
+
       
     }
   }

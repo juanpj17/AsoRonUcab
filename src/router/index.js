@@ -95,7 +95,8 @@ const routes = [
   {
     path: '/PrincipalEventos/',
     name: 'PrincipalEventos',
-    component: PrincipalEventos
+    component: PrincipalEventos,
+    props: true
   },
   {
     path: '/PrincipalEventosC/:tipoUsuario',
@@ -104,7 +105,7 @@ const routes = [
   },
   
   {
-    path: '/PrincipalPago',
+    path: '/PrincipalPago/:id/:tipo_pago',
     name: 'PrincipalPago',
     component: PrincipalPago
   },
@@ -165,7 +166,8 @@ const routes = [
   {
     path: '/PrincipalRegistroJuridico/:id/:tipoUsuario',
     name: 'PrincipalRegistroJuridico',
-    component:PrincipalRegistroJuridico
+    component:PrincipalRegistroJuridico,
+    props: true
   },
   {
     path: '/PrincipalClientes',
@@ -214,6 +216,11 @@ const routes = [
     path: '/PersonasContacto',
     name: 'PersonasContacto',
     component:PersonasContacto
+  },
+  {
+    path: '/AsignarRoles/:id',
+    name: 'AsignarRoles',
+    component:AsignarRoles
   },
   
   

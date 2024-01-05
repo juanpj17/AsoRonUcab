@@ -51,7 +51,7 @@
         
   
       </b-row>
-      <div  style="margin-bottom: 50px;"> <b-button pill class="boton" size="lg"  @click="AsignarRoles()"><b-icon icon="plus-circle" scale="3"> </b-icon></b-button></div>
+      <div  style="margin-bottom: 50px;" @click="AsignarRoles('*')"> <b-button pill class="boton" size="lg" @click="AsignarRoles('*')"><b-icon icon="plus-circle" scale="3" @click="AsignarRoles('*')"> </b-icon></b-button></div>
       <!-- Main table element -->
       <b-table
       id="table-transition-example"
@@ -74,9 +74,9 @@
       >
       <template #cell(actions)="row">
 
-        <b-button size="sm" style="margin-left: 10px; background-color: red; border-color: red" class="mr-1">Eliminar</b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: red; border-color: red" class="mr-1" @click="EliminarRol(row.item.Codigo)">Eliminar</b-button>
         <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">Detalles</b-button>
-        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" class="mr-1" @click="AsignarRoles(row.item.id)">Modificar</b-button>
+        <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" class="mr-1" @click="AsignarRoles(row.item.Codigo)">Modificar</b-button>
     
       </template>
         <template #row-details="row">
@@ -105,8 +105,8 @@
                       <td>{{ item.Descripcion}}</td> 
                   </tr>
               </tbody>
-          </table>
-          <p>Permisos asignados</p>
+      </table>
+    <!--        <p>Permisos asignados</p>
           <table class="table table-bordered">
               <thead>
                   <tr>
@@ -120,7 +120,7 @@
                       <td>{{ item.Accion}}</td>
                   </tr>
               </tbody>
-          </table>
+          </table>-->  
       </template>
   </b-modal>
 
@@ -200,6 +200,7 @@
             const item = {
               Codigo: data[i].codigo,
               Nombre: data[i].nombre,
+              Descripcion:data[i].descripcion
             };
             
             this.items.push(item)
@@ -217,8 +218,6 @@
               console.log(error);
             });
         },
-
-      },
         info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
               this.infoModal = [item];
@@ -226,10 +225,25 @@
               this.modficarN=item
           },
           AsignarRoles(id){
-            if (this.$route.path!='/AsignarRoles/')
+            if (this.$route.path!='/AsignarRoles/'+id)
             this.$router.push('/AsignarRoles/' + id);
           },
+        async  EliminarRol(codigo){
+            const dato={
+              id:codigo}
+            const url = 'http://localhost:3000/api/roles/eliminar';
+            await this.axios.post(url,dato).then(response => {
+            Swal.fire("Rol Eliminado");
+            }).catch(error => {
+              console.log(error);
+            });
+          }
+
           
+          
+
+      },
+        
 
       }
     

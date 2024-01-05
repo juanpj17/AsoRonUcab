@@ -13,8 +13,8 @@
             
             <b-col style="margin-left: 30PX;">
                 <H4 style="text-align: left;" >ASORONUCAB C.A</H4>
-                <h6  style="text-align: left;">Avenida Teherán, Caracas 1020, Distrito Capital</h6>
-                <h6 style="text-align: left;">RIF: J-2531343012</h6>
+                <h6  style="text-align: left;"> Direccion: {{ direccionAso }}</h6>
+                <h6 style="text-align: left;">RIF: {{ rifAso }}</h6>
             </b-col>
             <b-col></b-col>
             <b-col></b-col>
@@ -22,27 +22,26 @@
         <b-row>
             <b-col><h4 style="font-weight: bold; text-align: left;">A</h4></b-col>
             <b-col></b-col>
-            <b-col><h5 style="font-weight: bold;">N de recibo:0001</h5>
-            <h5 style="font-weight: bold;">Fecha: 12/12/2023</h5> </b-col>
+            <b-col><h5 style="font-weight: bold;">N de recibo: {{ num_factura }}</h5>
+            <h5 style="font-weight: bold;">Fecha: {{ fecha }}</h5> </b-col>
         </b-row>
         <b-row>
             <b-col>
-                <H6 style="text-align: left;">Nombre:Gabriela Martinez</H6>
-                <h6 style="text-align: left;" >CI: 29919287</h6>
-                <h6 style="text-align: left;">Direccion: Edif Toscana, Parroquia San Agustín en el Municipio Libertador.</h6>
+                <H6 style="text-align: left;">Nombre/Razon Social: {{ nombre_razon_s }}</H6>
+                <h6 style="text-align: left;" >CI/RIF: {{ rif_cedula }}</h6>
+                <h6 style="text-align: left;">Direccion: {{ direccionAfi }}</h6>
             </b-col>
             <b-col></b-col>
             <b-col></b-col>
         </b-row>
-        <hr>
         <b-row>
             <b-col><h1 style="font-weight: bold;">Total</h1></b-col>
             <b-col></b-col>
-            <b-col><h1 style="font-weight: bold;">230 bs</h1></b-col>
-        <hr>
+            <b-col><h1 style="font-weight: bold;">{{ total }} bs</h1></b-col>
+        
         </b-row>
         <b-row>
-            <b-col lg="9" style="text-align: left;"><h5>Concepto: Pago del mes de marzo de la tarifa de afilicion</h5>
+            <b-col lg="9" style="text-align: left;"><h5>Concepto: Pago del mes de {{ mes }} de la tarifa de afilicion</h5>
             </b-col>
             <b-col></b-col>
         </b-row>
@@ -56,3 +55,69 @@
     
 </section>
 </template>
+<script>
+export default{
+    props:{
+        codigo_afiliado:'',
+        
+    },
+    data(){
+        return{
+        direccionAfi:'',
+        direccionAso:'',
+        rifAso:'',
+        rif_cedula:'',
+        nombre_razon_s:'',
+        total:'',
+        mes:'',
+        fecha:'',
+        num_factura:'',}
+    },
+    created(){
+        this.datosFactura()
+        this.datosAfiliacion()
+        this.datosAsoron()
+    },
+    methods:{
+        datosFactura(){
+            console.log(this.codigo_afiliado)
+        const url = 'http://localhost:3000/api/facturaAfiliado';
+        const datos ={ codigo_identificador:this.codigo_afiliado}
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data);
+                    this.num_factura=response.data.num_factura
+                    this.fecha=response.data.fecha
+                    this.mes=response.data.mes
+                    this.total=response.data.total
+                     }).catch(error => {
+                     console.log(error.response.data);
+                 });},
+                 datosAfiliacion(){
+            console.log(this.codigo_afiliado)
+        const url = 'http://localhost:3000/api/facturaAfiliado/datosAfiliado';
+        const datos ={ codigo_identificador:this.codigo_afiliado}
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data);
+                     this.nombre_razon_s=response.data.nombre
+                     this.rif_cedula=response.data.rif_cedula
+                     this.direccionAfi=response.data.direccion
+                     }).catch(error => {
+                     console.log(error.response.data);
+                 });},
+                 datosAsoron(){
+            console.log(this.codigo_afiliado)
+        const url = 'http://localhost:3000/api/facturaAfiliado/datosAsoron';
+        const datos ={ codigo_identificador:this.codigo_afiliado}
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data)
+                     this.rifAso=response.data.rif
+                     this.direccionAso=response.data.direccion
+                     }).catch(error => {
+                     console.log(error.response.data);
+                 });},
+                 
+
+
+    }
+}
+</script>
