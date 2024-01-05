@@ -366,9 +366,6 @@ export default {
             const url = 'http://localhost:3000/api/parroquia';
             await this.axios.get(url).then(response => {
               const parroquia = response.data;
-              
-              console.log(parroquia)
-              console.log(parroquia.length)
               this.llenarParroquias(parroquia)
             }).catch(error => {
               console.log(error);

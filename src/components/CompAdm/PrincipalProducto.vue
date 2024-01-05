@@ -16,7 +16,7 @@
               <b-icon icon="gear-fill"></b-icon>
             </template>
             <b-dropdown-item @click="RegistrarProducto(producto.Id)">Modificar</b-dropdown-item>
-            <b-dropdown-item>Eliminar</b-dropdown-item>
+            <b-dropdown-item @click="EliminarProducto(producto.Id)">Eliminar</b-dropdown-item>
             <b-dropdown-item @click="RegistrarPremio()">Agregar Premio</b-dropdown-item>
             <b-dropdown-item @click="RegistrarNotaCata(producto.Id)">Agregar nota de cata</b-dropdown-item>
           </b-dropdown>
@@ -42,7 +42,7 @@ export default {
     };
   },
   methods: {
-    RegistrarProducto(id) {
+    async RegistrarProducto(id) {
       this.$router.push('/RegistrarProductoView/' + id);
     },
     RegistrarPremio() {
@@ -69,11 +69,28 @@ export default {
               Imagen: producto.url, 
             };
           });
+          console.log(this.Productos)
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    async EliminarProducto(id) {
+      const url = 'http://localhost:3000/api/producto/' + id;
+      await this.axios
+        .delete(url)
+        .then((response) => {
+          console.log(response);
+          this.ObtenerProductos();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+  
+
   },
 
   created() {
