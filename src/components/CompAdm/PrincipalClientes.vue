@@ -112,7 +112,7 @@
 <!-------------------------------- Info modal --------------------------------------->
       <b-modal v-model="mostrarModal" size="xl" scrollable>
         <template #modal-title>
-          <h2 >Detalles del empleado</h2>
+          <h2 >Detalles del cliente</h2>
         </template>
         <template #default>
           <table class="table table-bordered">
