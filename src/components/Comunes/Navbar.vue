@@ -43,12 +43,12 @@
            
           },
           RegistroNatural(){
-            if (this.$route.path!='/PrincipalRegistroNatural/*/*Nuevo')
-           this.$router.push('/PrincipalRegistroNatural/*/*Nuevo');
+            if (this.$route.path!='/PrincipalRegistroNatural/*/*Nuevo/Nuevo')
+           this.$router.push('/PrincipalRegistroNatural/*/*Nuevo/Nuevo');
    },
    RegistroJuridico(){
-    if (this.$route.path!='/PrincipalRegistroJuridico/*/*Nuevo')
-           this.$router.push('/PrincipalRegistroJuridico/*/*Nuevo');
+    if (this.$route.path!='/PrincipalRegistroJuridico/*/*Nuevo/Nuevo')
+           this.$router.push('/PrincipalRegistroJuridico/*/*Nuevo/Nuevo');
    },
         
         

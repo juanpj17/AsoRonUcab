@@ -137,7 +137,9 @@
 <script>
   
   export default {  
-
+    props:{
+      cod_tipo_usuario:''
+    },
     data() {
       return {
         modal: false,
@@ -177,6 +179,9 @@
         this.obtenerEventos()
         this.getMonitor()
         
+      },
+      mounted() {
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
       },
     methods: {
       CrearOrden(){
@@ -248,6 +253,7 @@
 
 
       regVentaFisica(natural, juridico){
+        this.insertarAuditoria('Crear','Venta_Fisica')
         const url = 'http://localhost:3000/api/ventaF/insertarE';
         const datos = {
                 total: this.totalbs,
@@ -270,6 +276,7 @@
       },
 
       regVentaFisicaEntrada(fk_fisica, natural, juridico){
+        this.insertarAuditoria('Crear','Venta_Fisica_Entrada')
         console.log(natural)
         console.log(juridico)
         const url = 'http://localhost:3000/api/ventaF/entrada';
@@ -294,6 +301,7 @@
 
       async obtenerValorPunto() {
             const url = 'http://localhost:3000/api/tiendafisica/punto';
+            this.insertarAuditoria('Consultar','Punto')
             console.log(this.monitorData)
             await this.axios.get(url).then(response => {
               const punto = response.data[0].obtener_ultimo_precio/this.monitorData;
@@ -321,9 +329,9 @@
             }else{
               this.regVentaFisicaEntrada(1, this.Cliente, null)
             }
-            if (this.$route.path!='/PagarTiendaFisica'){
+            if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
               this.$router.push({
-                path: '/PagarTiendaFisica',
+                path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
                 query: {
                   array: JSON.stringify(this.items),
                   doc: this.Cedula,
@@ -353,9 +361,9 @@
               this.regVentaFisica(this.Cliente, null, null)
             }
             
-            if (this.$route.path!='/PagarTiendaFisica'){
+            if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
               this.$router.push({
-                path: '/PagarTiendaFisica',
+                path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
                 query: {
                   array: JSON.stringify(this.items),
                   doc: this.Cedula,
@@ -419,7 +427,9 @@
             console.log('aca')
             const response = await this.axios.post('http://localhost:3000/api/cliente/naturalUno', {
                cedula: cliente 
-            });
+            
+              });
+              this.insertarAuditoria('Consultar','Cliente_Natural')
             const clienteNatural = response.data;
             console.log(clienteNatural);
             this.Nombre = clienteNatural.p_nombre;
@@ -434,6 +444,7 @@
             const response = await this.axios.get('http://localhost:3000/api/cliente/juridico', {
               params: { rif: cliente }
             });
+            this.insertarAuditoria('Consultar','Cliente_Juridico')
             const clienteJuridico = response.data;
             console.log(clienteJuridico);
             this.Nombre = clienteJuridico[0].denominacion_comercial;
@@ -501,6 +512,7 @@
               console.log(this.colocados)
               this.llenarTabla(response.data[0].nombre, response.data[0].precio,data, response.data[0].cantidad_entradas)
             }
+            this.insertarAuditoria('Consultar','Entrada')
               }).catch(error => {
                 console.log(error);
             });
@@ -514,6 +526,7 @@
             console.log(datos);
             this.axios.post(url, datos).then(response => {
             console.log(response.data[0]);
+            this.insertarAuditoria('Consultar','Presentacion')
             if (this.verificarNumeroEnArray(data, this.colocados)) {
               console.log(`${data} está en el array.`);
             } else {
@@ -600,7 +613,9 @@
             console.log(data[i].nombre_evento)            
             this.Eventos.push(item)
             console.log(item)
+            
           }
+          this.insertarAuditoria('Consultar','Evento')
         },
 
     async obtenerEventos() {
@@ -611,10 +626,21 @@
             console.log(evento)
              
             this.llenarEventos(evento)
+            
             }).catch(error => {
               console.log(error);
             });
         },
+        async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
 
 
 

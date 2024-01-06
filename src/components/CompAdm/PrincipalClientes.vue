@@ -322,7 +322,7 @@
         RegistroNatural(id){
           if (this.$route.path!='/PrincipalRegistroNatural/'){
                 this.$router.push({
-                  path: '/PrincipalRegistroNatural/'+id+'/%Cliente',
+                  path: '/PrincipalRegistroNatural/'+id+'/%Cliente/'+this.cod_tipo_usuario,
                     query: {
                       id: id,
                       proviene: 'cliente',
@@ -333,7 +333,7 @@
         RegistroJuridico(id){
           if (this.$route.path!='/PrincipalRegistroJuridico/'){
                 this.$router.push({
-                  path: '/PrincipalRegistroJuridico/'+id+'/%ClienteJ',
+                  path: '/PrincipalRegistroJuridico/'+id+'/%ClienteJ/'+this.cod_tipo_usuario,
                     query: {
                       id: id,
                       proviene: 'cliente',

@@ -36,24 +36,24 @@ import TiendaFisica from './TiendaFisica.vue';
             this.$router.push('/PrincipalProducto/'+ this.cod_tipo_usuario);
           },
           PrincipalEmpleados() {
-            if (this.$route.path!='/PrincipalEmpleados/')
-            this.$router.push('/PrincipalEmpleados/');
+            if (this.$route.path!='/PrincipalEmpleados/'+this.cod_tipo_usuario)
+            this.$router.push('/PrincipalEmpleados/'+this.cod_tipo_usuario);
           },
           PrincipalEventos() {
-            if (this.$route.path!='/PrincipalEventos/')
-            this.$router.push('/PrincipalEventos/');
+            if (this.$route.path!='/PrincipalEventos/' +this.cod_tipo_usuario)
+            this.$router.push('/PrincipalEventos/'+ this.cod_tipo_usuario);
           },
           InicioAdm() {
-            if (this.$route.path!='/Home')
-            this.$router.push('/Home');
+            if (this.$route.path!='/Home/'+this.cod_tipo_usuario)
+            this.$router.push('/Home/'+this.cod_tipo_usuario);
            },
           Inventario() {
-            if (this.$route.path!='/Inventario/')
-            this.$router.push('/Inventario/');
+            if (this.$route.path!='/Inventario/'+this.cod_tipo_usuario)
+            this.$router.push('/Inventario/'+  this.cod_tipo_usuario);
           },
           Pedidos() {
-            if (this.$route.path!='/Pedidos/')
-            this.$router.push('/Pedidos/');
+            if (this.$route.path!='/Pedidos/'+this.cod_tipo_usuario)
+            this.$router.push('/Pedidos/'+this.cod_tipo_usuario);
           },
           PrincipalClientes() {
             if (this.$route.path!='/PrincipalClientes/'+this.cod_tipo_usuario)
@@ -64,16 +64,16 @@ import TiendaFisica from './TiendaFisica.vue';
             this.$router.push('/PrincipalRoles/'+this.cod_tipo_usuario);
           },
           Compras(){
-            if (this.$route.path!='/Compras/'+null)
-            this.$router.push('/Compras/'+null);
+            if (this.$route.path!='/Compras/'+null+'/'+this.cod_tipo_usuario)
+            this.$router.push('/Compras/'+null+'/'+this.cod_tipo_usuario);
           },
           ControlAccion(){
-            if (this.$route.path!='/ControlAccion')
-            this.$router.push('/ControlAccion');
+            if (this.$route.path!='/ControlAccion/'+this.cod_tipo_usuario)
+            this.$router.push('/ControlAccion/'+this.cod_tipo_usuario);
           },
           TiendaFisica(){
-            if (this.$route.path!='/TiendaFisica')
-            this.$router.push('/TiendaFisica');
+            if (this.$route.path!='/TiendaFisica/'+this.cod_tipo_usuario)
+            this.$router.push('/TiendaFisica/'+this.cod_tipo_usuario);
           }
        
          },

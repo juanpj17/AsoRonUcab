@@ -83,9 +83,15 @@ import Navbar from '../../components/CompAdm/Navbar.vue';
 import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCategoria.vue';
 
     export default{
+        props:{
+            cod_tipo_usuario:''
+        },
          components:{
         Navbar,TablaHistoricoVue,TablaProductosCategoriaVue
         },
+        mounted() {
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
+      },
      data(){
         return{
             tipo:'a',
@@ -96,15 +102,28 @@ import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCateg
         methods:{
             tipo_historico(){
             this.key++
-            this.tipo='a'},
+            this.tipo='a'
+        this.insertarAuditoria('Consultar','Punto')},
             tipo_historicob(){
             this.key++
-            this.tipo='b'},
+            this.tipo='b'
+            this.insertarAuditoria('Consultar','Tasa')},
             MostrarFactura(id){
-                if (this.$route.path!='/Compras/'+id)
-            this.$router.push('/Compras/'+id);
-            }
-        }
+                if (this.$route.path!='/Compras/'+id+'/'+this.cod_tipo_usuario)
+            this.$router.push('/Compras/'+id+'/'+this.cod_tipo_usuario);
+            },
+            async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
+        },
+      
        
 
         }

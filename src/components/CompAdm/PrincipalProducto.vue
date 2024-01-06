@@ -49,7 +49,7 @@ export default {
 
   methods: {
     async RegistrarProducto(id) {
-      this.$router.push('/RegistrarProductoView/' + id);
+      this.$router.push('/RegistrarProductoView/' + id +'/'+this.cod_tipo_usuario);
     },
     //RegistrarPremio() {
      // this.$router.push('/RegistrarPremio/');

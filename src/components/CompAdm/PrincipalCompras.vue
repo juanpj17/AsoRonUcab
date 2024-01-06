@@ -145,6 +145,7 @@
     export default {
       props:{
         tipo_historico:'',
+        cod_tipo_usuario:''
       },
       data() {
         return {
@@ -193,6 +194,7 @@
       mounted() {
         // Set the initial number of items
         this.totalRows = this.items.length
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
       },
       methods: {
         onFiltered(filteredItems) {
@@ -220,6 +222,17 @@
               this.mostrarModal = true;
               this.modficarN=item
           },
+            
+        async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
 
       }
     }

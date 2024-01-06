@@ -212,7 +212,8 @@ import '../assets/styles.css'
 export default {
   props:{
     id:'',
-    tipo:''
+    tipo:'',
+    cod_tipo_usuario:''
   
 },
     data: function() {
@@ -248,6 +249,7 @@ export default {
       mounted() {
         const cod = this.$route.query.id;
         const page = this.$route.query.proviene;
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
       },
       created(){
         this.obtenerParroquias()
@@ -272,7 +274,8 @@ export default {
             console.log(response.data);
             this.rol = response.data.rol
             console.log(this.rol)
-            this.password = response.data.contrasena
+            this.password = response.data.
+            this.insertarAuditoria('Consultar','Rol')
         }).catch(error => {
             console.log(error);
         });
@@ -297,6 +300,7 @@ export default {
             this.telefonos.push(item)
             console.log(this.telefonos)
           }
+          this.insertarAuditoria('Consultar','Telefono')
           }).catch(error => {
             console.log(error);
         });
@@ -311,6 +315,7 @@ export default {
         this.axios.post(url, datos).then(response => {
             console.log(response.data.correo);
             this.email = response.data.correo
+            this.insertarAuditoria('Consultar','Correo')
         }).catch(error => {
             console.log(error);
         });
@@ -353,10 +358,11 @@ export default {
                 juridico: '',
                 rol: this.rol
               };
-   
+                 
                 console.log(datos);
                 this.axios.put(url, datos).then(response => {
                 console.log(response.data);
+                this.insertarAuditoria('Modificar','Usuario')
               }).catch(error => {
             console.log(error);
               }   );
@@ -372,6 +378,7 @@ export default {
                 console.log(datos);
                 this.axios.put(url, datos).then(response => {
                 console.log(response.data);
+                this.insertarAuditoria('Modificar','Correo')
               }).catch(error => {
             console.log(error);
               }   );
@@ -440,6 +447,7 @@ export default {
                    console.log(datos, typeof datos);
                    this.axios.put(url, datos).then(response => {
                        console.log(response.data);
+                       this.insertarAuditoria('Modificar','Empleado')
                       //  this.enviado=true;
                       //  this.$router.push('/PrincipalRegistroNatural/*/%');
                    }).catch(error => {
@@ -468,6 +476,7 @@ export default {
                    this.axios.post(url, datos).then(response => {
                        console.log(response.data);
                        this.enviado=true;
+                       this.insertarAuditoria('Crear','Empleado')
                        this.$router.push('/PrincipalRegistroNatural/*/%');
                    }).catch(error => {
                        console.log(error.response.data);
@@ -485,6 +494,7 @@ export default {
                     this.axios.post(url, datos).then(response => {
                         console.log(response.data.correo);
                         this.email = response.data.correo
+                        this.insertarAuditoria('Consultar','Correo')
                     }).catch(error => {
                         console.log(error);
                     });
@@ -522,6 +532,7 @@ export default {
                 console.log(datos);
                 this.axios.put(url, datos).then(response => {
                 console.log(response.data);
+                this.insertarAuditoria('Modificar','Usuario')
               }).catch(error => {
             console.log(error);
               }   );
@@ -539,6 +550,7 @@ export default {
             console.log(datos);
             this.axios.post(url, datos).then(response => {
             console.log(response.data);
+            this.insertarAuditoria('Crear','Telefono')
 
             }).catch(error => {
               console.log(error.response.data);
@@ -569,6 +581,7 @@ export default {
                 console.log(datos);
                 this.axios.put(url, datos).then(response => {
                 console.log(response.data);
+                this.insertarAuditoria('Modificar','Correo')
               }).catch(error => {
             console.log(error);
               }   );
@@ -601,6 +614,7 @@ export default {
                     }
                    console.log(datos, typeof datos);
                    this.axios.put(url, datos).then(response => {
+                    this.insertarAuditoria('Modificar','Cliente_Natural')
                        console.log(response.data);
                    }).catch(error => {
                        console.log(error.response.data);
@@ -624,6 +638,7 @@ export default {
                 console.log(datos)
                 this.axios.post(url, datos).then(response => {
                   console.log(response.data);
+                  this.insertarAuditoria('Crear','Cliente_Natural')
 
                 }).catch(error => {
                   console.log(error);
@@ -757,12 +772,22 @@ export default {
               console.log(parroquia)
               console.log(parroquia.length)
               this.llenarParroquias(parroquia)
+              this.insertarAuditoria('Consultar','Lugar')
             }).catch(error => {
               console.log(error);
             });
         },
 
-
+        async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
          
          
              

@@ -58,7 +58,7 @@ const routes = [
     component: RegistrarProducto 
   },
   {
-    path: '/RegistrarProductoView/:idProducto',
+    path: '/RegistrarProductoView/:idProducto/:cod_tipo_usuario',
     name: 'RegistrarProductoView',
     component: RegistrarProductoView 
   },
@@ -93,7 +93,7 @@ const routes = [
     component: MiCuenta
   },
   {
-    path: '/PrincipalEventos/',
+    path: '/PrincipalEventos/:cod_tipo_usuario',
     name: 'PrincipalEventos',
     component: PrincipalEventos,
     props: true
@@ -121,12 +121,12 @@ const routes = [
   },
   {
 
-    path: '/Home',
+    path: '/Home/:cod_tipo_usuario',
     name: 'Home',
     component: Home
   },
   {
-    path: '/Inventario',
+    path: '/Inventario/:cod_tipo_usuario',
     name: 'Inventario',
     component: Inventario
   },{
@@ -135,13 +135,13 @@ const routes = [
     component: AsignarRoles
   },
   {
-    path: '/TiendaFisica',
+    path: '/TiendaFisica/:cod_tipo_usuario',
     name: 'TiendaFisica',
     component: TiendaFisica,
     props: true
   },
   {
-    path: '/Pedidos',
+    path: '/Pedidos/:cod_tipo_usuario',
     name: 'Pedidos',
     component: Pedidos
 
@@ -153,18 +153,18 @@ const routes = [
 
   },
   {
-    path: '/PrincipalEmpleados',
+    path: '/PrincipalEmpleados/:cod_tipo_usuario',
     name: 'PrincipalEmpleados',
     component: PrincipalEmpleados
   },
   {
-    path: '/PrincipalRegistroNatural/:id/:tipoUsuario',
+    path: '/PrincipalRegistroNatural/:id/:tipoUsuario/:cod_tipo_usuario',
     name: 'PrincipalRegistroNatural',
     component:PrincipalRegistroNatural,
     props: true
   },
   {
-    path: '/PrincipalRegistroJuridico/:id/:tipoUsuario',
+    path: '/PrincipalRegistroJuridico/:id/:tipoUsuario/:cod_tipo_usuario',
     name: 'PrincipalRegistroJuridico',
     component:PrincipalRegistroJuridico,
     props: true
@@ -192,23 +192,23 @@ const routes = [
   },
   
   {
-    path: '/Compras/:id',
+    path: '/Compras/:id/:cod_tipo_usuario',
     name: 'Compras',
     component:Compras
   },
   {
-    path: '/RegistrarEvento/:id',
+    path: '/RegistrarEvento/:id/:cod_tipo_usuario',
     name: 'RegistrarEvento',
     component:RegistrarEvento,
     props: true
   },
   {
-    path: '/ControlAccion',
+    path: '/ControlAccion/:cod_tipo_usuario',
     name: 'ControlAccion',
     component:ControlAccion
   },
   {
-    path: '/PagarTiendaFisica',
+    path: '/PagarTiendaFisica/:cod_tipo_usuario',
     name: 'PagarTiendaFisica',
     component:PagarTiendaFisica
   },

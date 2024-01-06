@@ -205,6 +205,8 @@ font-size: 40px;
   export default{
     props:{
       idProducto:'',
+      cod_tipo_usuario:''
+      
     },
       data(){
           return{
@@ -272,8 +274,9 @@ font-size: 40px;
           añejamiento: {required},
           gradosa: {required, numeric},
           parroquia: {required, numeric},
-      },   
-
+      },
+      mounted(){
+    this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;},
       methods:{
          
           
@@ -357,6 +360,7 @@ font-size: 40px;
                     };
                     this.parroquias.push(item);
                 }
+                this.insertarAuditoria('Consultar','Lugar')
             } catch (error) {
                 console.log(error);
             }
@@ -376,6 +380,7 @@ font-size: 40px;
                     };
                     this.cod_proveedor.push(item);
                 }
+                this.insertarAuditoria('Consultar','Proveedor')
             } catch (error) {
                 console.log(error);
             }
@@ -395,6 +400,7 @@ font-size: 40px;
                     };
                     this.cod_añejamiento.push(item);
                 }
+                this.insertarAuditoria('Consultar','Añejamiento')
             } catch (error) {
                 console.log(error);
             }
@@ -414,6 +420,7 @@ font-size: 40px;
                     };
                     this.cod_categorias.push(item);
                 }
+                this.insertarAuditoria('Consultar','Categoria')
             } catch (error) {
                 console.log(error);
             }
@@ -433,6 +440,7 @@ font-size: 40px;
                     };
                     this.cod_variedad.push(item);
                 }
+                this.insertarAuditoria('Consultar','Variedad')
             } catch (error) {
                 console.log(error);
             }
@@ -452,6 +460,7 @@ font-size: 40px;
                     };
                     this.cod_sabores.push(item);
                 }
+                this.insertarAuditoria('Consultar','Sabor')
             } catch (error) {
                 console.log(error);
             }
@@ -471,6 +480,7 @@ font-size: 40px;
                     };
                     this.cod_colores.push(item);
                 }
+                this.insertarAuditoria('Consultar','Color')
             } catch (error) {
                 console.log(error);
             }
@@ -509,6 +519,7 @@ font-size: 40px;
                     };
                     this.cod_imagenes.push(item);
                 }
+                this.insertarAuditoria('Consultar','Materia')
             } catch (error) {
                 console.log(error);
             }
@@ -528,6 +539,7 @@ font-size: 40px;
                     };
                     this.cod_presesentaciones.push(item);
                 }
+                this.insertarAuditoria('Consultar','Presentacion')
             } catch (error) {
                 console.log(error);
             }
@@ -561,6 +573,7 @@ font-size: 40px;
                 if (respuesta.estado === 'ok') {
                     this.mensajeValidacion('Producto registrado con exito');
                     this.LimpiarCampos();
+                    this.insertarAuditoria('Registrar','Producto')
                 } else {
                     this.mensajeValidacion('Error al registrar el producto');
                 }
@@ -568,8 +581,20 @@ font-size: 40px;
                 console.log(error);
             }
         },
+        async  insertarAuditoria(Accion,Tabla){
+          console.log(this.cod_tipo_usuario)
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
         
     },
+
 
  
   }

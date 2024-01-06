@@ -139,7 +139,8 @@
 export default {
   props:{
     id:'',
-    tipoUsuario:''
+    tipoUsuario:'',
+    cod_tipo_usuario:'',
   },
     data() {
       return {
@@ -169,6 +170,7 @@ export default {
       mounted() {
         const cod = this.$route.query.id;
         const page = this.$route.query.proviene;
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
       },
       created(){
 
@@ -315,6 +317,7 @@ export default {
             console.log(datos);
             this.axios.post(url, datos).then(response => {
                 console.log(response.data);
+                this.insertarAuditoria('Crear','Telefono')
           
             }).catch(error => {
                 console.log(error.response.data);
@@ -338,7 +341,7 @@ export default {
             }else{
               this.parroquiaFiscal = response.data.lugar
             }
-
+            this.insertarAuditoria('Crear','Lugar_Persona')
           
           }).catch(error => {
             console.log(error);
@@ -365,6 +368,7 @@ export default {
               console.log(parroquia)
               console.log(parroquia.length)
               this.llenarParroquias(parroquia)
+              this.insertarAuditoria('Consultar','Lugar')
             }).catch(error => {
               console.log(error);
             });
@@ -399,6 +403,7 @@ export default {
                this.axios.post(url, datos).then(response => {
                    console.log(response.data);
                    this.enviado=true;
+                   this.insertarAuditoria('Modificar','Cliente_Juridico');
                 
                }).catch(error => {
                    console.log(error.response.data);
@@ -427,6 +432,7 @@ export default {
                this.axios.post(url, datos).then(response => {
                    console.log(response.data);
                    this.enviado=true;
+                   this.insertarAuditoria('Crear','Cliente_Juridico');
                 
                }).catch(error => {
                    console.log(error.response.data);
@@ -434,6 +440,18 @@ export default {
 
           }
              },
+             async  insertarAuditoria(Accion,Tabla){
+              console.log(this.cod_tipo_usuario);
+               const dato={
+
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
      
                
     },

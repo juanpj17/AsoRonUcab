@@ -208,6 +208,9 @@
 
 <script>
 export default {
+  props:{
+    cod_tipo_usuario:''
+  },
   data() {
     return {
       items: [],
@@ -249,7 +252,7 @@ export default {
           console.log(id)
           if (this.$route.path!='/PrincipalRegistroNatural/'+id+'/%Empleado'){
                 this.$router.push({
-                  path: '/PrincipalRegistroNatural/'+id+'/%Empleado',
+                  path: '/PrincipalRegistroNatural/'+id+'/%Empleado/'+this.cod_tipo_usuario,
                     query: {
                       id: id,
                       proviene: 'empleado',
@@ -285,7 +288,9 @@ export default {
         .get(url)
         .then((response) => {
           this.empleado = response.data;
+          console.log(this.empleado)
           this.LlenarTabla(this.empleado);
+          this.insertarAuditoria('Consultar','Empleado')
         })
         .catch((error) => {
           console.log(error);
@@ -296,6 +301,7 @@ export default {
       this.axios.delete(`http://localhost:3000/api/empleado/` + cedula)
         .then((response) => {
           console.log(response);
+          this.insertarAuditoria('Eliminar','Empleado')
         })
         .catch((error) => {
           console.log(error);
@@ -304,6 +310,17 @@ export default {
 
 
     },
+      
+    async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
   },
 
   created() {
@@ -312,6 +329,7 @@ export default {
 
   mounted() {
     this.totalRows = this.items.length;
+    this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
   },
 };
 </script>

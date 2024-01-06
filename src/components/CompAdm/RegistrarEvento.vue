@@ -201,9 +201,9 @@
 <script>
 
 export default {
-  // props:{
-  //   id:'',
-  // },
+  props:{
+  cod_tipo_usuario:''
+  },
     data() {
       return {
         inventario:[
@@ -235,6 +235,8 @@ export default {
       },
       mounted() {
         const cod = this.$route.query.codigo;
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
+        
       },
       created(){
         this.verificarModificar(this.$route.query.codigo)
@@ -270,6 +272,7 @@ export default {
           this.axios.post(url, datos).then(response => {
             console.log(response.data);
             this.precioXEntrada = response.data[0].obtener_cantidad_entrada
+            this.insertarAuditoria('Consultar','Entrada')
           }).catch(error => {
             console.log(error);
           });
@@ -300,6 +303,7 @@ export default {
             this.fecha_fin = fecha_cortada_final, 
             this.direccion = response.data.direccion,
             this.parroquia = response.data.parroquia
+            this.insertarAuditoria('Consultar','Evento')
 
         }).catch(error => {
             console.log(error);
@@ -346,6 +350,7 @@ export default {
               const producto = response.data;
               console.log(producto)
                 this.llenarProductos(producto, index)
+                this.insertarAuditoria('Consultar','Presentacion')
             }).catch(error => {
               console.log(error);
             });
@@ -381,6 +386,7 @@ export default {
         console.log(datos);
         this.axios.post(url, datos).then(response => {
             console.log(response.data);
+            this.insertarAuditoria('Registrar','Presentacion_Evento')
           
         }).catch(error => {
             console.log(error);
@@ -398,6 +404,7 @@ export default {
    
           console.log(datos);
           this.axios.post(url, datos).then(response => {
+            this.insertarAuditoria('Registrar','Entrada')
             console.log(response.data);
           }).catch(error => {
             console.log(error);
@@ -435,6 +442,7 @@ export default {
           console.log(datos);
           this.axios.put(url, datos).then(response => {
             console.log(response.data);
+            this.insertarAuditoria('Modificar','Entrada')
           
           }).catch(error => {
             console.log(error);
@@ -465,6 +473,7 @@ export default {
           console.log(datos);
           this.axios.post(url, datos).then(response => {
             console.log(response.data);
+            this.insertarAuditoria('Registrar','Evento')
             const num = this.inventario.map(t => t.numero).slice();
             if(this.numEnt > 0){
               this.regEntrada()
@@ -492,6 +501,7 @@ export default {
           this.modificarPrecioEntrada()
           console.log(datos);
           this.axios.put(url, datos).then(response => {
+            this.insertarAuditoria('Modificar','Evento')
             console.log(response.data);
           }).catch(error => {
             console.log(error);
@@ -521,6 +531,7 @@ export default {
               console.log(parroquia)
               console.log(parroquia.length)
               this.llenarParroquias(parroquia)
+              this.insertarAuditoria('Consultar','Lugar')
             }).catch(error => {
               console.log(error);
             });
@@ -544,10 +555,22 @@ export default {
            
               console.log(proveedor)
               this.llenarProveedores(proveedor)
+              this.insertarAuditoria('Consultar','Proveedor')
             }).catch(error => {
               console.log(error);
             });
         },
+        async  insertarAuditoria(Accion,Tabla){
+          console.log(this.cod_tipo_usuario)
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
 
                
     },

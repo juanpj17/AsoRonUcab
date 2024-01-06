@@ -184,6 +184,9 @@
   
 <script>
   export default {
+    props:{
+      cod_tipo_usuario:''
+    },
     data() {
       return {
         items:[
@@ -256,6 +259,7 @@
     mounted() {
       // Set the initial number of items
       this.totalRows = this.items.length
+      this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
     },
     methods: {
         agregarElemento() {
@@ -286,9 +290,11 @@
         console.log(codigo)
         if (this.$route.path!='/RegistrarEvento/'){
           this.$router.push({
-            path: '/RegistrarEvento/'+codigo,
+            path: '/RegistrarEvento/'+codigo+'/'+this.cod_tipo_usuario,
             query: {
               codigo: codigo,
+          
+              
             }
           });
         }
@@ -315,6 +321,7 @@
               this.evento = response.data;
               console.log(this.evento)
               this.LlenarTabla(this.evento)
+              this.insertarAuditoria('Consultar','Evento')
             }).catch(error => {
               console.log(error);
             });
@@ -322,20 +329,33 @@
 
         async eliminarEvento(data){
           console.log(data.Codigo)
+          this.insertarAuditoria('Eliminar','Evento');
           const url = 'http://localhost:3000/api/evento'
          
           try {
             const response = await this.axios.delete(url, { params: { codigo: data.Codigo } });
             const evento = response.data;
-            console.log(evento);
-    
           } catch (error) {
             console.log('Error al eliminar el evento:', error);
           }
             console.log('console')
             this.obtenerEventos();
             console.log('console')
-        }
+        },
+
+        async  insertarAuditoria(Accion,Tabla){
+          console.log(this.cod_tipo_usuario)
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
+
+
         
     
 

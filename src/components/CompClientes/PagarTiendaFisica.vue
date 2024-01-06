@@ -94,6 +94,9 @@
 <script>
 import FacturaVentaVue from './FacturaVenta.vue';
   export default {
+    props:{
+        cod_tipo_usuario:''
+    },
     mounted() {
    
     const array = this.$route.query.array;
@@ -103,6 +106,7 @@ import FacturaVentaVue from './FacturaVenta.vue';
     const divisas = this.$route.query.totaldi;
     const bs = this.$route.query.totalbs;
     const lug = this.$route.query.lugar;
+    this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
   },
     components:{
         FacturaVentaVue

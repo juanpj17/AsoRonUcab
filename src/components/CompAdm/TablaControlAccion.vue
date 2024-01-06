@@ -101,7 +101,9 @@
 
 <script>
   export default {
-    
+    props:{
+      cod_tipo_usuario:''
+    },
     data() {
       return {
         aux:'',
@@ -153,6 +155,7 @@
     mounted() {
       // Set the initial number of items
       this.totalRows = this.items.length
+      this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
     },
     methods: {
       info(item) {
