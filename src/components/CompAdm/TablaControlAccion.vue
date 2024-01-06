@@ -101,16 +101,19 @@
 
 <script>
   export default {
+    
     data() {
       return {
+        aux:'',
         items: [
         ],
         fields: [
         { key: 'Codigo', label: 'Codigo de Usuario', class:'spann', sortable: true },
             { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center spann',sortable: true },
+            { key: 'Rol', label: 'Rol', class: 'text-center spann',sortable: true },
             { key: 'Accion', label: 'Accion', class: 'text-center spann',sortable: true },
             { key: 'Tabla', label: 'Tabla', class: 'text-center spann',sortable: true },
-            { key: 'Fecha_hora', label: 'Fecha y hora de la accion', class: 'text-center spann',sortable: true },
+            { key: 'Fecha', label: 'Fecha y hora de la accion', class: 'text-center spann',sortable: true },
         ],
         totalRows: 1,
         infoModal: [],
@@ -166,18 +169,39 @@
       },
       llenarTabla(data){
           for (let i = 0; i < data.length; i++) {
+            
             const item = {
               Codigo: data[i].codigo_usuario,
               Accion: data[i].accion,
               Tabla: data[i].tabla,
-              Fecha_Hora: data[i].fecha_hora,
-             
+              Fecha: data[i].fecha_hora,
+              Nombre_Completo:'',
+              Rol:''
             };
-            
             this.items.push(item)
             console.log(this.items)
           }
+          this.llenarTabla2()
         },
+
+  async  llenarTabla2(){
+          for (let i = 0; i < this.items.length; i++) {
+             
+            const dato={cod_usuario:this.items[i].Codigo}
+            const url = 'http://localhost:3000/api/usuario/buscarNombreRol';
+            await this.axios.post(url,dato).then(response => {
+              this.aux=response.data[0].nombre
+              console.log(this.aux)
+              this.items[i].Nombre_Completo=response.data[0].nombre
+              this.items[i].Rol=response.data[0].rol
+            
+            }).catch(error => {
+              console.log(error);
+            });
+            
+          }
+        },
+        
 
 
 
@@ -199,23 +223,21 @@
               console.log(error);
             });
           },
+          async  nombreRol(usuario){
+            
+            const dato={cod_usuario:usuario}
+            const url = 'http://localhost:3000/api/usuario/buscarNombreRol';
+            await this.axios.post(url,dato).then(response => {
+              this.aux=response.data[0].nombre
+              console.log(this.aux)
+         
+            
+            }).catch(error => {
+              console.log(error);
+            });
+          },
 
-   RegistroNatural(id){
-    if (this.$route.path!='/PrincipalRegistroNatural/')
-           this.$router.push('/PrincipalRegistroNatural/'+id);
-   },
-   RegistroJuridico(id){
-    if (this.$route.path!='/PrincipalRegistroJuridico/')
-           this.$router.push('/PrincipalRegistroJuridico/'+id);
-   },
-   Modificar(id){
-    if (this.tipoRegistro=='J'){
-      this.RegistroJuridico(id)
-    }
-    else
-    this.RegistroNatural(id)
-   }
-
+   
     }
   }
 </script>

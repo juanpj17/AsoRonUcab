@@ -13,11 +13,11 @@
                         <b-form-text  v-if="!$v.nombre.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
                     </div>
                                         <div  class=" col form-group form-floating mb-3">
-                        <input type="text" id="precio"   class="form-control rounded-2 altura" placeholder="precio" v-model="precio"  />
+                        <input type="text" id="gradosa"   class="form-control rounded-2 altura" placeholder="precio" v-model="gradosa"  />
                         <label for="precio">Grados de alcohol</label>
-                        <b-form-text  v-if="!$v.precio.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
-                        <b-form-text  v-if="!$v.precio.numeric" class="form-floating mb-3" text-variant="danger">Formato invalido, solo se aceptan numeros positivos</b-form-text > 
-                        <b-form-text  v-if="!$v.precio.between&&this.precio=='0'" class="form-floating mb-3" text-variant="danger">El precio debe ser mayor que 0 bs </b-form-text > 
+                        <b-form-text  v-if="!$v.gradosa.required" class="form-floating mb-3" text-variant="danger">Debe llenar el campo</b-form-text > 
+                        <b-form-text  v-if="!$v.gradosa.numeric" class="form-floating mb-3" text-variant="danger">Formato invalido, solo se aceptan numeros positivos</b-form-text > 
+                        <b-form-text  v-if="!$v.gradosa.between&&this.precio=='0'" class="form-floating mb-3" text-variant="danger">El precio debe ser mayor que 0 bs </b-form-text > 
                     </div>
                   </div>
                   <div class="row">
@@ -41,7 +41,7 @@
                           <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  placeholder="Proveedor"  v-model="proveedor" :options="cod_proveedor"></b-form-select>
                         </b-col>
                         <b-col cols="6">
-                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  placeholder="Tipo"  v-model="tipo" :options="cod_tipo"></b-form-select>
+                          <b-form-select class="custom-select mr-sm-2 form-control altura" id="per-page-select"  placeholder="tipo"  v-model="tipo" :options="cod_tipo"></b-form-select>
                         </b-col>
                       </b-row>
                     </b-container>
@@ -208,7 +208,7 @@ font-size: 40px;
     },
       data(){
           return{
-            tipo:'',
+              tipo:'',
               añejamiento:'',
               nombre:'',
               descripcion:'',
@@ -217,6 +217,7 @@ font-size: 40px;
               categoria:'',
               variedad:'',
               parroquia:'',
+              gradosa:'',
               imagenes:[],
               sabor: [],
               color: [],
@@ -269,6 +270,8 @@ font-size: 40px;
           },
           nombreImagen:{required},
           añejamiento: {required},
+          gradosa: {required, numeric},
+          parroquia: {required, numeric},
       },   
 
       methods:{
@@ -307,7 +310,7 @@ font-size: 40px;
         },
          
         registrarSabor() {
-            this.sabor.push({ valor: '' });
+            this.sabor.push( {valor:''} );
         },
 
         eliminarSaborSeleccionado(indice) {
@@ -350,7 +353,7 @@ font-size: 40px;
                 for (let i = 0; i < parroquia.length; i++) {
                     const item = {
                         text: parroquia[i].nombre,
-                        value: parroquia[i].codigo
+                        value: parroquia[i].id
                     };
                     this.parroquias.push(item);
                 }
@@ -532,25 +535,27 @@ font-size: 40px;
 
         async registrarProducto(){
             const url = 'http://localhost:3000/api/producto';
+            console.log(this.parroquia)
             const data = {
                 nombre: this.nombre,
                 descripcion: this.descripcion,
-                precio: this.precio,
-                stock: this.stock,
+                tipo: this.tipo,    
+                gradosa: this.gradosa,
                 añejamiento: this.añejamiento,
                 proveedor: this.proveedor,
                 categoria: this.categoria,
                 variedad: this.variedad,
-                sabor: this.sabor,
-                color: this.color,
-                materiaPrima: this.materiaPrima,
-                imagenes: this.imagenes,
-                presentaciones: this.presentaciones
+                parroquia: this.parroquia,
+                sabor: this.sabor.map((item) => item.valor),
+                color: this.color.map((item) => item.valor),
+                materiaPrima: this.materiaPrima.map((item) => item.valor),
+                imagenes: this.imagenes.map((item) => item.valor),
+                presentaciones: this.presentaciones.map((item) => item.valor),
             };
 
             console.log(data)
 
-           /* try {
+            try {
                 const response = await this.axios.post(url, data);
                 const respuesta = response.data;
                 if (respuesta.estado === 'ok') {
@@ -561,11 +566,11 @@ font-size: 40px;
                 }
             } catch (error) {
                 console.log(error);
-            }*/
+            }
         },
         
     },
 
- 
-  }
+ 
+  }
 </script>
