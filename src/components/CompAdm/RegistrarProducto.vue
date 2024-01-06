@@ -230,7 +230,7 @@ font-size: 40px;
               cod_materia:[],
               cod_presesentaciones:[],
               cod_imagenes:[],
-              cod_tipo:[{text:'Agricola',value:1},{ text:'Industrial',value:2}],
+              cod_tipo:['Agricola','Industrial'],
               cod_proveedor:[],
               cod_categorias:[],
               cod_variedad:[]

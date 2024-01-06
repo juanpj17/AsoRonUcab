@@ -17,7 +17,7 @@
             </template>
             <b-dropdown-item @click="RegistrarProducto(producto.Id)">Modificar</b-dropdown-item>
             <b-dropdown-item @click="EliminarProducto(producto.Id)">Eliminar</b-dropdown-item>
-          <!--  <b-dropdown-item @click="RegistrarPremio()">Agregar Premio</b-dropdown-item>-->
+            <b-dropdown-item @click="RegistrarPremio()">Agregar Premio</b-dropdown-item>
             <b-dropdown-item @click="RegistrarNotaCata(producto.Id)">Agregar nota de cata</b-dropdown-item>
           </b-dropdown>
           <b-button

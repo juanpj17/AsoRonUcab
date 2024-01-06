@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h3>El total es de {{ total }}</h3>
+        <h3>El total es de:</h3>
+        <h2>{{ totaldi }}$</h2>
+        <h2>{{ totalbs }}Bs</h2>
             <div>
                 <b-button-group>
                     <b-button variant="outline-primary"  v-b-modal.Efectivo><b-icon icon="cash"  ></b-icon> Efectivo</b-button>
@@ -98,6 +100,8 @@ import FacturaVentaVue from './FacturaVenta.vue';
     const doc = this.$route.query.doc;
     const tipo = this.$route.query.tipo;
     const evento = this.$route.query.evento;
+    const divisas = this.$route.query.totaldi;
+    const bs = this.$route.query.totalbs;
   },
     components:{
         FacturaVentaVue
@@ -124,10 +128,16 @@ import FacturaVentaVue from './FacturaVenta.vue';
         doc : '',
         array: [],
         tipo: '',
+        items: [],
+        doc: '',
+        tipoCliente: '',
+        idEvento: '',
+        totaldi: '',
+        totalbs: ''
       }
     },
     created(){
-       
+        this.obtenerDatos()
         this.calcularTotal()
     },
 
@@ -154,6 +164,15 @@ import FacturaVentaVue from './FacturaVenta.vue';
         console.log(this.$route.query.valor1)
         //Aqui deberia verificar que el pago se realiza conrrectamente emite factura
         this.pagar=true
+    },
+
+    obtenerDatos(){
+        this.items = this.$route.query.array;
+        this.doc = this.$route.query.doc;
+        this.tipoCliente = this.$route.query.tipo;
+        this.idEvento = this.$route.query.evento;
+        this.totaldi = this.$route.query.totaldi;
+        this.totalbs = this.$route.query.totalbs;
     },
 
     calcularTotal(){ 
