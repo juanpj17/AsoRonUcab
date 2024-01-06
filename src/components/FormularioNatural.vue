@@ -631,6 +631,27 @@ export default {
                 
               }
             },
+
+            llenarTelefonosCliente(data) {
+              this.telefonos = []
+              const url = 'http://localhost:3000/api/telefono/obtenerClienteN';
+              const datos = {
+                  cedula: data
+              };
+              console.log(datos);
+              this.axios.post(url, datos).then(response => {
+                  console.log(response.data);
+              for (let i = 0; i < response.data.length; i++) {
+                console.log(response.data[i].numero)
+                this.telefonos.push({ numero: response.data[i].numero })
+                console.log(this.telefonos)
+              }
+              this.telefonos.shift()
+              console.log(this.telefonos)
+              }).catch(error => {
+                  console.log(error);
+              });
+            },
 //----------------------------------------------------COMUNES---------------------------------------------------
 
 
@@ -647,6 +668,9 @@ export default {
         }
      
       },
+
+      
+      
 
       
       llenarCampos(data){
@@ -677,6 +701,7 @@ export default {
           });
         }else{
           console.log(data)
+          this.llenarTelefonosCliente(data)
           this.buscarCorreoC(data)
           this.buscarClaveC(data)
           const url = 'http://localhost:3000/api/cliente/natural1';

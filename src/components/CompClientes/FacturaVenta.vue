@@ -22,14 +22,14 @@
       <b-row>
           <b-col><h4 style="font-weight: bold; text-align: left;">A</h4></b-col>
           <b-col></b-col>
-          <b-col><h5 style="font-weight: bold;">N de recibo:0001</h5>
-          <h5 style="font-weight: bold;">Fecha: 12/12/2023</h5> </b-col>
+          <b-col><h5 style="font-weight: bold;">N de recibo: {{ facturaNum }}</h5>
+          <h5 style="font-weight: bold;">Fecha: {{ fechaActual }}</h5> </b-col>
       </b-row>
       <b-row>
           <b-col>
-              <H6 style="text-align: left;">Nombre:Gabriela Martinez</H6>
-              <h6 style="text-align: left;" >CI: 29919287</h6>
-              <h6 style="text-align: left;">Direccion: Edif Toscana, Parroquia San Agustín en el Municipio Libertador.</h6>
+              <H6 style="text-align: left;">Nombre: {{ nombre }}</H6>
+              <h6 style="text-align: left;" >CI: {{ doc }}</h6>
+              <h6 style="text-align: left;">Direccion:  {{ direccion }}</h6>
           </b-col>
           <b-col></b-col>
           <b-col></b-col>
@@ -49,20 +49,84 @@
    
 </template>
 <script>
+
   export default {
+    props: {
+      datosPestanaPagar: Object 
+    },
+    mounted() {
+    console.log('Datos recibidos desde el padre:', this.datosPestanaPagar);
+    },
     data() {
+      
       return {
         // Note `isActive` is left out and will not appear in the rendered table
         fields: ['Cantidad','Descripcion', 'Subtotal', ],
         items: [
-          {  Cantidad: 40, Descripcion: 'Santa teresa', Subtotal: 800 },
-          {  Cantidad: 21, Descripcion: 'Casique 500', Subtotal: 500 },
-          {  Cantidad: 89, Descripcion: 'Pampero', Subtotal: 200 },
-          {  Cantidad: 38, Descripcion: 'Santa tereza linaje', Subtotal: 987 }
+          // {  Cantidad: 40, Descripcion: 'Santa teresa', Subtotal: 800 },
+          // {  Cantidad: 21, Descripcion: 'Casique 500', Subtotal: 500 },
+          // {  Cantidad: 89, Descripcion: 'Pampero', Subtotal: 200 },
+          // {  Cantidad: 38, Descripcion: 'Santa tereza linaje', Subtotal: 987 }
         ],
-        total:1500,
-        
+        total:'',
+        nombre:'',
+        direccion: '',
+        doc: '',
+        tipoV: '',
+        num : 1,
+        monitorData : 0,
+        facturaNum: '',
+        fechaActual: ''
       }
+    },
+    created(){
+      console.log(this.datosPestanaPagar)
+      this.llenarDatos()
+      this.obtenerFecha_Factura()
+    },
+    methods: {
+      llenarDatos(){
+        console.log(this.datosPestanaPagar.items.length)
+        const float = parseFloat(this.datosPestanaPagar.dolar);
+        console.log(float)
+        for (let i = 0; i < this.datosPestanaPagar.items.length; i++) {
+            this.items.push({
+              Cantidad: this.datosPestanaPagar.items[i].stock,
+              Descripcion: this.datosPestanaPagar.items[i].Nombre,
+              Subtotal: (this.datosPestanaPagar.items[i].Precio*this.datosPestanaPagar.items[i].stock*float).toFixed(2)
+            })
+          }
+          console.log(this.datosPestanaPagar)
+        this.total = this.datosPestanaPagar.total
+        this.nombre = this.datosPestanaPagar.nombre
+        this.direccion = this.datosPestanaPagar.direccion
+        this.doc = this.datosPestanaPagar.doc
+        this.tipoV = this.datosPestanaPagar.tipoV
+      },
+      async obtenerFecha_Factura(){
+        console.log(this.tipoV)
+        if(this.tipoV == '----Entrada----'){
+          this.num = 0
+        }
+        try {
+            const response = await this.axios.post('http://localhost:3000/api/tiendafisica/factura', {
+               tipo: this.num
+            });
+            console.log(response)
+            console.log(response.data[0].resultado)
+            this.facturaNum = response.data[0].resultado
+          } catch (error) {
+            console.error('Error al obtener el cliente natural:', error);
+          }
+        this.fechaActual = new Date()
+        const fechaString = this.fechaActual.toISOString()
+        const fecha_cortada_final = fechaString.slice(0, 10);
+        this.fechaActual = fecha_cortada_final
+        console.log(this.fechaActual)
+      },
+     
+      
     }
+
   }
 </script>

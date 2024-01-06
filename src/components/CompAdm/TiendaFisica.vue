@@ -161,7 +161,7 @@
           { key: 'Precio', label: 'Precio', class: 'text-center spann' , sortable: true},
         ],
         canjear:0,
-        tipo:['----Tienda----','----Evento----'],
+        tipo:['----Tienda----','----Evento----', '----Entrada----'],
         TipoDeVenta:'',
         EventoSeleccionado:-1,
         Eventos:[],
@@ -169,12 +169,14 @@
         tipoDeVenta: true,
         aggProducto: false,
         fueSeleccionado: true,
-        monitorData: 0
+        monitorData: 0,
+        valorRealPunto: 0
       }
     },
     created(){
         this.obtenerEventos()
         this.getMonitor()
+        
       },
     methods: {
       CrearOrden(){
@@ -231,7 +233,7 @@
           this.tipoDeVenta = false;
         }
         console.log(this.habilitado)
-        if(this.TipoDeVenta == '----Tienda----' && this.habilitado == false){
+        if((this.TipoDeVenta == '----Tienda----' || this.TipoDeVenta == '----Entrada----') && this.habilitado == false){
           this.aggProducto = true;
         }
       },
@@ -244,23 +246,133 @@
         }
       },
 
-      Pagar(){
-        console.log(this.items)
-        if(this.totaldi > 0 || this.totalbs >0){
-          if (this.$route.path!='/PagarTiendaFisica'){
-            this.$router.push({
-              path: '/PagarTiendaFisica',
-              query: {
-                array: this.items,
-                doc: this.Cedula,
-                tipo: this.perPage,
-                evento: this.EventoSeleccionado,
-                punto: this.canjear,
-                totaldi: this.totaldi,
-                totalbs: this.totalbs
-              }
+
+      regVentaFisica(natural, juridico){
+        const url = 'http://localhost:3000/api/ventaF/insertarE';
+        const datos = {
+                total: this.totalbs,
+                cod_cliente_natural_1: natural, 
+                cod_empleado_1: 1, 
+                cod_empleado_2: '1234567',
+                cod_cliente_juridico: juridico,
+                cod_estatus: 3,
+                cod_inventario_1: null,
+                cod_inventario_2: null,
+                cod_inventario_3:  null
+        };
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+
+            
+      },
+
+      regVentaFisicaEntrada(fk_fisica, natural, juridico){
+        console.log(natural)
+        console.log(juridico)
+        const url = 'http://localhost:3000/api/ventaF/entrada';
+        console.log(this.totalbs)
+        const datos = {
+                total: this.totalbs,
+                cod_cliente_natural_2: natural, 
+                cod_cliente_juridico: juridico,
+                fk_fisica: fk_fisica,
+                
+        };
+        console.log(datos)
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data);
+  
+        }).catch(error => {
+            console.log(error);
+        });
+
+            
+      },
+
+      async obtenerValorPunto() {
+            const url = 'http://localhost:3000/api/tiendafisica/punto';
+            console.log(this.monitorData)
+            await this.axios.get(url).then(response => {
+              const punto = response.data[0].obtener_ultimo_precio/this.monitorData;
+              
+              console.log(punto)
+              this.valorRealPunto = punto.toFixed(2)
+              console.log(this.valorRealPunto)
+            }).catch(error => {
+              console.log(error);
             });
+        },
+
+      Pagar(){
+        
+        console.log(this.TipoDeVenta)
+        
+        if(this.TipoDeVenta == '----Entrada----'){
+          // Esto es para registrar la venta de una entrada
+          console.log(this.items)
+          console.log(this.TipoDeVenta)
+          if(this.totaldi > 0 || this.totalbs > 0){
+            this.calcularTotal()
+            if(this.perPage == 'Juridico'){
+              this.regVentaFisicaEntrada(1, null, this.Cliente)
+            }else{
+              this.regVentaFisicaEntrada(1, this.Cliente, null)
+            }
+            if (this.$route.path!='/PagarTiendaFisica'){
+              this.$router.push({
+                path: '/PagarTiendaFisica',
+                query: {
+                  array: JSON.stringify(this.items),
+                  doc: this.Cedula,
+                  tipo: this.perPage,
+                  lugar: this.TipoDeVenta,
+                  evento: this.EventoSeleccionado,
+                  punto: this.canjear,
+                  totaldi: this.totaldi,
+                  totalbs: this.totalbs,
+                  nombreC: this.Nombre,
+                  direccion: this.Direccion,
+                  dolar: this.monitorData
+                }
+              });
+            }
           }
+        }else {
+          // Esto es para registrar la venta en un evento
+          console.log(this.TipoDeVenta)
+          console.log(this.items)
+          if(this.totaldi > 0 || this.totalbs >0){
+            this.calcularTotal()
+            if(this.perPage == 'Juridico'){
+  
+              this.regVentaFisica(null, this.Cliente, null)
+            }else{
+              this.regVentaFisica(this.Cliente, null, null)
+            }
+            
+            if (this.$route.path!='/PagarTiendaFisica'){
+              this.$router.push({
+                path: '/PagarTiendaFisica',
+                query: {
+                  array: JSON.stringify(this.items),
+                  doc: this.Cedula,
+                  tipo: this.perPage,
+                  evento: this.EventoSeleccionado,
+                  punto: this.canjear,
+                  totaldi: this.totaldi,
+                  totalbs: this.totalbs,
+                  nombreC: this.Nombre,
+                  direccion: this.Direccion,
+                  lugar: this.TipoDeVenta, 
+                  dolar: this.monitorData
+                }
+              });
+            }
+          }
+
         }
             
       },
@@ -275,11 +387,12 @@
         if(puntosDecimal < this.canjear){
           this.canjear = puntosDecimal
         }
+        this.calcularTotal()
         console.log(this.canjear)
       },
 
       decreaseStock(item) {
-          if (item.stock > 0) {
+          if (item.stock > 0 ) {
             item.stock--;
             this.calcularTotal()
           }
@@ -371,45 +484,105 @@
         });
       },
 
-      cargarProducto(data){
-        console.log(data)
-        console.log(this.EventoSeleccionado )
-        if (this.EventoSeleccionado == -1){
+      cargarEntrada(data){
+        const url = 'http://localhost:3000/api/tiendafisica/entradasDisponibles';
+            const datos = {
+                codE: data,
+            };
+          
+            console.log(datos);
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data[0]);
+            if (this.verificarNumeroEnArray(data, this.colocados)) {
+              console.log(`${data} está en el array.`);
+            } else {
+              console.log(`${data} no está en el array.`);
+              this.colocados.push(data)
+              console.log(this.colocados)
+              this.llenarTabla(response.data[0].nombre, response.data[0].precio,data, response.data[0].cantidad_entradas)
+            }
+              }).catch(error => {
+                console.log(error);
+            });
+      },
+      cargarProductoTienda(data){
+        const url = 'http://localhost:3000/api/tiendafisica/tienda';
+            const datos = {
+                cod_pro: data,
+            };
+          
+            console.log(datos);
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data[0]);
+            if (this.verificarNumeroEnArray(data, this.colocados)) {
+              console.log(`${data} está en el array.`);
+            } else {
+              console.log(`${data} no está en el array.`);
+              this.colocados.push(data)
+              console.log(this.colocados)
+              this.traerNombre(data, response.data[0].precio, response.data[0].cantidad)
+              // this.llenarTabla(data, response.data[0].precio, response.data[0].cantidad)
+            }
+              }).catch(error => {
+                console.log(error);
+            });
+      },
 
-        }else{
-          const url = 'http://localhost:3000/api/tiendafisica';
-          const datos = {
-              cod_pro: data,
-              cod_eve: this.EventoSeleccionado,
-          };
-        
-        console.log(datos);
-        this.axios.post(url, datos).then(response => {
-        console.log(response.data[0]);
-        if (this.verificarNumeroEnArray(data, this.colocados)) {
-          console.log(`${data} está en el array.`);
-        } else {
-          console.log(`${data} no está en el array.`);
-          this.colocados.push(data)
-          console.log(this.colocados)
-          this.traerNombre(data, response.data[0].precio, response.data[0].cantidad)
-          // this.calcularTotal()
+      cargarProducto(data){
+        if(this.TipoDeVenta == '----Tienda----'){
+            console.log('por aca paso')
+            this.cargarProductoTienda(data)
         }
-        }).catch(error => {
-            console.log(error);
-        });
+        if(this.TipoDeVenta == '----Entrada----'){
+            console.log('por aca paso')
+            this.cargarEntrada(data)
+        }else{
+          console.log(data)
+          console.log(this.EventoSeleccionado )
+          if (this.EventoSeleccionado == -1){
+  
+          }else{
+            const url = 'http://localhost:3000/api/tiendafisica';
+            const datos = {
+                cod_pro: data,
+                cod_eve: this.EventoSeleccionado,
+            };
+          
+            console.log(datos);
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data[0]);
+            if (this.verificarNumeroEnArray(data, this.colocados)) {
+              console.log(`${data} está en el array.`);
+            } else {
+              console.log(`${data} no está en el array.`);
+              this.colocados.push(data)
+              console.log(this.colocados)
+              this.traerNombre(data, response.data[0].precio, response.data[0].cantidad)
+              this.calcularTotal()
+            }
+              }).catch(error => {
+                console.log(error);
+            });
+
+          }
+        
       }
 
       },
 
       calcularTotal(){
+        this.obtenerValorPunto()
         this.totaldi = 0
         this.totalbs = 0
         for (let i = 0; i < this.items.length; i++) {
             this.totaldi = this.totaldi + (this.items[i].stock*this.items[i].Precio)
+            if(this.canjear > 0){
+              this.totaldi = (this.totaldi - (this.canjear*this.valorRealPunto)).toFixed(2)
+            }
             this.totalbs = (this.totaldi * this.monitorData).toFixed(2)
             console.log(this.items[i].stock)
           }
+
           console.log(this.items)
       },
 
