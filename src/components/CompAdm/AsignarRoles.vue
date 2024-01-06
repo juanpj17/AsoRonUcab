@@ -30,7 +30,8 @@ import RegistrarEventoVue from './RegistrarEvento.vue';
   
     export default {
       props:{
-        id:''
+        id:'',
+        cod_tipo_usuario:''
       },
     data(){
       return {
@@ -74,6 +75,9 @@ this.obtenerPermisos();
 
 
   },
+  mounted() {
+        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
+       },
   
   
   
@@ -92,9 +96,7 @@ this.obtenerPermisos();
         const datos={nombre:this.nombreDelRol,descripcion:this.text}
         const url = 'http://localhost:3000/api/roles';
         await this.axios.post(url,datos).then(response => {
-          this.roles = response.data;
-          console.log(this.roles)
-         
+          this.insertarAuditoria('Crear','Rol')
         }).catch(error => {
           console.log(error);
         });
@@ -123,6 +125,7 @@ this.obtenerPermisos();
               console.log(response.data)
               Swal.fire(response.data.modificar_rol);
               this.obtenerEstadoCasillas()
+              this.insertarAuditoria('Modificar','Rol')
         }).catch(error => {
           console.log(error);
         })
@@ -137,14 +140,16 @@ this.obtenerPermisos();
         },
 
       async obtenerPermisos() {
+        if (this.id!=='*'){
       const url = 'http://localhost:3000/api/roles/permisos';
       await this.axios.get(url).then(response => {
         this.permisos = response.data;
         this.llenarCheck(this.permisos)
         console.log(this.permisos)
+        this.insertarAuditoria('Consultar','Permiso')
       }).catch(error => {
         console.log(error);
-      });
+      });}
 },
 llenarCheck(data){
   this.arrayCheckBox =[]
@@ -163,19 +168,21 @@ registrarPermisos(){
       });},
 
 async insertarPermisos(codigo) {
+  
   const dato={codigo_permiso:codigo,codigo_rol:this.id}
   const url = 'http://localhost:3000/api/roles/asignarPermisos';
   await this.axios.post(url,dato).then(response => {this.permisos = response.data;}).catch(error => { console.log(error); });
 },
 
  async buscarPermisosRol(){
+  if (this.id!=='*'){
     const dato={codigo_rol:this.id}
     const url = 'http://localhost:3000/api/roles/rolPermisos';
     await this.axios.post(url,dato).then(response => {
     this.permisos = response.data;
     this.llenarArrayPermisoRol(response.data)
   }).catch(error => {console.log(error);});
-    },
+  } },
   llenarArrayPermisoRol(data){
     for (let i = 0; i < data.length; i++) {
       this.permisos_rol.push(data[i].seleccionar_codigos_permisos_rol)}
@@ -188,6 +195,19 @@ async eliminarPermisosRol(){
     this.permisos = response.data;
   }).catch(error => {console.log(error);});
     },
+
+    async  insertarAuditoria(Accion,Tabla){
+      console.log( '%%%'+this.cod_tipo_usuario)
+            const dato={
+            cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
+
       
 
 

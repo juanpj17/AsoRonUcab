@@ -16,7 +16,7 @@
               <b-icon icon="gear-fill"></b-icon>
             </template>
             <b-dropdown-item @click="RegistrarProducto(producto.Id)">Modificar</b-dropdown-item>
-            <b-dropdown-item>Eliminar</b-dropdown-item>
+            <b-dropdown-item @click="EliminarProducto(producto.Id)">Eliminar</b-dropdown-item>
             <b-dropdown-item @click="RegistrarPremio()">Agregar Premio</b-dropdown-item>
             <b-dropdown-item @click="RegistrarNotaCata(producto.Id)">Agregar nota de cata</b-dropdown-item>
           </b-dropdown>
@@ -36,20 +36,26 @@
 
 <script>
 export default {
+  props:{
+   cod_tipo_usuario:''
+  },
   data() {
     return {
       Productos: [],
     };
   },
+  mounted(){
+    this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;},
+
   methods: {
-    RegistrarProducto(id) {
+    async RegistrarProducto(id) {
       this.$router.push('/RegistrarProductoView/' + id);
     },
-    RegistrarPremio() {
-      this.$router.push('/RegistrarPremio/');
-    },
+    //RegistrarPremio() {
+     // this.$router.push('/RegistrarPremio/');
+   // },
     RegistrarNotaCata(id) {
-      this.$router.push('/NotaCata/' + id );
+      this.$router.push('/NotaCata/' + id +'/'+this.cod_tipo_usuario);
     },
     verMas(producto) {
       this.$router.push({ path: '/DetalleProducto', query: { producto: JSON.stringify(producto) } });
@@ -69,11 +75,41 @@ export default {
               Imagen: producto.url, 
             };
           });
+          console.log(this.Productos)
+          this.insertarAuditoria('Consultar')
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    async EliminarProducto(id) {
+      const url = 'http://localhost:3000/api/producto/' + id;
+      await this.axios
+        .delete(url)
+        .then((response) => {
+
+          //console.log(response);
+          this.insertarAuditoria('Eliminar')
+          this.ObtenerProductos();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+      async  insertarAuditoria(Accion){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:'Producto'}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
+
+  
+
   },
 
   created() {

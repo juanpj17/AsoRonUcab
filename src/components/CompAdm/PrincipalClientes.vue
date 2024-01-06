@@ -190,6 +190,9 @@
 
 <script>
   export default {
+    props:{
+      cod_tipo_usuario:''
+    },
     data() {
       return {
         items: [
@@ -239,6 +242,7 @@
     mounted() {
       // Set the initial number of items
       this.totalRows = this.items.length
+      this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
     },
     methods: {
       info(item) {
@@ -275,6 +279,8 @@
             await this.axios.get(url).then(response => {
               this.cliente = response.data;
               console.log(this.cliente)
+              this.insertarAuditoria('Consultar','Cliente_Juridico')
+              this.insertarAuditoria('Consultar','Cliente_Natural')
               this.LlenarTabla(this.cliente)
             }).catch(error => {
               console.log(error);
@@ -289,7 +295,7 @@
               const response = await this.axios.delete(url, { params: { doc: data.Documento} });
               const cliente = response.data;
               console.log(cliente);
-      
+              this.insertarAuditoria('Eliminar','Cliente_Juridico')
             } catch (error) {
               console.log('Error al eliminar el cliente:', error);
             }
@@ -302,7 +308,7 @@
               const response = await this.axios.delete(url, { params: { cedula: data.Documento} });
               const cliente = response.data;
               console.log(cliente);
-      
+              this.insertarAuditoria('Eliminar','Cliente_Natural')
             } catch (error) {
               console.log('Error al eliminar el cliente:', error);
             }
@@ -345,7 +351,18 @@
             
             this.RegistroNatural(data.Documento)
           }
-        } 
+        },
+        
+        async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          } 
     }
   }
 </script>

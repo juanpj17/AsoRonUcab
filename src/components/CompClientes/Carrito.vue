@@ -44,7 +44,9 @@
   
   
   export default {
-      
+      props:{
+        cod_tipo_usuario:''
+      },
   
   
       data() {
@@ -55,6 +57,9 @@
           };
 
       },
+      mounted(){
+       this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
+      },
   
       
   
@@ -64,7 +69,7 @@
             return this.cont++
           },
           Pagar(){
-            this.$router.push('/PrincipalPago')
+            this.$router.push('/PrincipalPago/'+this.cod_tipo_usuario+'/'+'Cliente')
           }
   
           

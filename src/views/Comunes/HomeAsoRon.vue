@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: var(--fondo);">
-      <NavbarAdm v-if="registrado=='%'"></NavbarAdm>
-      <NavbarCli v-if="tipo"  :tipo_codigo_registro="registrado"> </NavbarCli>
+      <NavbarAdm v-if="tipoEmpleado" :cod_tipo_usuario="registrado"></NavbarAdm>
+      <NavbarCli v-if="tipoCliente"  :tipo_codigo_registro="registrado"> </NavbarCli>
 
          <b-carousel id="carousel-1"  v-model="slide" :interval="3000" controls indicators background="#ababab" img-width="1024" img-height="300" style="text-shadow: 1px 1px 2px #333;" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
       <!-- Text slides with image -->
@@ -165,13 +165,16 @@ import { required } from 'vuelidate/lib/validators';
 
   mounted(){
  this.registrado=this.$route.params.registrado
- this.tipo=this.registrado.includes('C')
-
+ console.log(this.registrado)
+ this.tipoCliente=this.registrado.includes('Cliente')  
+ this.tipoEmpleado=this.registrado.includes('Empleado')
+ 
   },
     
     data() {
       return {
-        tipo:'',
+        tipoCliente:'',
+        tipoEmpleado:'',
         slide: 0,
         sliding: null,
         arrayImagenes:[

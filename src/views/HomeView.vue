@@ -2,7 +2,7 @@
   <div class="home">
  
   <NavbarVue></NavbarVue>
-  <Home></Home>
+  <Home :registrado="'Nuevo'"></Home>
  
     
    

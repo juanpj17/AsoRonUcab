@@ -35,8 +35,8 @@
 
           methods:{
            PrincipalProducto() {
-             if (this.$route.path!='/PrincipalProductoC/$')
-             this.$router.push('/PrincipalProductoC/$');
+             if (this.$route.path!='/PrincipalProductoC/'+this.tipo_codigo_registro)
+             this.$router.push('/PrincipalProductoC/'+ this.tipo_codigo_registro);
            },
            PrincipalEventosC() {
              if (this.$route.path!='/PrincipalEventosC/$')

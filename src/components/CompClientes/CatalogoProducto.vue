@@ -28,6 +28,8 @@
     props:{
       tipoUsuario:'',
     },
+    mounted(){
+    this.tipoUsuario=this.$route.params.tipoUsuario;},
   
       data(){
           return{

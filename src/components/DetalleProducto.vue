@@ -90,10 +90,8 @@ import { numeric } from 'vuelidate/lib/validators';
        this.currentSlideIndex = (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length;
      },
      Carrito(){
-      if(this.tipoUsuario=='$')
-        this.$router.push('/PrincipalCarrito')
-      else
-      this.Advertencia()
+        this.$router.push('/PrincipalCarrito/'+ this.tipoUsuario)
+     
    },
    Advertencia(){
   Swal.fire({
