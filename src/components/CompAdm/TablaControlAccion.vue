@@ -106,7 +106,7 @@
         items: [
         ],
         fields: [
-        { key: 'Codigo', label: 'Codigo', class:'spann', sortable: true },
+        { key: 'Codigo', label: 'Codigo de Usuario', class:'spann', sortable: true },
             { key: 'Nombre_Completo', label: 'Nombre completo', class: 'text-center spann',sortable: true },
             { key: 'Accion', label: 'Accion', class: 'text-center spann',sortable: true },
             { key: 'Tabla', label: 'Tabla', class: 'text-center spann',sortable: true },
@@ -133,7 +133,7 @@
       }
     },
     created(){
-     this.LlenarTabla();
+     this.obtenerAuditoria();
     },
    
     computed: {
@@ -164,10 +164,42 @@
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
-    LlenarTabla(){
-      this.items=[{ Codigo: 1, Nombre_Completo: 'Gabriela Martinez', Accion:'Eliminar',Tabla:'Productos' },
-          ]
-    },
+      llenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              Codigo: data[i].codigo_usuario,
+              Accion: data[i].accion,
+              Tabla: data[i].tabla,
+              Fecha_Hora: data[i].fecha_hora,
+             
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+    async  obtenerAuditoria(){
+            const url = 'http://localhost:3000/api/usuario/Auditoria';
+            await this.axios.get(url).then(response => {
+            console.log(response.data)
+            this.llenarTabla(response.data)
+            }).catch(error => {
+              console.log(error);
+            });
+          },
+
    RegistroNatural(id){
     if (this.$route.path!='/PrincipalRegistroNatural/')
            this.$router.push('/PrincipalRegistroNatural/'+id);

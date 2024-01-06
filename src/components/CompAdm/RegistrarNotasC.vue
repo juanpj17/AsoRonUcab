@@ -10,6 +10,9 @@
 </template>
 <script>
   export default {
+    props:{
+      cod_tipo_usuario:''
+    },
     data() {
       return {
         elementos:[],

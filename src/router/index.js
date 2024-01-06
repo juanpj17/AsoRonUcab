@@ -68,12 +68,12 @@ const routes = [
     component: RegistrarPremio 
   },
   {
-    path: '/NotaCata/:id',
+    path: '/NotaCata/:id/:cod_tipo_usuario',
     name: 'NotaCata',
     component: NotaCata 
   },
   {
-    path: '/PrincipalProducto',
+    path: '/PrincipalProducto/:cod_tipo_usuario',
     name: 'PrincipalProducto',
     component: PrincipalProducto
   },
@@ -114,7 +114,7 @@ const routes = [
     component: PrincipalProductoC
   },
   {
-    path: '/PrincipalCarrito',
+    path: '/PrincipalCarrito/:cod_tipo_usuario',
     name: 'PrincipalCarrito',
     component: PrincipalCarrito
   },
@@ -169,12 +169,12 @@ const routes = [
     props: true
   },
   {
-    path: '/PrincipalClientes',
+    path: '/PrincipalClientes/:cod_tipo_usuario',
     name: 'PrincipalClientes',
     component:PrincipalClientes
   },
   {
-    path: '/PrincipalRoles',
+    path: '/PrincipalRoles/:cod_tipo_usuario',
     name: 'PrincipalRoles',
     component:PrincipalRoles
   },
@@ -217,7 +217,7 @@ const routes = [
     component:PersonasContacto
   },
   {
-    path: '/AsignarRoles/:id',
+    path: '/AsignarRoles/:id/:cod_tipo_usuario',
     name: 'AsignarRoles',
     component:AsignarRoles
   },
@@ -228,9 +228,9 @@ const routes = [
  
 
   // *****dejar este de último*****
-  {
-    path: '*',
-    redirect: '/'
+ {
+   path: '*',
+   redirect: '/'
   },
  
 ]

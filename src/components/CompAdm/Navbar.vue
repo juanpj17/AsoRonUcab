@@ -25,13 +25,15 @@
 <script>
 import TiendaFisica from './TiendaFisica.vue';
 
-  
   export default{
+    props:{
+      cod_tipo_usuario:''
+    },
 
          methods:{
           PrincipalProducto() {
-            if (this.$route.path!='/PrincipalProducto/')
-            this.$router.push('/PrincipalProducto/');
+            if (this.$route.path!='/PrincipalProducto/'+this.cod_tipo_usuario)
+            this.$router.push('/PrincipalProducto/'+ this.cod_tipo_usuario);
           },
           PrincipalEmpleados() {
             if (this.$route.path!='/PrincipalEmpleados/')
@@ -54,12 +56,12 @@ import TiendaFisica from './TiendaFisica.vue';
             this.$router.push('/Pedidos/');
           },
           PrincipalClientes() {
-            if (this.$route.path!='/PrincipalClientes/')
-            this.$router.push('/PrincipalClientes/');
+            if (this.$route.path!='/PrincipalClientes/'+this.cod_tipo_usuario)
+            this.$router.push('/PrincipalClientes/'+this.cod_tipo_usuario);
           },
           PrincipalRoles() {
-            if (this.$route.path!='/PrincipalRoles/')
-            this.$router.push('/PrincipalRoles/');
+            if (this.$route.path!='/PrincipalRoles/'+this.cod_tipo_usuario)
+            this.$router.push('/PrincipalRoles/'+this.cod_tipo_usuario);
           },
           Compras(){
             if (this.$route.path!='/Compras/'+null)

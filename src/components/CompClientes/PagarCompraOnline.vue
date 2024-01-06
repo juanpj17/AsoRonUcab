@@ -125,7 +125,7 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
     data() {
       return {
      
-        fields: ['selected', 'Mis_tarjetas', 'nombre_tarjeta', 'fecha_vencimiento'],
+        fields: ['selected', 'id','Mis_tarjetas', 'nombre_tarjeta', 'fecha_vencimiento'],
         items: [
           { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:'1' },
           { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'G Martinez', fecha_vencimiento: '03/15',id:'2' },
@@ -143,6 +143,9 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
         mensaje:''
         
       }
+    },
+    created(){
+      this.cargarTarjetas();
     },
     methods: {
       onRowSelected(items) {
@@ -188,16 +191,36 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
         const datos ={codigo_identificador:this.id ,
                        montos:this.Montos_por_tarjeta, 
                        tarjetas:this.id_tarjetas,
-                       cuota:'9' ,
+                       cuota:'400' ,
                        cant_elementos:this.cant_elementos}
         this.axios.post(url,datos).then(response => {
                      console.log(response.data);
                      Swal.fire(response.data.pagar);
-
+                   }).catch(error => {
+                     console.log(error.response.data); });},
                      
-                     }).catch(error => {
-                     console.log(error.response.data);
-                 });},
+ async   cargarTarjetas(){
+        const url = 'http://localhost:3000/api/facturaAfiliado/tarjetasAfiliados';
+        const datos={codigo_identificador:this.id }
+        console.log('g'+datos)
+  await this.axios.post(url,datos).then(response => {this.llenarArray(response.data)}).catch(error => {console.log(error.response.data); })
+      },
+      llenarArray(data){
+        this.items=[]
+        for (let i = 0; i < data.length; i++) {
+            const item = {
+              isActive: true,
+              Mis_tarjetas: data[i].numero_tarjeta,
+              nombre_tarjeta: data[i].banco,
+              fecha_vencimiento:data[i].fecha_vencimiento,
+              id:data[i].codigo_tarjeta
+            };
+            
+            this.items.push(item)
+            console.log(this.items)
+          }
+
+      }
 
       
     }

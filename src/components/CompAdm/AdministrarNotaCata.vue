@@ -5,18 +5,27 @@
       <b-tab title="Registrar notas" active><b-card-text> <div>
         <b-button variant="danger"  @click="agregarElemento" style="margin-right: 10px;">Agregar nueva nota</b-button>
         <b-button variant="danger"   @click="guardarInformacion">Guardar</b-button>
-  <div v-for="(elemento, index) in elementos" :key="index">
-    <b-form-select v-model="elemento.selected" :options="options" ></b-form-select>
-    <b-form-textarea
-      id="textarea"
-      v-model="elemento.texto"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-  </div>
-
-</div></b-card-text></b-tab>
+    <b-container>
+      <div v-for="(elemento, index) in elementos" :key="index">
+        <b-row style="margin-top: 10px; text-align: left;">
+          <b-col >
+            <b-form-select v-model="elemento.Presentacion" :options="presentaciones" ></b-form-select>
+          </b-col>
+          <b-col >
+            <b-form-select v-model="elemento.Evento" :options="options" ></b-form-select>
+          </b-col>
+           <b-col >
+            <b-form-select v-model="elemento.Premio" :options="premios" ></b-form-select>
+          </b-col>
+          <b-col>
+            <b-form-textarea id="textarea" v-model="elemento.texto" placeholder="Ingrese la nota de cata" rows="3" max-rows="6" ></b-form-textarea>
+          </b-col>
+        </b-row>
+      </div>
+    </b-container>
+</div>
+</b-card-text>
+</b-tab>
       <b-tab title="Consultar notas"><b-card-text>
         <b-container fluid class="principal">
     <br>
@@ -133,16 +142,19 @@
 </template>
 <script>
   export default {
+    props:{
+      id:'',
+      cod_tipo_usuario:''
+    },
     data() {
       return {
-        elementos:[],
+        elementos:[{texto:'',Premio:'',Evento:'',Presentacion:''}],
         selected: null,
         options: [
           { value: null, text: 'Please select an option' },
-          { value: 'a', text: 'This is First option' },
-          { value: 'b', text: 'Selected Option' },
-          { value: 'd', text: 'This one is disabled'}
+          
         ],
+        premios:[{value:'null', text:'Seleccione un premio'}],
         ejemplo:[
               { Codigo: 1, Nombre_evento: 'Evento 1', Descripcion: 'Macdonald'  },
               { Codigo: 21,  Nombre_evento: 'Evento 2', Descripcion: 'Shaw'},
@@ -165,9 +177,16 @@
         mostrarModal:false,
         texto:'',
         modficarN:'',
+        presentaciones:[],
+        
 
         
       }
+    },
+    created(){
+    this.obtenerEventos()
+    this.obtenerPremios()
+    this.obtenerPresentaciones()
     },
     computed: {
       sortOptions() {
@@ -182,13 +201,22 @@
     mounted() {
       // Set the initial number of items
       this.totalRows = this.items.length
+      this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
+     
     },
     methods: {
         agregarElemento() {
-        this.elementos.push({texto:'',selected:''})
+        this.elementos.push({texto:'',Premio:'',Evento:'',Presentacion:''})
       },
       guardarInformacion() {
-        console.log(this.elementos)
+        for (let i = 0; i < this.elementos.length; i++) {
+            if (this.elementos[i].texto!=='')
+           { this.ingresarNotaCata(this.elementos[i].Presentacion,this.elementos[i].Evento,this.elementos[i].texto)}
+
+           if (this.elementos[i].Premio!=='')
+           { this.ingresarPremio(this.elementos[i].Premio,this.elementos[i].Presentacion,this.elementos[i].Evento)}    
+          }
+        
       },
       info(item) {
               // Puedes actualizar infoModal con los detalles del pedido específico
@@ -206,7 +234,113 @@
         const resultado = this.ejemplo.find((nota) => nota.Codigo === this.modficarN.Codigo);
         console.log(resultado)
         resultado.Descripcion=this.texto;
-      }
+      },
+
+      LlenarEventos(data){
+        this.options=[{ value: null, text: 'Please select an option' }]
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+            value: data[i].codigo,
+            text: data[i].nombre,};
+            
+            this.options.push(item)
+            console.log(this.items)
+          }
+        },
+        LlenarPremios(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              value: data[i].codigo,
+              text: data[i].nombre,
+            };
+            this.premios.push(item)
+            console.log(this.items)
+          }
+        },
+        LlenarPresentaciones(data){
+        
+        for (let i = 0; i < data.length; i++) {
+          const item = {
+            value: data[i].codigo,
+            text: data[i].nombre,
+           
+          };
+          
+          this.presentaciones.push(item)
+          console.log(this.items)
+        }
+      },
+        async obtenerEventos() {
+            const url = 'http://localhost:3000/api/evento';
+            await this.axios.get(url).then(response => {
+              this.evento = response.data;
+             // console.log(this.evento)
+              this.insertarAuditoria('Consultar','Evento')
+              this.LlenarEventos(this.evento)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        async obtenerPremios() {
+            const url = 'http://localhost:3000/api/evento/obtenerPremios';
+            await this.axios.get(url).then(response => {
+              this.evento = response.data;
+            //  console.log(this.evento)
+            this.insertarAuditoria('Consultar','Premio')
+              this.LlenarPremios(this.evento)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        async obtenerPresentaciones() {
+          const dato={cod_producto: this.id}
+            console.log(this.id +'fd')
+            const url = 'http://localhost:3000/api/evento/presentacionesProducto';
+           
+            await this.axios.post(url,dato).then(response => {
+              this.insertarAuditoria('Consultar','Presentacion')
+              this.LlenarPresentaciones(response.data)
+              
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+  async   ingresarNotaCata(cod_presen,cod_even,notaC){
+          const dato={nota:notaC,evento:cod_even,presentacion:cod_presen}
+          const url = 'http://localhost:3000/api/evento/notaCata';
+          await this.axios.post(url,dato).then(response => {
+           //console.log(response.data[0].insertar_nota_cata)
+           this.insertarAuditoria('Crear','Nota_Cata')
+           Swal.fire(response.data[0].insertar_nota_cata)
+            }).catch(error => {
+              console.log(error);
+            });
+           
+        },
+        async   ingresarPremio(cod_premio,cod_presen,cod_even){
+          const dato={premio:cod_premio,presentacion:cod_presen,evento:cod_even}
+          const url = 'http://localhost:3000/api/evento/premio';
+          await this.axios.post(url,dato).then(response => {
+         //  console.log(response.data)
+           this.insertarAuditoria('Crear','Presentacion_Evento')
+           Swal.fire(response.data[0].insertar_premio_evento);
+              
+            }).catch(error => {
+              console.log(error);
+            });
+           
+        },
+        async  insertarAuditoria(Accion,Tabla){
+            const dato={
+              cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
+            const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
+            await this.axios.post(url,dato).then(response => {
+            console.log('auditoria realizada')
+            }).catch(error => {
+              console.log(error);
+            });
+          }
+    
     },
     
   }

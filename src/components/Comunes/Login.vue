@@ -102,18 +102,22 @@ buscarUsuario(){
                      this.cod_1=this.datos[0].cod1
                      this.cod_2=this.datos[0].cod2
                      this.tipo_registro=this.datos[0].tipo
-
+                     console.log(this.cod_1 +'&'+this.cod_2)
+                     this.buscarRuta()
                  }).catch(error => {
                      console.log(error.response);
                  });
 
-this.buscarRuta()}
+}
 },
 buscarRuta(){
-    if (this.cod_1!='' && this.cod_1 != undefined){
-       
+    console.log('$$$')
+    console.log(this.cod_1 +'&'+this.cod_2)
+
+    if (this.cod_1!=='' && this.cod_2 !== undefined){
+        console.log('$$$')
         let parametro =this.cod_1+'_'+this.cod_2+'_'+this.tipo_registro
-        this.InicioSesion('%')
+        this.InicioSesion(parametro)
 
 
     }
