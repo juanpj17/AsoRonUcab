@@ -145,7 +145,8 @@ import FacturaVentaVue from './FacturaVenta.vue';
         validaciones: 0,
         validacionE: 0,
         tipoV: '',
-        punto: 0
+        punto: 0,
+        acumuladoP: 0
       }
     },
     created(){
@@ -444,19 +445,46 @@ import FacturaVentaVue from './FacturaVenta.vue';
             console.log(error);
         });
       }else{
-        // const url = 'http://localhost:3000/api/ventaF/actualizarPuntosJ';
-        // const datos = {
-        //         codC: this.doc,
-        //         puntos_a_restar: this.punto,
-        // };
-        //     this.axios.post(url, datos).then(response => {
-        //     console.log(response.data);
-        // }).catch(error => {
-        //     console.log(error);
-        // });
+        const url = 'http://localhost:3000/api/ventaF/actualizarPuntosJ';
+        const datos = {
+                codC: this.doc,
+                puntos_a_restar: this.punto,
+        };
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
       }
      
  },
+ sumarPuntos(tipo){
+      if(tipo == 'Natural'){
+        const url = 'http://localhost:3000/api/ventaF/sumarPuntos';
+        const datos = {
+                codC: this.doc,
+                puntos_a_sumar: this.acumuladoP,
+        };
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+      else{
+        const url = 'http://localhost:3000/api/ventaF/sumarPuntosJ';
+        const datos = {
+                codC: this.doc,
+                puntos_a_restar: this.acumuladoP,
+        };
+            this.axios.post(url, datos).then(response => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+      }
+     
+    },
 
 
     Pagar(){
@@ -487,7 +515,8 @@ import FacturaVentaVue from './FacturaVenta.vue';
                     console.log(this.totalfinal)
                 }
                 this.totalfinal = this.totalfinal.toFixed(2)
-                console.log(this.totalfinal)
+                console.log(this.totalfinal, typeof this.totalfinal)
+                console.log(this.totalbs, typeof this.totalbs)
                 if(!isNaN(this.totalfinal) && this.totalfinal == this.totalbs){
                     
                     if(this.tipoV == '----Evento----'){
@@ -570,6 +599,12 @@ import FacturaVentaVue from './FacturaVenta.vue';
                         for (let i = 0; i < this.productos.length; i++) {
                             this.actualizarInfoTienda(this.productos[i])
                         }
+                        for (let i = 0; i < this.productos.length; i++) {
+                                console.log(this.productos[i])
+                                this.acumuladoP = this.acumuladoP + this.productos[i].stock
+                            }
+                            console.log(this.acumuladoP, typeof this.acumuladoP)
+                            this.sumarPuntos(this.tipoCliente)
                     }
 
                     this.mandarDatos()
