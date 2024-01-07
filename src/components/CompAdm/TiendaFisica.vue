@@ -171,11 +171,17 @@
         tipoDeVenta: true,
         aggProducto: false,
         fueSeleccionado: true,
-        monitorData: 0,
-        valorRealPunto: 0
+        monitorData: 35.93,
+        valorRealPunto: 0,
+        idEmpleado: 1,
+        ciEmpleado:'1234567',
+        punto: 0,
+        acumuladoP: 0
       }
     },
     created(){
+        this.adquirirDatos(this.$route.params.cod_tipo_usuario)
+       console.log(this.$route.params.cod_tipo_usuario)
         this.obtenerEventos()
         this.getMonitor()
         
@@ -184,6 +190,15 @@
         this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
       },
     methods: {
+      adquirirDatos(cod){
+       const partes = cod.split('_');
+       const codigo = parseInt(partes[0], 10);
+       const ci = partes[1];
+       this.idEmpleado = codigo
+       this.ciEmpleado = ci
+       console.log('Código:', this.idEmpleado, typeof this.idEmpleado);
+       console.log('CI:', this.ciEmpleado, typeof this.ciEmpleado);
+      },
       CrearOrden(){
             let producto={Nombre:'Santa teresa',Cantidad:1,Precio:50}
             console.log(this.Cliente + this.CodigoProducto)
@@ -192,6 +207,7 @@
         },
 
         async getContentPage(url) {
+          console.log('todo')
           try {
             const response = await fetch(url);
 
@@ -212,6 +228,7 @@
             const api = 'https://pydolarvenezuela-api.vercel.app/api/v1/dollar/';
             try {
                 const response = await this.getContentPage(api);
+                console.log('todo okkk')
                 const allMonitors = response['monitors'];
                 console.log(allMonitors)
                 const monitorData = allMonitors['bcv'];
@@ -258,8 +275,8 @@
         const datos = {
                 total: this.totalbs,
                 cod_cliente_natural_1: natural, 
-                cod_empleado_1: 1, 
-                cod_empleado_2: '1234567',
+                cod_empleado_1: this.idEmpleado, 
+                cod_empleado_2: this.ciEmpleado,
                 cod_cliente_juridico: juridico,
                 cod_estatus: 3,
                 cod_inventario_1: null,
