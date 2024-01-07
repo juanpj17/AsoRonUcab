@@ -55,18 +55,7 @@
           <b-button variant="light" block @click="hide" style="margin-left: 80%;" ><b-icon icon="x-lg" scale="0.60"></b-icon></b-button>
           <div v-for="(elemento, index) in OrdenesDeCompra" :key="index">
             <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            <b-alert show variant="warning"  style="text-align: left; cursor: pointer; margin-top: 10px;" ><b-button variant="warning" @click="MostrarFactura(elemento.id)" class="alert-link">{{ 'Orden: '+elemento.id +' Fecha de emision: '+ elemento.fechaDeEmision}}</b-button></b-alert>
-            
+          
         </div>
         </div>
       </template>
@@ -92,12 +81,15 @@ import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCateg
         mounted() {
         this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario
       },
+      created(){
+        this.obtenerOrdenes()
+      },
      data(){
         return{
             tipo:'a',
             key:1,
             valor:'',
-            OrdenesDeCompra:[{id:'1',fechaDeEmision:'12/12/2023'}]
+            OrdenesDeCompra:[]
         }},
         methods:{
             tipo_historico(){
@@ -108,10 +100,12 @@ import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCateg
             this.key++
             this.tipo='b'
             this.insertarAuditoria('Consultar','Tasa')},
+
             MostrarFactura(id){
                 if (this.$route.path!='/Compras/'+id+'/'+this.cod_tipo_usuario)
             this.$router.push('/Compras/'+id+'/'+this.cod_tipo_usuario);
             },
+            
             async  insertarAuditoria(Accion,Tabla){
             const dato={
               cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
@@ -121,7 +115,28 @@ import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCateg
             }).catch(error => {
               console.log(error);
             });
-          } 
+          } ,
+          async obtenerOrdenes() {
+            const url = 'http://localhost:3000/api/orderReposicion';
+            await this.axios.get(url).then(response => {
+              this.orden = response.data;
+              console.log(this.orden)
+             this.llenarTabla(this.orden)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        llenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              id: data[i].codigo,
+              fechaDeEmision: data[i].fecha_inicio,
+            };
+            
+            this.OrdenesDeCompra.push(item)
+          }
+        },
+
         },
       
        
