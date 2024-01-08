@@ -160,10 +160,10 @@
                         </b-container>
                       
                         <div class="d-grid gap-2 mb-3" v-if="tipo=='%Empleado'">
-                            <b-button @click=" registrarEmpleado()" > RegistrarE</b-button>
+                            <b-button @click=" registrarEmpleado()" style="background-color: var(--dorado)">Registrar</b-button>
                         </div>
-                        <div class="d-grid gap-2 mb-3" v-if="tipo=='%Cliente'">
-                          <b-button @click=" registrarCliente()" > RegistrarC</b-button>
+                        <div class="d-grid gap-2 mb-3" v-if="['%Cliente', '*Nuevo'].includes(tipo)">
+                          <b-button @click=" registrarCliente()" style="background-color: var(--dorado)">Registrar</b-button>
                       </div>
                       </form>
                   
@@ -673,7 +673,7 @@ export default {
       verificarModificar(data){
         console.log(data)
         console.log(typeof data)
-        if (typeof data !== 'object' && data !=='*') {
+        if (typeof data !== 'object' && data !=='*' && data !==undefined) {
           console.log('modificar');
           this.isModify= true;
           this.llenarCampos(data)
