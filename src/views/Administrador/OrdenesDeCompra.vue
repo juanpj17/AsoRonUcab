@@ -2,9 +2,9 @@
     <div>
         <Navbar></Navbar>
        <PrincipalComprasVue></PrincipalComprasVue>
-       <b-modal v-model="modalShow" scrollable size="xl">
-        <OrdeDeCompraVue></OrdeDeCompraVue>
-    </b-modal>
+     <!--   <b-modal v-model="modalShow" scrollable size="xl">
+       <OrdeDeCompraVue :id="idOrdenCompra"></OrdeDeCompraVue> 
+    </b-modal>  -->
     
     </div>
 </template>
@@ -26,8 +26,11 @@ export default{
         Navbar,PrincipalComprasVue,OrdeDeCompraVue
 },
 created(){
-    this.idOrdenCompra=this.$route.params.id
+   
     this.MostrarFactura()
+},
+mounted(){
+  this.idOrdenCompra=this.$route.params.id
 },
 methods:{
    MostrarFactura(){

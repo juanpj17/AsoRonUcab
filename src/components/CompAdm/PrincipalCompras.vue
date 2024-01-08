@@ -37,7 +37,6 @@
             label-align-sm="right"
             label-size="sm"
             class="mb-0"
-            
           >
             <b-form-select  class="custom-select mr-sm-2  form-control altura"
               id="per-page-select"
@@ -46,6 +45,7 @@
             ></b-form-select>
           </b-form-group>
         </b-col>
+  
       
         
   
@@ -72,8 +72,9 @@
       >
       <template #cell(actions)="row">
         <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
-         Detalles
+         Actualizar
         </b-button>
+        <b-button v-b-modal.factura variant="primary" @click="factura(row.item)" size="sm"  style="margin-left: 10px;">Ver orden</b-button>
       
       </template>
         <template #row-details="row">
@@ -85,49 +86,14 @@
         </template>
       </b-table>
  <!-- Info modal -->
+ <div>
+    <b-modal id="factura" size="xl"  scrollable>
+      <OrdeDeCompraVue :id="aux"></OrdeDeCompraVue>
+    </b-modal>
+  </div>
 
- <b-modal v-model="mostrarModal"  id="modal-xl" size="xl" scrollable >
-      <template #modal-title>
-        <h3 >Detalles del pedido</h3>
-      </template>
-      <template #default>
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
-                      <th>Nombre</th>
-                      <th>Cantidad</th>
-                      <th>Precio Unitario</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Nombre}}</td> 
-                      <td>{{ item.Cantidad}}</td> 
-                      <td>{{ item.Precio}}</td> 
-
-                  </tr>
-              </tbody>
-          </table>
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
-                      <th>Estatus</th>
-                      <th>Fecha y Hora</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in infoModal" :key="item.id">
-                      <td>{{ item.Estatus}}</td> 
-                      <td>{{ item.Fecha_Hora}}</td>
-                  </tr>
-              </tbody>
-          </table>
-         <b-button>Actualizar estatus</b-button>
-
-      </template>
-  </b-modal>
-
-      
+ 
+        
       <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -142,20 +108,22 @@
   </template>
   
   <script>
+  import OrdeDeCompraVue from '@/components/CompAdm/OrdeDeCompra.vue';
     export default {
+      components:{
+        OrdeDeCompraVue
+      },
       props:{
         tipo_historico:'',
-        cod_tipo_usuario:''
+        cod_tipo_usuario:'',
       },
       data() {
         return {
           items: [
           ],
           fields: [
-            { key: 'id', label: 'Codigo del pedido', class:'spann', sortable: true  },
-            { key: 'idCliente', label: 'Codigo del Proveedor', class:'spann', sortable: true  },
-            { key: 'Fecha', label: 'Fecha de compra', class: 'text-center spann',sortable: true  },
-            { key: 'Total', label: 'Total', class: 'text-center spann',sortable: true  },
+            { key: 'id', label: 'Numero de Orden', class:'spann', sortable: true  },
+            { key: 'Fecha', label: 'Fecha de Emision', class: 'text-center spann',sortable: true  },
             { key: 'Estatus', label: 'Estatus', class: 'text-center spann',sortable: true  },
             { key: 'actions', label: 'Detalles', class: 'text-center spann' },
 
@@ -172,12 +140,14 @@
         },
         infoModal: [],
         mostrarModal:false,
+        aux:''
 
          
         }
       },
       created(){
-       this.LlenarTabla();
+      // this.LlenarTabla();
+       this.ObtenerOrdenes();
       },
      
       computed: {
@@ -207,21 +177,14 @@
         {id:3,idCliente:1,Fecha:'9/12/2023',Total:'50bs',Estatus:'En proceso', Nombre:'Santa teresa',Cantidad:'5',Precio:33},
        ]
       },
-      decreaseStock(item) {
-          if (item.stock > 0) {
-            item.stock--;
-          }
-        },
-        increaseStock(item) {
-          item.stock++;
-          
-        },
+    
         info(item) {
-              // Puedes actualizar infoModal con los detalles del pedido específico
-              this.infoModal = [item];
-              this.mostrarModal = true;
-              this.modficarN=item
+              this.actualizar(item.id)
           },
+          factura(item){
+            this.aux=item.id
+          },
+          
             
         async  insertarAuditoria(Accion,Tabla){
             const dato={
@@ -232,7 +195,36 @@
             }).catch(error => {
               console.log(error);
             });
-          } 
+          } ,
+          async ObtenerOrdenes() {
+            const url = 'http://localhost:3000/api/orderReposicion/orden';
+          await this.axios.get(url).then(response => {
+            console.log( response.data)
+            this.llenarTabla(response.data)
+            
+          }).catch(error => {
+            console.log(error);
+          });
+          },
+          llenarTabla(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              id: data[i].codigo,
+              Fecha: data[i].fecha,
+              Estatus:data[i].estatus
+            };
+            
+            this.items.push(item)
+          }
+        }, async actualizar(codigo) {
+        const data={ id:codigo}
+            const url = 'http://localhost:3000/api/orderReposicion/actualizar';
+            await this.axios.post(url,data).then(response => {
+              this.fecha = response.data[0].fecha_orden;
+            }).catch(error => {
+              console.log(error);
+            });
+        },
 
       }
     }
