@@ -1,11 +1,7 @@
 <template>
     <div>
-        <Navbar></Navbar>
-        
+        <Navbar></Navbar>   
         <Login style="margin-top:2%"></Login>
-        
-       
-    
     </div>
 </template>
 
