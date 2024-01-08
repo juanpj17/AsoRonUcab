@@ -59,8 +59,8 @@
              this.$router.push('/MiCuenta/');
            },
            Carrito() {
-             if (this.$route.path!='/PrincipalCarrito/')
-             this.$router.push('/PrincipalCarrito/');
+             if (this.$route.path!='/PrincipalCarrito/'+this.tipo_codigo_registro)
+             this.$router.push('/PrincipalCarrito/'+this.tipo_codigo_registro);
            },
            MisPedidos() {
              if (this.$route.path!='/MisPedidos/')

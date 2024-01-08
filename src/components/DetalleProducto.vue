@@ -18,28 +18,48 @@
 
      <b-col md="6">
        <b-card-body >
-           <h1 style="font-family: 'Times New Roman', Times, serif;" >Santa Teresa 1796®</h1>
-           <h3 style="color: var(--verde)">26.50$ (incluye IVA)</h3>
+           <h1 style="font-family: 'Times New Roman', Times, serif;" >{{ nombre }}</h1>
+           <h3 style="color: var(--verde)"> {{ precio }}$ (incluye IVA)</h3>
+           <p style="color: var(--verde)">Varia por presentacion </p>
            <br>
            <br>
-   <b-form-select v-model="selected" :options="options"></b-form-select>
+   <b-form-select v-model="presentacion" :options="options"></b-form-select>
    
 
 
 <b-container class="bv-example-row">
    <hr>
  <b-row>
-   <b-col > <b-form-input v-model="text" placeholder=""></b-form-input></b-col>
-   <b-col style="background-color: rgb(220, 69, 69) ;"> <b-button variant="danger" @click="Carrito()">Añadir  al  carrito</b-button></b-col>
+   <b-col > <b-form-input v-model="cantidad" placeholder=""></b-form-input></b-col>
+   <b-col style="background-color: rgb(220, 69, 69) ;"> <b-button variant="danger" @click="CrearOrden()">Añadir  al  carrito</b-button></b-col>
  </b-row>
 </b-container>
 <hr>
    <b-row>
        <b-button  v-b-toggle="'collapse-2'" class="m-1" squared variant="outline-dark" ><b-icon icon="chevron-right" shift-h="-4"  rotate="90"  font-scale = "0.90"></b-icon> Descripcion  </b-button>
-       <b-button  v-b-toggle="'collapse-2'" class="m-1" squared variant="outline-dark" ><b-icon icon="chevron-right" shift-h="-4"  rotate="90"  font-scale = "0.90"></b-icon> Ficha tecnica </b-button>
        <!-- Element to collapse -->
            <b-collapse id="collapse-2">
-           <b-card>{{ options }}</b-card>
+           <b-card style="text-align: left;">
+            <b-card-text>
+             Descripcion: {{ descripcion }}
+            </b-card-text>
+            <b-card-text>
+              Grados de Alcohol: {{ grados }}
+            </b-card-text>
+            <b-card-text>
+              Tipo: {{ tipo }}
+            </b-card-text>
+            <b-card-text>
+              Categoria: {{ categoria }}
+            </b-card-text>
+            <b-card-text>
+              Variedad: {{ variedad }}
+            </b-card-text>
+            <b-card-text>
+              Origen: {{ direccion }}
+            </b-card-text>
+           
+           </b-card>
        </b-collapse>
    </b-row>
        </b-card-body>
@@ -60,26 +80,26 @@ import { numeric } from 'vuelidate/lib/validators';
     idProducto:'',
     tipoUsuario:''
   },
-   data() {
+  created()
+{ this.obtenerDetalle()
+  this.CategoriaVariedadDireccion()
+
+},   data() {
      return {
-       slides: ["https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg" , "https://picsum.photos/1024/480/?image=51", "https://picsum.photos/1024/480/?image=50", "https://picsum.photos/1024/480/?image=50"],
-       selected: null,
-       options: [
-         { value: null, text: 'Please select an option' },
-         { value: 'a', text: 'This is First option' },
-         { value: 'b', text: 'Selected Option' },
-         { value: { C: '3PO' }, text: 'This is an option with object value' },
-         { value: 'd', text: 'This one is disabled', disabled: true }
-       ],
+       slides: [],
+       presentacion:'null',
+       options: [],
        currentSlideIndex: 0,
-       items: [
-         { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-         { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-         { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-         { age: 38, first_name: 'Jami', last_name: 'Carney' }
-       ],
-       value:0
-       
+       value:0,
+       nombre:'',
+       descripcion:'',
+       grados:'',
+       tipo:'',
+       categoria:'',
+       direccion:'',
+       variedad:'',
+       precio:'',
+       cantidad:0
      };
    },
    methods: {
@@ -93,13 +113,76 @@ import { numeric } from 'vuelidate/lib/validators';
         this.$router.push('/PrincipalCarrito/'+ this.tipoUsuario)
      
    },
-   Advertencia(){
-  Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "Debe Iniciar Sesion como cliente antes de continuar con la compra",
-});
-   }
+   
+   async obtenerDetalle() {
+    console.log(this.idProducto)
+         console.log(parseInt(this.idProducto, 10))
+          const data={
+            id:parseInt(this.idProducto,10)
+          }
+            const url = 'http://localhost:3000/api/producto/productoId';
+            await this.axios.post(url,data).then(response => {
+              this.nombre = response.data[0].nombre;
+              this.descripcion=response.data[0].descripcion;
+              this.grados=response.data[0].grados_alcohol;
+              this.tipo = response.data[0].tipo;
+              this.slides.push(response.data[0].url)
+              this.precio=response.data[0].precio;
+              this.llenarPresentaciones(response.data)
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        llenarPresentaciones(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+             value: data[i].codigo_presentacion,
+             text: data[i].capacidad,
+            };
+            this.options.push(item)
+          }
+        },
+        async CategoriaVariedadDireccion() {
+         console.log(parseInt(this.idProducto, 10))
+          const data={
+            id:parseInt(this.idProducto,10)
+          }
+            const url = 'http://localhost:3000/api/producto/detalle';
+            await this.axios.post(url,data).then(response => {
+             this.variedad=response.data[0].variedad;
+             this.categoria=response.data[0].categoria;
+             this.direccion=response.data[0].direccion;
+
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+       
+        async CrearOrden() {
+          console.log('estas en crear oren')
+          const aux=this.tipoUsuario.split('_')
+         console.log(parseInt(aux[0], 10))
+         console.log(parseInt(aux[1], 10))
+         console.log(this.presentacion)
+          const data={
+            cod1:parseInt(aux[0],10),
+            cod2:aux[1],
+            presentacion:this.presentacion,
+            cantidad:this.cantidad
+          }
+            const url = 'http://localhost:3000/api/producto/crearOrden';
+            await this.axios.post(url,data).then(response => {
+             console.log(response.data)
+             console.log('crea la orden')
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+
+
+
+
+
  }}
  </script>
  

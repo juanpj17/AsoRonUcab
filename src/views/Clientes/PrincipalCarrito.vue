@@ -1,7 +1,7 @@
 <template>
     <div>
         <NavbarVue></NavbarVue>
-        <CarritoVue></CarritoVue>
+        <CarritoVue :cod_tipo_usuario="this.$route.params.cod_tipo_usuario"></CarritoVue>
     </div>
 </template>
 

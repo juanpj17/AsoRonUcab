@@ -101,12 +101,16 @@
                     </div>
                     <b-button v-if="pagar" @click="generarCadenas()">Pagar</b-button>
                     <div>
-                      <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button>
-
-  <b-modal id="modal-xl" size="xl"  scrollable>
-    <FacturaAfiliacion :codigo_afiliado="this.id"></FacturaAfiliacion>
-  </b-modal>
+   <b-button v-b-modal.modal-xl variant="primary" v-if="tipo_usuario=='Afiliado'">Ver Factura</b-button>
+    <b-modal id="modal-xl" size="xl"  scrollable>
+      <FacturaAfiliacion :codigo_afiliado="this.id"></FacturaAfiliacion>
+    </b-modal>
+    <b-button v-b-modal.venta variant="primary" v-if="this.tipo_usuario.includes('Cliente') ">Ver Factura</b-button>
+    <b-modal id="venta" size="xl"  scrollable>
+    <FacturaVentaVirtualVue :cod_tipo_usuario="this.id"></FacturaVentaVirtualVue>
+    </b-modal>
   
+
 </div>
     
 </div>
@@ -115,9 +119,10 @@
 
 <script>
 import FacturaAfiliacion from './FacturaAfiliacion.vue';
+import FacturaVentaVirtualVue from './FacturaVentaVirtual.vue';
 
   export default {
-  components: { FacturaAfiliacion },
+  components: { FacturaAfiliacion,FacturaVentaVirtualVue },
     props:{
       id:'',
       tipo_usuario:''
@@ -146,6 +151,8 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
     },
     created(){
       this.cargarTarjetas();
+      this.obtenerTarjetasN();
+      
     },
     methods: {
       onRowSelected(items) {
@@ -184,7 +191,10 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
            this.Montos_por_tarjeta=this.Montos_por_tarjeta+'$'+elemento.monto
             this.id_tarjetas=this.id_tarjetas+'$'+elemento.idTarjeta}
         })
-        this.pagarCuota();
+        if( this.id.includes('Cliente') )
+        {this.pagarCompra();}
+      else
+        {this.pagarCuota()}
       },
       pagarCuota(){
         const url = 'http://localhost:3000/api/afiliado';
@@ -220,7 +230,90 @@ import FacturaAfiliacion from './FacturaAfiliacion.vue';
             console.log(this.items)
           }
 
-      }
+      },
+      llenarTarjetasCliente(){
+        const aux1 =this.tipo_usuario.includes('Cliente_Natural')
+        const aux2 =this.tipo_usuario.includes('Cliente_Juridico')
+        if (aux1==true)
+        {}
+       
+      },
+
+      obtenerTarjetasN(){
+        const url = 'http://localhost:3000/api/ventaF/tarjetasObtener';
+        const ci=this.id.split('_')
+        const datos = {
+                cod_cliente_natural_2:ci[1] 
+
+        };
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data);
+        //esto es para convertir la fecha al fromato solicitado
+        // { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:1 },
+        for (let i = 0; i < response.data.length; i++) {
+          
+            const fecha = response.data[i].fecha.slice(0, 10);
+              this.items.push({ 
+                    isActive: true,
+                    Mis_tarjetas: response.data[i].num_oculto,
+                    nombre_tarjeta: response.data[i].nombre,
+                    fecha_vencimiento : fecha,
+                    id: response.data[i].id.toString()
+                })
+            console.log(this.items)
+        }
+        }).catch(error => {
+            console.log(error);
+        });
+        
+
+    },
+    obtenerTarjetasJ(){
+        const url = 'http://localhost:3000/api/ventaF/tarjetasObtenerJ';
+        const rif=this.id.split('_')
+        const datos = {
+                cod_cliente: rif[1]
+        };
+        this.axios.post(url, datos).then(response => {
+        console.log(response.data);
+        //esto es para convertir la fecha al fromato solicitado
+        // { isActive: true, Mis_tarjetas: "***"+22, nombre_tarjeta: 'Gabriela M', fecha_vencimiento: '03/15',id:1 },
+        for (let i = 0; i < response.data.length; i++) {
+          
+            const fecha = response.data[i].fecha.slice(0, 10);
+              this.items.push({ 
+                    isActive: true,
+                    Mis_tarjetas: response.data[i].num_oculto,
+                    nombre_tarjeta: response.data[i].nombre,
+                    fecha_vencimiento : fecha,
+                    cod_met: response.data[i].id
+                })
+            console.log(this.items)
+        }
+        }).catch(error => {
+            console.log(error);
+        });
+    },
+    pagarCompra(){
+
+      const cod=this.id.split('_')
+      const cod2=this.tipo_usuario.split('_')
+      console.log('*****' +cod2)
+
+        const url = 'http://localhost:3000/api/producto/pagar';
+        const datos ={cod1: parseInt(cod[0],10) ,
+                      cod2:cod[1],
+                       montos:this.Montos_por_tarjeta, 
+                       tarjetas:this.id_tarjetas,
+                       cant_elementos:this.cant_elementos,
+                       cuota:cod2[2] ,
+                       cod_venta:parseInt(cod2[1],10)
+                      }
+        this.axios.post(url,datos).then(response => {
+                     console.log(response.data);
+                     Swal.fire(response.data.pagar);
+                   }).catch(error => {
+                     console.log(error.response.data); });},
 
       
     }

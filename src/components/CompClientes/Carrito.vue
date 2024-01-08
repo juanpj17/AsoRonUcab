@@ -6,27 +6,24 @@
           <b-col cols="12" md="12">
             <br>
             <b-card class="mt-5" style="max-width: 1200px;" bg-variant="info" text-variant="white">
-              <b-card-title><h2>Total 100 Bs</h2></b-card-title>
+              <b-card-title><h2>Total {{ total }} Bs</h2></b-card-title>
               <b-card-text><h5>Carrito de articulos</h5></b-card-text>
             </b-card>
           </b-col>
           <b-col cols="12" md="12">
             <b-card no-body class="overflow-hidden" style="max-width: 1200px;" border-variant="primary">
-              <b-row no-gutters v-for="producto in orden" :key="producto.id">
-                <b-col md="6" cols="12">
-                  <b-card-img :src="producto.nombreImagen" alt="Image" class="rounded-0"></b-card-img>
-                </b-col>
+              <b-row no-gutters v-for="producto in orden" :key="producto.idPresentacion">
                 <b-col md="6">
                   <b-card-body>
-                    <b-card-title><h1>{{ producto.nombre }}</h1></b-card-title>
-                    <b-card-text><h4>{{ producto.precio }} Bs c/u</h4></b-card-text>
+                    <b-card-title><h1>{{ producto.NombreProducto }}</h1></b-card-title>
+                    <b-card-text><h4>{{ producto.NombrePresentacion }}</h4></b-card-text>
+                    <b-card-text><h4>{{ producto.precio }}  Bs c/u</h4></b-card-text>
                     <div>
                       <b-form-spinbutton id="sb-inline" inline size="lg" v-model="producto.cantidad"></b-form-spinbutton>
                       <b-button variant="link"><h4>Eliminar</h4></b-button>
                     </div>
                   </b-card-body>
                 </b-col>
-                <hr>
               </b-row>
             </b-card>
           </b-col>
@@ -47,18 +44,22 @@
       props:{
         cod_tipo_usuario:''
       },
+      
   
   
       data() {
           return {
 
-          orden:[{idProducto:1,nombre:'Producto1',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0},
-                {idProducto:1,nombre:'Producto2',precio:22,nombreImagen: 'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',cantidad:2,total:0}]
+          orden:[],
+          total:'',
           };
 
       },
       mounted(){
        this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario;
+      },
+      created(){
+        this.carrito()
       },
   
       
@@ -69,9 +70,32 @@
             return this.cont++
           },
           Pagar(){
-            this.$router.push('/PrincipalPago/'+this.cod_tipo_usuario+'/'+'Cliente')
+            this.$router.push('/PrincipalPago/'+this.cod_tipo_usuario+'/'+'Cliente_'+this.orden[0].idVenta+'_'+this.total)
+          },
+          carrito(){
+          const cod=this.cod_tipo_usuario.split('_')
+          const url = 'http://localhost:3000/api/producto/carrito';
+          const datos ={cod1: parseInt(cod[0],10) ,cod2:cod[1],}
+          this.axios.post(url,datos).then(response => {
+               this.llenarCarrito(response.data);
+             }).catch(error => {
+               console.log(error.response.data); });},
+
+          llenarCarrito(data){
+          for (let i = 0; i < data.length; i++) {
+            const item = {
+              idVenta: data[i].codigo_venta,
+              idPresentacion: data[i].codigo_presentacion,
+              NombreProducto: data[i].pro_nombre,
+              NombrePresentacion:data[i].pre_nombre,
+              precio:data[i].precio_unitario,
+              cantidad:parseInt(data[i].cantidad, 10),
+            };
+            this.total=this.total+item.cantidad*item.precio
+            this.orden.push(item)
+            console.log(this.items)
           }
-  
+        },
           
          
   

@@ -162,7 +162,7 @@ export default {
           direccionFiscal:'',
           Roles:['Administrador','vendedor','cajero','cliente'],
           rol:'cliente',
-          numAntiguos: []
+          numAntiguos: [],
 
 
         }
@@ -178,7 +178,6 @@ export default {
         this.verificarModificar(this.$route.query.id)
          this.RegistrarCorreo()
          this.RegistrarTelefonos() 
-     
       },
 
  
@@ -245,6 +244,7 @@ export default {
           const datos = {
             rif: data.Documento
           };
+          
           console.log(datos);
           this.axios.post(url, datos).then(response => {
             console.log(response.data);
@@ -256,7 +256,6 @@ export default {
             this.direccionFiscal = response.data.direccion_fiscal,
             this.direccionFisica = response.data.direccion_fisica,
             this.Capital  = response.data.capital
-
           }).catch(error => {
             console.log(error);
           });
@@ -356,7 +355,7 @@ export default {
             };
             console.log(data[i].lug_nombre)            
             this.parroquias.push(item)
-            console.log(item)
+            //console.log(item)
           }
       },
 
@@ -365,8 +364,8 @@ export default {
             await this.axios.get(url).then(response => {
               const parroquia = response.data;
               
-              console.log(parroquia)
-              console.log(parroquia.length)
+             // console.log(parroquia)
+             // console.log(parroquia.length)
               this.llenarParroquias(parroquia)
               this.insertarAuditoria('Consultar','Lugar')
             }).catch(error => {
@@ -433,6 +432,7 @@ export default {
                    console.log(response.data);
                    this.enviado=true;
                    this.insertarAuditoria('Crear','Cliente_Juridico');
+                   this.insertarCorreoJ();
                 
                }).catch(error => {
                    console.log(error.response.data);
@@ -451,7 +451,21 @@ export default {
             }).catch(error => {
               console.log(error);
             });
-          } 
+          } ,
+          async  insertarCorreoJ(){
+            for (let i = 0; i < this.correos.length; i++){
+            const dato={
+            correo:this.correos[i].direccion,rif:this.numDoc}
+            const url = 'http://localhost:3000/api/cliente/insertarCorreoJ';
+            await this.axios.post(url,dato).then(response => {
+            console.log('correo registrado')
+            }).catch(error => {
+              console.log(error);
+            });}
+          },
+        
+          
+          
      
                
     },
