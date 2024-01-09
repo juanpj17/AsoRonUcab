@@ -1,6 +1,5 @@
 <template>
     <div>
-    <h3>El total es de {{ total }}</h3>
     <div>
         <br>
         <section class="container" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
@@ -101,7 +100,7 @@
                     </div>
                     <b-button v-if="pagar" @click="generarCadenas()">Pagar</b-button>
                     <div>
-   <b-button v-b-modal.modal-xl variant="primary" v-if="tipo_usuario=='Afiliado'">Ver Factura</b-button>
+   <b-button v-b-modal.modal-xl variant="primary" v-if="this.tipo_usuario.includes('Afiliado')">Ver Factura</b-button>
     <b-modal id="modal-xl" size="xl"  scrollable>
       <FacturaAfiliacion :codigo_afiliado="this.id"></FacturaAfiliacion>
     </b-modal>

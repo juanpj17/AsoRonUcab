@@ -75,7 +75,7 @@
           carrito(){
           const cod=this.cod_tipo_usuario.split('_')
           const url = 'http://localhost:3000/api/producto/carrito';
-          const datos ={cod1: parseInt(cod[0],10) ,cod2:cod[1],}
+          const datos ={cod1: parseInt(cod[0],10) ,cod2:cod[1], estatus:3}
           this.axios.post(url,datos).then(response => {
                this.llenarCarrito(response.data);
              }).catch(error => {

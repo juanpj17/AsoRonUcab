@@ -392,7 +392,7 @@ font-size: 40px;
             try {
                 const response = await this.axios.get(url);
                 const anejamiento = response.data;
-                
+                console.log(anejamiento)
                 for (let i = 0; i < anejamiento.length; i++) {
                     const item = {
                         text: anejamiento[i].nombre,
@@ -553,7 +553,7 @@ font-size: 40px;
                 descripcion: this.descripcion,
                 tipo: this.tipo,    
                 gradosa: this.gradosa,
-                añejamiento: this.añejamiento,
+                anejamiento: this.añejamiento,
                 proveedor: this.proveedor,
                 categoria: this.categoria,
                 variedad: this.variedad,
@@ -561,7 +561,7 @@ font-size: 40px;
                 sabor: this.sabor.map((item) => item.valor),
                 color: this.color.map((item) => item.valor),
                 materiaPrima: this.materiaPrima.map((item) => item.valor),
-                imagenes: this.imagenes.map((item) => item.valor),
+                imagenes: this.imagenes[0].valor,
                 presentaciones: this.presentaciones.map((item) => item.valor),
             };
 
