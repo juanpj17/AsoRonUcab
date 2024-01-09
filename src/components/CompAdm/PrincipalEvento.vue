@@ -111,16 +111,52 @@
           <table class="table table-bordered">
               <thead>
                   <tr>
-                      <th>Descripcion</th> 
+                      <th>Nombre del evento</th> 
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="item in infoModal" :key="item.age">
-                      <td>{{ item.Descripcion}}</td> 
+                      <td>{{ item.Nombre_Evento}}</td> 
                   </tr>
               </tbody>
           </table>
           <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Direcciono</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in infoModal" :key="item.age">
+                    <td>{{ item.Direccion}}</td> 
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+          <thead>
+              <tr>
+                  <th>Empieza: </th> 
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                  <td>{{ item.Fecha_i}}</td> 
+              </tr>
+          </tbody>
+      </table>
+      <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Finaliza: </th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Fecha_f}}</td> 
+            </tr>
+        </tbody>
+    </table>
+          <!-- <table class="table table-bordered">
               <thead>
                   <tr>
                       <th>Estado</th> 
@@ -137,9 +173,9 @@
                       <td>{{ item.Direccion}}</td> 
                   </tr>
               </tbody>
-          </table>
+          </table> -->
 
-          <table class="table table-bordered">
+          <!-- <table class="table table-bordered">
               <thead>
                   <tr>
                       <th>Proveedor</th> 
@@ -156,8 +192,8 @@
                       <td>{{ item.Direccion}}</td> 
                   </tr>
               </tbody>
-          </table>
-          <table class="table table-bordered">
+          </table> -->
+          <!-- <table class="table table-bordered">
               <thead>
                   <tr>
                       <th>Cantidad de entradas</th> 
@@ -171,7 +207,7 @@
                     
                   </tr>
               </tbody>
-          </table>
+          </table> -->
         
          
 

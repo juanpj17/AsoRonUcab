@@ -176,31 +176,52 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Rif</th>
-              <th>Correo</th>
-              <th>Direccion</th>
+              <th>Nombres</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in infoModal" :key="item.age">
-              <td>{{ item.Rif }}</td>
-              <td>{{ item.Correo }}</td>
-              <td>{{ item.Direccion }}</td>
+              <td>{{ item.Nombres}}</td>
             </tr>
           </tbody>
         </table>
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Telefonos</th>
+              <th>Apellidos</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in infoTelefonos" :key="item.age">
-              <td>{{ item }}</td>
+            <tr v-for="item in infoModal" :key="item.age">
+              <td>{{ item.Apellidos}}</td>
             </tr>
           </tbody>
         </table>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Cedula</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in infoModal" :key="item.age">
+              <td>{{ item.Cedula}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in infoModal" :key="item.age">
+              <td>{{ item.Rol}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
       </template>
     </b-modal>
   </b-container>
@@ -239,8 +260,9 @@ export default {
   },
   methods: {
     info(item) {
+      console.log(item)
       this.infoModal = [item];
-      this.infoTelefonos = [1, 2, 3];
+      // this.infoTelefonos = [1, 2, 3];
       this.mostrarModal = true;
     },
 

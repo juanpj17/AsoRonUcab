@@ -344,9 +344,9 @@ export default {
       async filtrarProductosPorProveedor(index){
         console.log('aqui?')
         const proveedorSeleccionado = this.inventario[index].proveedor;
-        const url = 'http://localhost:3000/api/producto/proveedor/presentacion';
-        
-        await this.axios.get(url, {params:{proveedor:proveedorSeleccionado}}).then(response => {
+        const url = 'http://localhost:3000/api/proveedor/PxP';
+        console.log(proveedorSeleccionado)
+        await this.axios.post(url, {params:{proveedor:proveedorSeleccionado}}).then(response => {
               const producto = response.data;
               console.log(producto)
                 this.llenarProductos(producto, index)
@@ -373,12 +373,12 @@ export default {
       regPresentacionEvento(data){
         // this.ultimoEvento()
         console.log(data.cantidad)
-        console.log(data.productos[0].codigo)
+        console.log(data.productoFiltrado)
         const url = 'http://localhost:3000/api/evento/actual';
         const datos = {
             cantidad: data.cantidad,
             precio: data.precio,
-            cod_presentacion: data.productos[0].codigo,
+            cod_presentacion: data.productoFiltrado,
             cod_evento: this.max_e,
             cod_premio: 1,
         };
@@ -478,8 +478,13 @@ export default {
             if(this.numEnt > 0){
               this.regEntrada()
             }
+            console.log(this.inventario[0])
+            console.log(this.inventario[1])
+            console.log(this.inventario[0].productos[0])
+            console.log(this.inventario[0].productos[1])
+            console.log(this.inventario.length)
             for (let i = 0; i < this.inventario.length; i++) {
-              console.log(this.inventario[i])
+              console.log(this.inventario[i].productos[i].codigo)
               this.regPresentacionEvento(this.inventario[i])
             };
           }).catch(error => {
@@ -541,7 +546,7 @@ export default {
           for (let i = 0; i < data.length; i++) {
             const item = {
               Nombre: data[i].nombre,
-              Rif: data[i].rif,
+              Rif: data[i].proveedor_id,
             };
             
             this.proveedores.push(item)
