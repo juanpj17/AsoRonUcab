@@ -3,7 +3,7 @@
     <br />
     <h1 class="titulos">Nuestros productos</h1>
 
-    <b-button block variant="primary" @click="RegistrarProducto()">Registrar nuevo producto</b-button>
+    <b-button block variant="primary" @click="RegistrarProducto('*')">Registrar nuevo producto</b-button>
     <b-row class="mt-5">
       <b-col cols="12" md="3" v-for="producto in Productos" :key="producto.Id">
         <b-card style="max-width: 20rem;margin-left: 10PX;" class="mb-2">

@@ -99,7 +99,7 @@ export default{
         this.axios.post(url,datos).then(response => {
                      console.log(response.data);
                      this.nombre_razon_s=response.data.nombre
-                     this.rif_cedula=response.data.rif_cedula
+                     this.rif_cedula=response.data.cedula
                      this.direccionAfi=response.data.direccion
                      }).catch(error => {
                      console.log(error.response.data);
