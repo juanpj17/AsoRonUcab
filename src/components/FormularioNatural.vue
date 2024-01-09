@@ -476,7 +476,7 @@ export default {
                    this.axios.post(url, datos).then(response => {
                        console.log(response.data);
                        this.enviado=true;
-                       this.insertarAuditoria('Crear','Empleado')
+                      //  this.insertarAuditoria('Crear','Empleado')
                        this.$router.push('/PrincipalRegistroNatural/*/%');
                    }).catch(error => {
                        console.log(error.response.data);

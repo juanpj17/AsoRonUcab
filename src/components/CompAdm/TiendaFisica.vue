@@ -330,74 +330,74 @@
         },
 
       Pagar(){
-        
-        console.log(this.TipoDeVenta)
-        
-        if(this.TipoDeVenta == '----Entrada----'){
-          // Esto es para registrar la venta de una entrada
-          console.log(this.items)
+        if(this.Nombre != undefined){
           console.log(this.TipoDeVenta)
-          if(this.totaldi > 0 || this.totalbs > 0){
-            this.calcularTotal()
-            if(this.perPage == 'Juridico'){
-              this.regVentaFisicaEntrada(1, null, this.Cliente)
-            }else{
-              this.regVentaFisicaEntrada(1, this.Cliente, null)
+          
+          if(this.TipoDeVenta == '----Entrada----'){
+            // Esto es para registrar la venta de una entrada
+            console.log(this.items)
+            console.log(this.TipoDeVenta)
+            if(this.totaldi > 0 || this.totalbs > 0){
+              this.calcularTotal()
+              if(this.perPage == 'Juridico'){
+                this.regVentaFisicaEntrada(1, null, this.Cliente)
+              }else{
+                this.regVentaFisicaEntrada(1, this.Cliente, null)
+              }
+              if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
+                this.$router.push({
+                  path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
+                  query: {
+                    array: JSON.stringify(this.items),
+                    doc: this.Cedula,
+                    tipo: this.perPage,
+                    lugar: this.TipoDeVenta,
+                    evento: this.EventoSeleccionado,
+                    punto: this.canjear,
+                    totaldi: this.totaldi,
+                    totalbs: this.totalbs,
+                    nombreC: this.Nombre,
+                    direccion: this.Direccion,
+                    dolar: this.monitorData
+                  }
+                });
+              }
             }
-            if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
-              this.$router.push({
-                path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
-                query: {
-                  array: JSON.stringify(this.items),
-                  doc: this.Cedula,
-                  tipo: this.perPage,
-                  lugar: this.TipoDeVenta,
-                  evento: this.EventoSeleccionado,
-                  punto: this.canjear,
-                  totaldi: this.totaldi,
-                  totalbs: this.totalbs,
-                  nombreC: this.Nombre,
-                  direccion: this.Direccion,
-                  dolar: this.monitorData
-                }
-              });
+          }else {
+            // Esto es para registrar la venta en un evento
+            console.log(this.TipoDeVenta)
+            console.log(this.items)
+            if(this.totaldi > 0 || this.totalbs >0){
+              this.calcularTotal()
+              if(this.perPage == 'Juridico'){
+    
+                this.regVentaFisica(null, this.Cliente, null)
+              }else{
+                this.regVentaFisica(this.Cliente, null, null)
+              }
+              
+              if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
+                this.$router.push({
+                  path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
+                  query: {
+                    array: JSON.stringify(this.items),
+                    doc: this.Cedula,
+                    tipo: this.perPage,
+                    evento: this.EventoSeleccionado,
+                    punto: this.canjear,
+                    totaldi: this.totaldi,
+                    totalbs: this.totalbs,
+                    nombreC: this.Nombre,
+                    direccion: this.Direccion,
+                    lugar: this.TipoDeVenta, 
+                    dolar: this.monitorData
+                  }
+                });
+              }
             }
-          }
-        }else {
-          // Esto es para registrar la venta en un evento
-          console.log(this.TipoDeVenta)
-          console.log(this.items)
-          if(this.totaldi > 0 || this.totalbs >0){
-            this.calcularTotal()
-            if(this.perPage == 'Juridico'){
-  
-              this.regVentaFisica(null, this.Cliente, null)
-            }else{
-              this.regVentaFisica(this.Cliente, null, null)
-            }
-            
-            if (this.$route.path!='/PagarTiendaFisica/'+this.cod_tipo_usuario){
-              this.$router.push({
-                path: '/PagarTiendaFisica/'+this.cod_tipo_usuario,
-                query: {
-                  array: JSON.stringify(this.items),
-                  doc: this.Cedula,
-                  tipo: this.perPage,
-                  evento: this.EventoSeleccionado,
-                  punto: this.canjear,
-                  totaldi: this.totaldi,
-                  totalbs: this.totalbs,
-                  nombreC: this.Nombre,
-                  direccion: this.Direccion,
-                  lugar: this.TipoDeVenta, 
-                  dolar: this.monitorData
-                }
-              });
-            }
-          }
 
-        }
-            
+          }
+        }  
       },
 
       mostrarModal(){
@@ -448,6 +448,7 @@
             const clienteNatural = response.data;
             console.log(clienteNatural);
             this.Nombre = clienteNatural.p_nombre;
+            console.log(this.Nombre)
             this.Cedula = cliente;
             this.Direccion = clienteNatural.direccion;
             this.Puntos = clienteNatural.puntos_acumulados;

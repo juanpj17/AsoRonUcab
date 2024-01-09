@@ -85,9 +85,9 @@
           <b-button icon="delete" variant="danger" size="sm" @click="eliminarCliente(row.item)">
             <i class="bi bi-trash-fill"></i> Eliminar
           </b-button>
-          <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
+          <!-- <b-button size="sm" style="margin-left: 10px; background-color: var(--verde)" @click="info(row.item)" class="mr-1">
             Detalles
-          </b-button>
+          </b-button> -->
           <b-button size="sm" style="margin-left: 10px; background-color: blue; border-color: blue" @click="Modificar(row.item)" class="mr-1">
             Modifiar
           </b-button>
@@ -110,12 +110,75 @@
           size="sm"
       ></b-pagination>
 <!-------------------------------- Info modal --------------------------------------->
-      <b-modal v-model="mostrarModal" size="xl" scrollable>
+      <b-modal v-model="mostrarModal" size="lg" scrollable >
         <template #modal-title>
           <h2 >Detalles del cliente</h2>
         </template>
         <template #default>
           <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Documento identificador</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Documento}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Nombre}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered" v-if="item.Tipo =='juridico'">
+            <thead>
+              <tr>
+                <th>Razon Social</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Apellido}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered" v-if="item.Tipo =='natural'">
+            <thead>
+              <tr>
+                <th>Apelldio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Apellido}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered" v-if="item.Tipo =='natural'">
+            <thead>
+              <tr>
+                <th>Puntos Actuales</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in infoModal" :key="item.age">
+                <td>{{ item.Puntos_Acumulados}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+         
+          <!-- <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Dirección física</th>
@@ -182,7 +245,7 @@
                     <td>{{ item }}</td>
                 </tr>
             </tbody>
-          </table>
+          </table> -->
         </template>
       </b-modal>
   </b-container>
@@ -246,10 +309,12 @@
     },
     methods: {
       info(item) {
+        this.mostrarModal = true;
             // Puedes actualizar infoModal con los detalles del pedido específico
+            console.log(item)
             this.infoModal = [item];
-            this.infoTelefonos=[1,2,3]
-            this.mostrarModal = true;
+            // this.infoTelefonos=[1,2,3]
+            
           
         },
       onFiltered(filteredItems) {
