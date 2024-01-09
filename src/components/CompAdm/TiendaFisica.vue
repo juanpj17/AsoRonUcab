@@ -279,9 +279,7 @@
                 cod_empleado_2: this.ciEmpleado,
                 cod_cliente_juridico: juridico,
                 cod_estatus: 3,
-                cod_inventario_1: null,
-                cod_inventario_2: null,
-                cod_inventario_3:  null
+                
         };
         this.axios.post(url, datos).then(response => {
         console.log(response.data);
@@ -542,7 +540,7 @@
           
             console.log(datos);
             this.axios.post(url, datos).then(response => {
-            console.log(response.data[0]);
+            console.log(response.data);
             this.insertarAuditoria('Consultar','Presentacion')
             if (this.verificarNumeroEnArray(data, this.colocados)) {
               console.log(`${data} está en el array.`);

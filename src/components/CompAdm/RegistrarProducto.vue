@@ -551,18 +551,18 @@ font-size: 40px;
             const data = {
                 nombre: this.nombre,
                 descripcion: this.descripcion,
-                tipo: this.tipo,    
                 gradosa: this.gradosa,
-                añejamiento: this.añejamiento,
+                tipo: this.tipo,    
+                anejamiento: this.añejamiento,
                 proveedor: this.proveedor,
+                parroquia: this.parroquia,
                 categoria: this.categoria,
                 variedad: this.variedad,
-                parroquia: this.parroquia,
                 sabor: this.sabor.map((item) => item.valor),
                 color: this.color.map((item) => item.valor),
-                materiaPrima: this.materiaPrima.map((item) => item.valor),
-                imagenes: this.imagenes.map((item) => item.valor),
-                presentaciones: this.presentaciones.map((item) => item.valor),
+                materia: this.materiaPrima.map((item) => item.valor),
+                imagen: this.imagenes.map((item) => item.valor),
+                presentacion: this.presentaciones.map((item) => item.valor),
             };
 
             console.log(data)
