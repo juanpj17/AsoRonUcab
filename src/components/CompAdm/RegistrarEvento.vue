@@ -473,7 +473,7 @@ export default {
           console.log(datos);
           this.axios.post(url, datos).then(response => {
             console.log(response.data);
-            this.insertarAuditoria('Registrar','Evento')
+            this.insertarAuditoria('Crear','Evento')
             const num = this.inventario.map(t => t.numero).slice();
             if(this.numEnt > 0){
               this.regEntrada()

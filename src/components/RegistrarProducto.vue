@@ -506,6 +506,7 @@ font-size: 40px;
                     };
                     this.cod_materia.push(item);
                 }
+                this.insertarAuditoria('Consultar','Materia')
             } catch (error) {
                 console.log(error);
             }
@@ -525,7 +526,7 @@ font-size: 40px;
                     };
                     this.cod_imagenes.push(item);
                 }
-                this.insertarAuditoria('Consultar','Materia')
+                this.insertarAuditoria('Consultar','Imagen')
             } catch (error) {
                 console.log(error);
             }
@@ -583,6 +584,7 @@ font-size: 40px;
                         title: 'Producto registrado',
                         text: respuesta.mensaje,
                     });
+                    this.insertarAuditoria('Crear','Producto')
                     this.LimpiarCampos();
                 } catch (error) {
                     console.log(error);
@@ -621,6 +623,7 @@ font-size: 40px;
                     title: 'Producto registrado',
                     text: respuesta.mensaje,
                 });
+                this.insertarAuditoria('Modificar','Producto')
                 this.LimpiarCampos();
             } catch (error) {
                 console.log(error);
@@ -641,7 +644,7 @@ font-size: 40px;
         async buscarProducto(idProducto) {
          
             if (this.idProducto !== '*') {
-              console.log('estas aqui es buscar producto')
+              this.insertarAuditoria('Consultar','Producto')
               const id = this.idProducto;
               const url = 'http://localhost:3000/api/producto/id';          
               try {
@@ -670,7 +673,8 @@ font-size: 40px;
             } else {
               console.log('El id es nulo o indefinido. No se ejecutará la consulta.');
             }
-        }
+        },
+       
     },
 
 

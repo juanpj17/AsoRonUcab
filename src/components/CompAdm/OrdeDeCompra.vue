@@ -101,11 +101,13 @@
                 
 
         async direccionProveedor(rif) {
+          console.log(rif)
         const data={ id:rif}
             const url = 'http://localhost:3000/api/orderReposicion/proveedor';
             await this.axios.post(url,data).then(response => {
               this.orden = response.data[0];
-              this.direccion=response.data[0].direccion_proveedor
+              this.direccion=response.data.direccion_proveedor
+              console.log(response.data)
             }).catch(error => {
               console.log(error);
             });
