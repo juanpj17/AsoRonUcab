@@ -204,7 +204,10 @@ font-size: 40px;
 
   export default{
     props:{
-      idProducto:'',
+      idProducto: {
+        type: [String, Number],  
+        default: null
+     },
       cod_tipo_usuario:''
       
     },
@@ -236,20 +239,23 @@ font-size: 40px;
               cod_tipo:['Agricola','Industrial'],
               cod_proveedor:[],
               cod_categorias:[],
-              cod_variedad:[]
+              cod_variedad:[],
+              producto: []
           }
       },
         async created(){               
             await this.obtenerParroquias();
             await this.obtenerProveedores();
-           await this.obtenerAnejamiento();
-           await this.obtenerCategoria();  
-           await this.obtenerVariedad();
-           await this.obtenerSabor();
-           await this.obtenerColor();
+            await this.obtenerAnejamiento();
+            await this.obtenerCategoria();  
+            await this.obtenerVariedad();
+            await this.obtenerSabor();
+            await this.obtenerColor();
             await this.obtenerMateria();
             await this.obtenerImagenes();
-           await this.obtenerPresentaciones();
+            await this.obtenerPresentaciones();
+            console.log(this.idProducto)
+            await this.buscarProducto(this.idProducto);
         },
 
       validations: {
@@ -546,9 +552,49 @@ font-size: 40px;
         },
 
         async registrarProducto(){
-            const url = 'http://localhost:3000/api/producto';
+            if(this.idProducto !== '*'){
+                console.log('estoy entrando al actualizar')
+                this.actualizarProducto();
+            } else {
+                const url = 'http://localhost:3000/api/producto';
+                console.log(this.parroquia)
+                const data = {
+                    nombre: this.nombre,
+                    descripcion: this.descripcion,
+                    tipo: this.tipo,    
+                    gradosa: this.gradosa,
+                    anejamiento: this.añejamiento,
+                    proveedor: this.proveedor,
+                    categoria: this.categoria,
+                    variedad: this.variedad,
+                    parroquia: this.parroquia,
+                    sabor: this.sabor.map((item) => item.valor),
+                    color: this.color.map((item) => item.valor),
+                    materiaPrima: this.materiaPrima.map((item) => item.valor),
+                    imagenes: this.imagenes[0].valor,
+                    presentaciones: this.presentaciones.map((item) => item.valor),
+                };
+
+                try {
+                    const response = await this.axios.post(url, data);
+                    const respuesta = response.data;
+                    this.swal.fire({
+                        icon: 'success',
+                        title: 'Producto registrado',
+                        text: respuesta.mensaje,
+                    });
+                    this.LimpiarCampos();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+
+        async actualizarProducto(){
+            const url = 'http://localhost:3000/api/producto/modificar';
             console.log(this.parroquia)
             const data = {
+                id: this.idProducto,
                 nombre: this.nombre,
                 descripcion: this.descripcion,
                 gradosa: this.gradosa,
@@ -565,24 +611,23 @@ font-size: 40px;
                 presentaciones: this.presentaciones.map((item) => item.valor),
             };
 
-            console.log(data)
+            console.log('estoy saliendo desde el actualizar:', data);
 
-            try {
+           try {
                 const response = await this.axios.post(url, data);
                 const respuesta = response.data;
-                if (respuesta.estado === 'ok') {
-                    this.mensajeValidacion('Producto registrado con exito');
-                    this.LimpiarCampos();
-                    this.insertarAuditoria('Registrar','Producto')
-                } else {
-                    this.mensajeValidacion('Error al registrar el producto');
-                }
+                this.swal.fire({
+                    icon: 'success',
+                    title: 'Producto registrado',
+                    text: respuesta.mensaje,
+                });
+                this.LimpiarCampos();
             } catch (error) {
                 console.log(error);
             }
         },
-        async  insertarAuditoria(Accion,Tabla){
-          console.log(this.cod_tipo_usuario)
+
+        async  insertarAuditoria(Accion,Tabla){        
             const dato={
               cod_tipo_usuario:this.cod_tipo_usuario,accion:Accion,tabla:Tabla}
             const url = 'http://localhost:3000/api/usuario/insertarAuditoria';
@@ -591,8 +636,40 @@ font-size: 40px;
             }).catch(error => {
               console.log(error);
             });
-          }
+        },
         
+        async buscarProducto(idProducto) {
+            console.log("Hola")
+            if (this.idProducto !== '*') {
+              const id = this.idProducto;
+              const url = 'http://localhost:3000/api/producto/id';          
+              try {
+                const producto = await this.axios.post(url, { id });
+                this.producto = producto.data;   
+                console.log(this.producto)       
+                // Asignar los valores del objeto devuelto a las propiedades del componente
+                this.nombre = this.producto[0].nombre || '';
+                this.gradosa = this.producto[0].grados_alcohol || '';
+                this.descripcion = this.producto[0].descripcion || '';
+                this.tipo = this.producto[0].tipo || '';
+                this.proveedor = this.producto[0].proveedor || '';
+                this.categoria = this.producto[0].categoria || '';
+                this.variedad = this.producto[0].variedad || '';
+                this.añejamiento = this.producto[0].añejamiento || '';
+                this.parroquia = this.producto[0].lugar || '';
+                this.imagenes = [{ valor: this.producto[0].url }] || [];
+                this.sabor = this.producto[0].sabor.map(valor => ({ valor })) || [];
+                this.color = this.producto[0].color.map(valor => ({ valor })) || []; 
+                this.materiaPrima = this.producto[0].materia_prima.map(valor => ({ valor })) || []; 
+                this.presentaciones = this.producto[0].capacidad.map(valor => ({ valor })) || [];
+        
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              console.log('El id es nulo o indefinido. No se ejecutará la consulta.');
+            }
+        }
     },
 
 
