@@ -513,8 +513,11 @@
 
       cargarEntrada(data){
         const url = 'http://localhost:3000/api/tiendafisica/entradasDisponibles';
+        const codigo = parseInt(data, 10);
+        console.log(codigo)
+        console.log(typeof codigo)
             const datos = {
-                codE: data,
+                codE: codigo,
             };
           
             console.log(datos);
