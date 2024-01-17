@@ -76,6 +76,10 @@
 
   <b-container fluid style="background-color: var(--fondo);">
     <h1 class="titulos">Registro de empleados</h1>
+    <b-col cols="1"><b-button @click="Horario">
+      
+      <b-icon  icon = "alarm"  aria- etiqueta = "Ayuda" > </b-icon > 
+    </b-button></b-col>
     <b-row>
       <b-col lg="6" class="my-1">
         <b-form-group
@@ -104,7 +108,7 @@
     </b-row>
 
     <b-row>
-      <b-col cols="11"></b-col>
+      <b-col cols="10"></b-col>
 
       <b-col class="my-1" cols="1">
         <b-form-group
@@ -118,12 +122,18 @@
         </b-form-group>
       </b-col>
     </b-row>
-
+<b-row>
+  <b-col cols="6">
     <div style="margin-bottom: 50px;">
       <b-button pill class="boton" size="lg" @click="RegistrarEmpleado">
         <b-icon icon="plus-circle" scale="3"> </b-icon>
       </b-button>
     </div>
+  </b-col>
+  
+</b-row>
+   
+    
 
     <b-table
       :items="items"
@@ -281,6 +291,9 @@ export default {
                     }
                 });
             }
+        },
+        Horario(){
+          this.$router.push('/Horario/')
         },
 
  

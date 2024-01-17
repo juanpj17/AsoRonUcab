@@ -34,6 +34,8 @@ import RegistrarEvento from '@/views/Administrador/RegistrarEvento.vue'
 import ControlAccion from '@/views/Administrador/ControlAccion.vue'
 import PagarTiendaFisica from '@/views/Clientes/PagarTiendaFisica.vue'
 import PersonasContacto from '@/views/Clientes/PersonasDeContacto'
+import Ficha from '@/views/Comunes/Ficha.vue'
+import Horario from '@/views/Administrador/Horarios.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -222,7 +224,16 @@ const routes = [
     name: 'AsignarRoles',
     component:AsignarRoles
   },
-  
+  {
+    path: '/Ficha/:producto/:presentacion',
+    name: 'Ficha',
+    component:Ficha
+  },
+  {
+    path: '/Horario/',
+    name: 'Horario',
+    component:Horario
+  },
   
 
 
