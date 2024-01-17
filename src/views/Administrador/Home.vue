@@ -44,8 +44,9 @@
             </b-row>
             </b-collapse>
             <b-row>
+              <h4 style="margin-top: 20px;">Ventas con canjeo de puntos</h4>
                 <b-col></b-col>
-                <b-col lg="12"><TablaProductosCategoriaVue></TablaProductosCategoriaVue></b-col>
+                <b-col lg="12"><TablaVentaConPuntoVue></TablaVentaConPuntoVue></b-col>
                 <b-col></b-col>
             </b-row>
         </b-container>
@@ -70,13 +71,14 @@ import TablaHistoricoVue from '@/components/CompAdm/TablaHistorico.vue';
 import Navbar from '../../components/CompAdm/Navbar.vue';
 
 import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCategoria.vue';
+import TablaVentaConPuntoVue from '@/components/CompAdm/TablaVentaConPunto.vue';
 
     export default{
         props:{
             cod_tipo_usuario:''
         },
          components:{
-        Navbar,TablaHistoricoVue,TablaProductosCategoriaVue
+        Navbar,TablaHistoricoVue,TablaProductosCategoriaVue,TablaVentaConPuntoVue
         },
         mounted() {
         this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario

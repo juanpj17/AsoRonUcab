@@ -24,6 +24,7 @@
            <br>
            <br>
    <b-form-select v-model="presentacion" :options="options"></b-form-select>
+    <b-button @click="ver_Ficha()">Ver Ficha</b-button>
    
 
 
@@ -66,7 +67,11 @@
      </b-col>
    </b-row>
  </b-card>
- 
+ <div v-if="ficha==true">
+  
+    <FichaVue></FichaVue>
+  
+ </div>
 
 </div>
 
@@ -74,8 +79,10 @@
 </template>
 <script>
 import { numeric } from 'vuelidate/lib/validators';
+import FichaVue from './Comunes/Ficha.vue';
 
  export default {
+  components:{FichaVue},
   props:{
     idProducto:'',
     tipoUsuario:''
@@ -99,7 +106,8 @@ import { numeric } from 'vuelidate/lib/validators';
        direccion:'',
        variedad:'',
        precio:'',
-       cantidad:0
+       cantidad:0,
+       Ficha:false
      };
    },
    methods: {
@@ -113,6 +121,9 @@ import { numeric } from 'vuelidate/lib/validators';
         this.$router.push('/PrincipalCarrito/'+ this.tipoUsuario)
      
    },
+   ver_Ficha(){
+          this.$router.push('/Ficha/'+this.idProducto+'/'+this.presentacion)
+        },
    
    async obtenerDetalle() {
     console.log(this.idProducto)
@@ -178,6 +189,7 @@ import { numeric } from 'vuelidate/lib/validators';
               console.log(error);
             });
         },
+       
 
 
 

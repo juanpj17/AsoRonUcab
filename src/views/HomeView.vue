@@ -3,14 +3,16 @@
  
   <NavbarVue></NavbarVue>
   <Home :registrado="'Nuevo'"></Home>
- 
-    
+   
+   
    
    </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import Ficha from '@/components/Comunes/Ficha.vue';
+import TablaVentaConPuntoVue from '@/components/CompAdm/TablaVentaConPunto.vue';
 import PrincipalEventos from './Administrador/PrincipalEventos.vue';
 import PrincipalProveedoresVue from '@/components/CompAdm/PrincipalProveedores.vue';
 import TablaHistoricoVue from '@/components/CompAdm/TablaHistorico.vue'
@@ -50,13 +52,14 @@ import Login from '@/views/Comunes/Login.vue'
 import NavbarVue from '@/components/Comunes/Navbar.vue';
 import pruebaVue from '@/components/prueba.vue';
 import HomeVue from '@/views/Administrador/Home.vue';
+import EmpleadoAsistencia from '@/components/CompAdm/EmpleadoAsistencia.vue';
 export default {
 
 
   name: 'HomeView',
-  components: { InventarioVue,HomeVue, MisPedidosVue, PedidosVue, TiendaFisica, FacturaVenta, PrincipalEmpleadosVue, AsignarRoles, PrincipalRolesVue,PrincipalRoles,Home,Login,
+  components: {Ficha, TablaVentaConPuntoVue, InventarioVue,HomeVue, MisPedidosVue, PedidosVue, TiendaFisica, FacturaVenta, PrincipalEmpleadosVue, AsignarRoles, PrincipalRolesVue,PrincipalRoles,Home,Login,
     GenerarQR, DetalleProducto, FormularioNatural, FormularioJuridico, RegistrarProducto, TablaClientes, CrearRolVue, TablaRoles, prueba, Carrito, MetodoPagoOnline, Home, FacturaAfiliacion,
-    pruebaVue,PrincipalProducto, NavbarVue, PrincipalClientes, PrincipalProveedoresVue, NavbarC, Carnet, PrincipalAfiiadosVue, MiCuentaVue, PrincipalEventos, CatalogoEventosVue, Punto, TablaHistoricoVue, InventarioPrincipal, InventarioPrincipal }
-    
+    pruebaVue,PrincipalProducto, NavbarVue, PrincipalClientes, PrincipalProveedoresVue, NavbarC, Carnet, PrincipalAfiiadosVue, MiCuentaVue, PrincipalEventos, CatalogoEventosVue, Punto, TablaHistoricoVue, InventarioPrincipal, InventarioPrincipal  ,EmpleadoAsistencia }
+  
 }
 </script>
