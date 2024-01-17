@@ -49,6 +49,12 @@
                 <b-col lg="12"><TablaVentaConPuntoVue></TablaVentaConPuntoVue></b-col>
                 <b-col></b-col>
             </b-row>
+            <b-row>
+              <h4 style="margin-top: 20px;">Ventas con canjeo de puntos</h4>
+                <b-col></b-col>
+                <b-col lg="12"><TablaProductosCategoriaVue></TablaProductosCategoriaVue></b-col>
+                <b-col></b-col>
+            </b-row>
         </b-container>
         <b-sidebar id="sidebar-no-header"   no-header shadow>
             <template #default="{ hide }">
