@@ -141,11 +141,35 @@
             size="sm"
           ></b-pagination> -->
       <!-- Info modal -->
+      <b-row>
+       
+        <b-col>
+            <label for="datepicker-full-width">Fecha inicial</label>
+            <b-form-datepicker
+      id="datepicker-full-width"
+      v-model="mes_i"
+      menu-class="w-100"
+      calendar-width="100%"
+      class="mb-2"
+      @input="graficos()"
+    ></b-form-datepicker>
+        </b-col>
+        <b-col> <label for="datepicker-full-width">Fecha final</label>
+            <b-form-datepicker
+      id="datepicker-full-width"
+      v-model="mes_f"
+      menu-class="w-100"
+      calendar-width="100%"
+      class="mb-2"
+      @input="graficos()"
+    ></b-form-datepicker></b-col>
+      </b-row>
+<!--   
       <b-row style="margin-top: 10px;">
         <b-col cols="3">
           <b-form-select   class="custom-select mr-sm-2  form-control " v-model="mes" :options="meses.map(item => ({ text: item.nombre, value: item.id }))" @change="graficos()"> </b-form-select>  
         </b-col>
-    </b-row>
+    </b-row> -->
     <b-row style="margin-top: 20px">
       <b-col cols="6">
         <div class="card border border-dark">
@@ -234,6 +258,8 @@
 
           ],
           mes: 1,
+          inicio: '',
+          fin: '',
           fields1: ['Total_de_Compras','Puntos_Canjeados', 'Puntos_Otorgados', 'Ordenes_Retrasadas'],
           loaded: false,
           etiquetas: [],
@@ -302,9 +328,10 @@
           this.currentPage = 1
         },
         async graficos(){
+          console.log(this.mes_i, this.mes_f)
           this.totalRows = this.items.length
           console.log(this.mes)
-          this.formatearDatos()
+          // this.formatearDatos()
           this.primerGrafico()
           this.segundoGrafico()
           this.tercerGrafico()

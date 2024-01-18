@@ -19,6 +19,7 @@
             <b-dropdown-item @click="EliminarProducto(producto.Id)">Eliminar</b-dropdown-item>
             <b-dropdown-item @click="RegistrarPremio()">Agregar Premio</b-dropdown-item>
             <b-dropdown-item @click="RegistrarNotaCata(producto.Id)">Agregar nota de cata</b-dropdown-item>
+            <b-dropdown-item v-b-modal.modal-center @click="mostrar(producto.Id)">Añadir a Dirario Ronero</b-dropdown-item>
           </b-dropdown>
           <b-button
             href="#"
@@ -31,6 +32,16 @@
         </b-card>
       </b-col>
     </b-row>
+    <!-- <div > -->
+    <b-modal id="modal-center" centered title="Descuento a aplicar" v-if="modal">
+      <b-input-group prepend="Descuento" class="mt-3">
+           <b-form-input v-model="dcto"></b-form-input>
+             <b-input-group-append>
+                <b-button variant="info" @click="agregarDR()">Aceptar</b-button>
+            </b-input-group-append>
+          </b-input-group>
+    </b-modal>
+  <!-- </div> -->
   </div>
 </template>
 
@@ -42,6 +53,9 @@ export default {
   data() {
     return {
       Productos: [],
+      modal: false,
+      dcto: 0,
+      id_actual: 'andi'
     };
   },
   mounted(){
@@ -106,7 +120,49 @@ export default {
             }).catch(error => {
               console.log(error);
             });
+      },
+      agregarDiarioRonero(id){
+        console.log('se llama')
+        console.log(id)
+        // this.mostrar()
+        // if(id != 'andi'){
+        //   this.agregarDR(id)
+        // }
+      
+      },
+      agregarDR(){
+        console.log(this.id_actual)
+        if(this.id_actual != 'andi'){
+          this.agregarOferta()
+        }
+        this.mostrar('andi')
+      },
+      mostrar(id){
+        this.id_actual = id
+        console.log(this.id_actual)
+        if(this.modal == false){
+          this.modal = true
+        }else{
+          this.modal=false
+          // this.agregarDiarioRonero(this.id_actual)
+        }
+        
+      },
+      async agregarOferta(){
+        console.log(this.dcto, this.id_actual)
+        try {
+            console.log('aca')
+            const response = await this.axios.post('http://localhost:3000/api/diario', {
+               descuento: this.dcto,
+               producto: this.id_actual 
+            
+              });
+            const result = response.data;
+            console.log(result);
+          } catch (error) {
+            console.error('Error al obtener el cliente natural:', error);
           }
+      }
 
   
 
@@ -115,6 +171,7 @@ export default {
   created() {
     this.ObtenerProductos();
   },
+  
 };
 </script>
 

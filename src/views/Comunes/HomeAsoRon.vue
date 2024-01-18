@@ -162,7 +162,9 @@ import { required } from 'vuelidate/lib/validators';
     components:{
       NavbarCli,NavbarAdm
     },
-
+    created(){
+      this.obtenerOfertas()
+    },
   mounted(){
  this.registrado=this.$route.params.registrado
  console.log(this.registrado)
@@ -188,51 +190,51 @@ import { required } from 'vuelidate/lib/validators';
         ],
        
         Productos:[
-                {
-                  Id:1,
-                  Nombre:'Santa teresa',
-                  Precio:20,
-                  Presentacion:'0,75',
-                  GradosA: '40°', 
-                  Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
-                  Dto: 7
-                }, 
-                {
-                  Id:2,
-                  Nombre:'Santa teresa',
-                  Precio:20,
-                  Presentacion:'0,75',
-                  GradosA: '40°', 
-                  Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
-                  Dto:5,
-                }, 
-                {
-                  Id:3,
-                  Nombre:'Santa teresa',
-                  Precio:20,
-                  Presentacion:'0,75',
-                  GradosA: '40°', 
-                  Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
-                  Dto:10,
-                },
-                {
-                  Id:4,
-                  Nombre:'Santa teresa',
-                  Precio:20,
-                  Presentacion:'0,75',
-                  GradosA: '40°', 
-                  Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
-                  Dto: 25,
-                },
-                {
-                  Id:5,
-                  Nombre:'Santa teresa',
-                  Precio:20,
-                  Presentacion:'0,75',
-                  GradosA: '40°', 
-                  Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
-                  Dto:10
-                }
+                // {
+                //   Id:1,
+                //   Nombre:'Santa teresa',
+                //   Precio:20,
+                //   Presentacion:'0,75',
+                //   GradosA: '40°', 
+                //   Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
+                //   Dto: 7
+                // }, 
+                // {
+                //   Id:2,
+                //   Nombre:'Santa teresa',
+                //   Precio:20,
+                //   Presentacion:'0,75',
+                //   GradosA: '40°', 
+                //   Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
+                //   Dto:5,
+                // }, 
+                // {
+                //   Id:3,
+                //   Nombre:'Santa teresa',
+                //   Precio:20,
+                //   Presentacion:'0,75',
+                //   GradosA: '40°', 
+                //   Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
+                //   Dto:10,
+                // },
+                // {
+                //   Id:4,
+                //   Nombre:'Santa teresa',
+                //   Precio:20,
+                //   Presentacion:'0,75',
+                //   GradosA: '40°', 
+                //   Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
+                //   Dto: 25,
+                // },
+                // {
+                //   Id:5,
+                //   Nombre:'Santa teresa',
+                //   Precio:20,
+                //   Presentacion:'0,75',
+                //   GradosA: '40°', 
+                //   Imagen:'https://i.ibb.co/WW33Dwc/gran-reserva-1.jpg',
+                //   Dto:10
+                // }
               ]
       }
     },
@@ -252,6 +254,31 @@ import { required } from 'vuelidate/lib/validators';
       verMas(id){
               this.$router.push('/DetalleProducto/'+'$'+'/'+id);
       },
+      async obtenerOfertas(){
+        const url = 'http://localhost:3000/api/diario';
+        await this.axios
+        .get(url)
+        .then((response) => {
+          this.Productos = response.data.map((producto) => {
+            const precio = parseFloat(producto.inv_vir_precio)
+            const descuento = parseInt(producto.ofe_valor, 10)
+            return {
+              Id:producto.pro_codigo,
+              Precio:precio,
+              Presentacion:producto.bot_capacidad,
+              GradosA: producto.pro_grados_alcohol+'°', 
+              Imagen:producto.ima_url,
+              Dto:descuento,
+              Nombre:producto.pro_nombre,
+             
+            };
+          });
+         console.log(response.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
     }
   }
 </script>
