@@ -43,6 +43,7 @@
             id="per-page-select"
             v-model="perPage"
             :options="pageOptions"
+            class="custom-select mr-sm-2  form-control altura"
           ></b-form-select>
         </b-form-group>
       </b-col>

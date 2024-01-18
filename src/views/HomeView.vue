@@ -1,9 +1,9 @@
 <template>
   <div class="home">
  
-  <NavbarVue></NavbarVue>
-  <Home :registrado="'Nuevo'"></Home>
-   
+ <!-- <NavbarVue></NavbarVue>
+  <Home :registrado="'Nuevo'"></Home> -->
+   <ReporteInvVirtualVue></ReporteInvVirtualVue>
    
    
    </div>
@@ -11,6 +11,8 @@
 
 <script>
 // @ is an alias to /src
+import ReporteInvVirtualVue from '@/components/CompAdm/ReporteInvVirtual.vue';
+import ReporteInvFisicoVue from '@/components/CompAdm/ReporteInvFisico.vue';
 import Ficha from '@/components/Comunes/Ficha.vue';
 import TablaVentaConPuntoVue from '@/components/CompAdm/TablaVentaConPunto.vue';
 import PrincipalEventos from './Administrador/PrincipalEventos.vue';
@@ -57,7 +59,7 @@ export default {
 
 
   name: 'HomeView',
-  components: {Ficha, TablaVentaConPuntoVue, InventarioVue,HomeVue, MisPedidosVue, PedidosVue, TiendaFisica, FacturaVenta, PrincipalEmpleadosVue, AsignarRoles, PrincipalRolesVue,PrincipalRoles,Home,Login,
+  components: {ReporteInvVirtualVue,ReporteInvFisicoVue,Ficha, TablaVentaConPuntoVue, InventarioVue,HomeVue, MisPedidosVue, PedidosVue, TiendaFisica, FacturaVenta, PrincipalEmpleadosVue, AsignarRoles, PrincipalRolesVue,PrincipalRoles,Home,Login,
     GenerarQR, DetalleProducto, FormularioNatural, FormularioJuridico, RegistrarProducto, TablaClientes, CrearRolVue, TablaRoles, prueba, Carrito, MetodoPagoOnline, Home, FacturaAfiliacion,
     pruebaVue,PrincipalProducto, NavbarVue, PrincipalClientes, PrincipalProveedoresVue, NavbarC, Carnet, PrincipalAfiiadosVue, MiCuentaVue, PrincipalEventos, CatalogoEventosVue, Punto, TablaHistoricoVue, InventarioPrincipal, InventarioPrincipal  ,EmpleadoAsistencia }
   
