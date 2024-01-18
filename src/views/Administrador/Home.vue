@@ -17,20 +17,17 @@
             <b-row> 
                 <b-col >
                     <b-card border-variant="warning" text-variant="black" class="text-center hov" >
-                        <b-card-title>Valor actual del punto</b-card-title>
-                        <b-card-title>1</b-card-title>
-                        <b-card-text>Ultima fecha de actualizacion</b-card-text>
-                        <b-card-text>12/22/2023</b-card-text>
+                        <b-card-title style="color:#833440; font-family:serif;">Punto   <b-icon  icon = " bullseye"  animación = "cylon-vertical"  font-scale = "5"   variant="info"> </b-icon></b-card-title>
+                         
+                      
                         <b-button v-b-toggle.collapse-1 @click=" tipo_historico()" variant="warning"> Consultar Historico</b-button>
                      </b-card>
                 </b-col>
                 <b-col> 
                     <b-card border-variant="warning" text-variant="black" class="text-center hov" >
-                        <b-card-title>Valor actual del dolar</b-card-title>
-                        <b-card-title>1</b-card-title>
-                        <b-card-text>Ultima fecha de actualizacion</b-card-text>
-                        <b-card-text>12/22/2023</b-card-text>
-                        <b-button v-b-toggle.collapse-1  @click="tipo_historicob()"  variant="warning"> Consultar Historico</b-button>
+                        <b-card-title style="color:#833440; font-family:serif;">Tasa de Cambio   <b-icon  icon = "cash-coin"  animación = "cylon-vertical"  font-scale = "5" variant="info" > </b-icon> </b-card-title>
+                       
+                        <b-button v-b-toggle.collapse-1  @click="tipo_historicob()"  variant="warning" > Consultar Historico</b-button>
                      </b-card>
                  </b-col>
             </b-row>
@@ -44,15 +41,27 @@
             </b-row>
             </b-collapse>
             <b-row>
-              <h4 style="margin-top: 20px;">Ventas con canjeo de puntos</h4>
+              <h4 style="margin-top: 20px; color:#833440; font-family:serif;">Ventas con canjeo de puntos</h4>
                 <b-col></b-col>
                 <b-col lg="12"><TablaVentaConPuntoVue></TablaVentaConPuntoVue></b-col>
                 <b-col></b-col>
             </b-row>
             <b-row>
-              <h4 style="margin-top: 20px;">Ventas con canjeo de puntos</h4>
+              <h4 style="margin-top: 20px;color:#833440; font-family:serif;">Ventas con canjeo de puntos</h4>
                 <b-col></b-col>
                 <b-col lg="12"><TablaProductosCategoriaVue></TablaProductosCategoriaVue></b-col>
+                <b-col></b-col>
+            </b-row>
+            <b-row>
+              <h4 style="margin-top: 20px;color:#833440; font-family:serif;">Inventario Fisico</h4>
+                <b-col></b-col>
+                <b-col lg="12"><ReporteInvFisicoVue></ReporteInvFisicoVue></b-col>
+                <b-col></b-col>
+            </b-row>
+            <b-row>
+              <h4 style="margin-top: 20px;color:#833440; font-family:serif;">Invetario Virtual</h4>
+                <b-col></b-col>
+                <b-col lg="12"><ReporteInvVirtualVue></ReporteInvVirtualVue></b-col>
                 <b-col></b-col>
             </b-row>
         </b-container>
@@ -78,13 +87,15 @@ import Navbar from '../../components/CompAdm/Navbar.vue';
 
 import TablaProductosCategoriaVue from '@/components/CompAdm/TablaProductosCategoria.vue';
 import TablaVentaConPuntoVue from '@/components/CompAdm/TablaVentaConPunto.vue';
+import ReporteInvFisicoVue from '@/components/CompAdm/ReporteInvFisico.vue';
+import ReporteInvVirtualVue from '@/components/CompAdm/ReporteInvVirtual.vue';
 
     export default{
         props:{
             cod_tipo_usuario:''
         },
          components:{
-        Navbar,TablaHistoricoVue,TablaProductosCategoriaVue,TablaVentaConPuntoVue
+        Navbar,TablaHistoricoVue,TablaProductosCategoriaVue,TablaVentaConPuntoVue,ReporteInvFisicoVue,ReporteInvVirtualVue
         },
         mounted() {
         this.cod_tipo_usuario=this.$route.params.cod_tipo_usuario

@@ -1,5 +1,6 @@
 <template>
     <b-container fluid>
+
         <h1 style="margin-top: 10px;">Productos vendidos por categoria</h1>
       <!-- User Interface controls -->
       <b-row>
